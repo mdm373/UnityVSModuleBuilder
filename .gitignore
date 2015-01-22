@@ -1,7 +1,9 @@
 UnityVSModuleBuilder/packages/
 UnityVSModuleBuilder/UnityVSModuleBuilderTests/bin/
 UnityVSModuleBuilder/UnityVSModuleBuilder/bin/
-UnityVSModuleBuilder/UnityVSModuleBuilder/obj/Debug/TemplateProjectBuilder.csproj.FileListAbsolute.txt
+UnityVSModuleBuilder/UnityVSModuleBuilderDrivers/bin/
 UnityVSModuleBuilder/UnityVSModuleBuilder/obj/
 UnityVSModuleBuilder/UnityVSModuleBuilderTests/obj/
+UnityVSModuleBuilder/UnityVSModuleBuilderDrivers/obj/
 *.VisualState.xml
+*.FileListAbsolute.txt
