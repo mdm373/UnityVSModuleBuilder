@@ -7,3 +7,4 @@ UnityVSModuleBuilder/UnityVSModuleBuilderTests/obj/
 UnityVSModuleBuilder/UnityVSModuleBuilderDrivers/obj/
 *.VisualState.xml
 *.FileListAbsolute.txt
+*TestResult.xml
