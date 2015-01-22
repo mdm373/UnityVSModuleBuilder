@@ -50,17 +50,112 @@
   <ItemGroup>
     <Compile Include="BuildProjectRequest.cs" />
     <Compile Include="BuildProjectResponse.cs" />
+    <Compile Include="FileSystem\FileSystemController.cs" />
+    <Compile Include="FileSystem\FileSystemControllerImpl.cs" />
+    <Compile Include="Implement\BuildProjectRequestImpl.cs" />
     <Compile Include="Implement\BuildProjectResponseImpl.cs" />
+    <Compile Include="Logging\ConsoleLoggingService.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\LoggingService.cs" />
     <Compile Include="Overlay\ProjectNameOverlay.cs" />
+    <Compile Include="Overlay\ProjectNameOverlayImpl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Implement\TemplateProjectBuilderImpl.cs" />
+    <Compile Include="TemplateCopy\TemplateCopyControllerImpl.cs" />
+    <Compile Include="TemplateCopy\TemplateCopyController.cs" />
     <Compile Include="TemplateProjectBuilder.cs" />
+    <Compile Include="TemplateProjectFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="ProjectTemplate\UnityGame\Assets\Editor.meta">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\Library\BuildPlayer.prefs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\Library\BuildSettings.asset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\Library\EditorUserBuildSettings.asset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\Library\EditorUserSettings.asset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\Library\InspectorExpandedItems.asset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\Library\MonoManager.asset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\Library\ProjectSettings.asset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\AudioManager.asset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\DynamicsManager.asset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\EditorBuildSettings.asset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\EditorSettings.asset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\GraphicsSettings.asset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\InputManager.asset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\NavMeshAreas.asset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\NetworkManager.asset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\Physics2DSettings.asset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\ProjectSettings.asset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\QualitySettings.asset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\TagManager.asset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\TimeManager.asset">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\VisualStudio\SSGTemplateProject.v12.suo">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\ProjectVersion.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\VisualStudio\SSGTemplateProject.sln">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProjectTemplate\VisualStudio\SSGTemplateProjectEditor\lib\NSubstitute.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="ProjectTemplate\VisualStudio\SSGTemplateProjectEditor\SSGTemplateProjectEditor.csproj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="ProjectTemplate\VisualStudio\SSGTemplateProject\SSGTemplateProject.csproj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ProjectTemplate\UnityGame\Assets\Editor\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

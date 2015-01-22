@@ -5,38 +5,61 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityVSModuleBuilder.Implement;
+using UnityVSModuleBuilder.TemplateCopy;
 
 
-namespace UnityVSModuleBuilder
+namespace UnityVSModuleBuilder.Implement
 {
     [TestFixture]
     class TemplateProjectBuilderTest
     {
         private const String EXPECTED_PROJECT_NAME = "EXPECTED_PROJECT_NAME";
+        private const String EXPECTED_COPY_LOCATION = "EXPECTED_COPY_LOCATION";
 
         private BuildProjectRequest request;
         private TemplateProjectBuilderImpl templateProjectBuilder;
         private BuildProjectResponse response;
         private ProjectNameOverlay nameOverlay;
+        private TemplateCopyController templateCopy;
+        
         
 
         [SetUp]
         public void SetUp()
         {
             this.nameOverlay = Substitute.For<ProjectNameOverlay>();
-            this.templateProjectBuilder = TemplateProjectBuilderImpl.GetInstance(nameOverlay);
+            this.templateCopy = Substitute.For<TemplateCopyController>();
+            this.templateProjectBuilder = TemplateProjectBuilderImpl.GetInstance(templateCopy, nameOverlay);
             GivenBuildProjectRequest();
             GivenBuildProjectRequestHasExpectedName();
+            GivenBuildProjectRequestHasExpectedCopyLocation();
         }
 
         [Test]
         public void TestProjectBuildSuccess()
         {
+            
+            GivenTemplateCopySuccessful();
             GivenNameOverlayIsSuccessful();
             WhenBuildProjectRequested();
             ThenProjectNameOverlayRequestedWithExpectedName();
+            ThenTemplateCopyRequestedWithExpectedLocation();
             ThenBuildProjectResponseIsSuccessful();
+        }
+
+        private void ThenTemplateCopyRequestedWithExpectedLocation()
+        {
+            this.templateCopy.Received().CopyTemplate(EXPECTED_COPY_LOCATION);
+        }
+
+        private void GivenTemplateCopySuccessful()
+        {
+            this.templateCopy.CopyTemplate(Arg.Any<String>()).Returns(true);
+        }
+
+        private void GivenTemplateCopyFailure()
+        {
+            this.templateCopy.CopyTemplate(Arg.Any<String>()).Returns(false);
         }
 
         [Test]
@@ -45,6 +68,21 @@ namespace UnityVSModuleBuilder
             GivenNameOverlayIsFailure();
             WhenBuildProjectRequested();
             ThenBuildProjectResponseIsFailure();
+        }
+
+        [Test]
+        public void TestProjectBuildTemplateCopyFailure()
+        {
+            GivenTemplateCopyFailure();
+            WhenBuildProjectRequested();
+            ThenProjectNameOverlayNotRequested();
+            ThenBuildProjectResponseIsFailure();
+
+        }
+
+        private void ThenProjectNameOverlayNotRequested()
+        {
+            nameOverlay.DidNotReceive().Overlay(Arg.Any<String>());
         }
 
         private void GivenNameOverlayIsFailure()
@@ -85,6 +123,11 @@ namespace UnityVSModuleBuilder
         private void GivenBuildProjectRequest()
         {
             this.request = Substitute.For<BuildProjectRequest>();
+        }
+
+        private void GivenBuildProjectRequestHasExpectedCopyLocation()
+        {
+            this.request.GetCopyLocation().Returns(EXPECTED_COPY_LOCATION);
         }
     }
 }

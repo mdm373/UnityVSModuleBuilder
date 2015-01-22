@@ -8,5 +8,6 @@ namespace UnityVSModuleBuilder
     public interface BuildProjectRequest
     {
         String GetProjectName();
+        String GetCopyLocation();
     }
 }

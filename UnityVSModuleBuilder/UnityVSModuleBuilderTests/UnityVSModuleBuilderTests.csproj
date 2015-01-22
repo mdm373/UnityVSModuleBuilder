@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -6,8 +6,8 @@
     <ProjectGuid>{7AC0F630-AE5F-4D73-9D1F-C684BA74D120}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TempProjBuilder</RootNamespace>
-    <AssemblyName>TempProjBuilderTests</AssemblyName>
+    <RootNamespace>UnityVSModuleBuilder</RootNamespace>
+    <AssemblyName>UnityVSModuleBuilderTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -56,9 +56,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implement\BuildProjectRequestImplTest.cs" />
     <Compile Include="Overlay\ProjectNameOverlayTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TemplateProjectBuilderTest.cs" />
+    <Compile Include="TemplateCopy\TemplateCopyControllerImplTest.cs" />
+    <Compile Include="Implement\TemplateProjectBuilderTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UnityVSModuleBuilder\UnityVSModuleBuilder.csproj">
@@ -69,6 +71,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <UsingTask AssemblyFile="lib\MSBuild.NUnit.dll" TaskName="MSBuild.Tasks.NUnit" />
   <Target Name="RunUnitTest">
     <NUnit Assemblies="$(ProjectName).csproj" ToolPath="..\packages\NUnit.Runners.2.6.2\tools" DisableShadowCopy="true" Force32Bit="false" ProjectConfiguration="$(Configuration)" FrameworkToUse="net-4.5" WorkingDirectory="$(ProjectDir)" ContinueOnError="false" />
