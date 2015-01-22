@@ -1,0 +1,7 @@
+UnityVSModuleBuilder/packages/
+UnityVSModuleBuilder/UnityVSModuleBuilderTests/bin/
+UnityVSModuleBuilder/UnityVSModuleBuilder/bin/
+UnityVSModuleBuilder/UnityVSModuleBuilder/obj/Debug/TemplateProjectBuilder.csproj.FileListAbsolute.txt
+UnityVSModuleBuilder/UnityVSModuleBuilder/obj/
+UnityVSModuleBuilder/UnityVSModuleBuilderTests/obj/
+*.VisualState.xml
