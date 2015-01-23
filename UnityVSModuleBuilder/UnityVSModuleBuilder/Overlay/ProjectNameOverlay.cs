@@ -5,9 +5,20 @@ using System.Text;
 
 namespace UnityVSModuleBuilder.Overlay
 {
-    public interface ProjectNameOverlay
+    public class ProjectNameOverlay : DefinedOverlayImpl
     {
-        bool Overlay(string projectName, string projectLocation);
-        
+        private const string PROJECT_NAME_TAG = "[[PROJECT_NAME]]";
+
+        public ProjectNameOverlay(FileSystem.FileSystemController fileSystem) : base(fileSystem) { }
+
+        public override string GetDefinedValue(BuildProjectRequest request)
+        {
+            return request.GetProjectName();
+        }
+
+        public override string GetDefinedTag()
+        {
+            return PROJECT_NAME_TAG;
+        }
     }
 }

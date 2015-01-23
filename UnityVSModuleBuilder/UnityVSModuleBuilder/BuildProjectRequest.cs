@@ -9,5 +9,6 @@ namespace UnityVSModuleBuilder
     {
         String GetProjectName();
         String GetCopyLocation();
+        String GetCompanyName();
     }
 }

@@ -9,18 +9,18 @@ namespace UnityVSModuleBuilder.Implement
 {
     public class TemplateProjectBuilderImpl : TemplateProjectBuilder
     {
-        private readonly ProjectNameOverlay nameOverlay;
+        private readonly List<DefinedOverlay> overlays;
         private readonly TemplateCopyController copyController;
 
-        private TemplateProjectBuilderImpl(TemplateCopyController copyController, ProjectNameOverlay nameOverlay)
+        private TemplateProjectBuilderImpl(TemplateCopyController copyController, List<DefinedOverlay> overlays)
         {
             this.copyController = copyController;
-            this.nameOverlay = nameOverlay;
+            this.overlays = overlays;
         }
 
-        public static TemplateProjectBuilderImpl GetInstance(TemplateCopyController copyController, ProjectNameOverlay nameOverlay)
+        public static TemplateProjectBuilderImpl GetInstance(TemplateCopyController copyController, List<DefinedOverlay> overlays)
         {
-            return new TemplateProjectBuilderImpl(copyController, nameOverlay);
+            return new TemplateProjectBuilderImpl(copyController, overlays);
         }
 
         public BuildProjectResponse DoBuild(BuildProjectRequest request)
@@ -28,7 +28,15 @@ namespace UnityVSModuleBuilder.Implement
             bool isSuccessful = copyController.CopyTemplate(request.GetCopyLocation());
             if (isSuccessful)
             {
-                isSuccessful = nameOverlay.Overlay(request.GetProjectName(), request.GetCopyLocation());
+                foreach (DefinedOverlay overlay in overlays)
+                {
+                    isSuccessful = overlay.Overlay(request);
+                    if (!isSuccessful)
+                    {
+                        break;
+                    }
+                }
+                
             }
             
             return BuildProjectResponseImpl.GetInstance(isSuccessful);

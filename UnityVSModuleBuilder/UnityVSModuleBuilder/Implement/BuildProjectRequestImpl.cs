@@ -9,6 +9,7 @@ namespace UnityVSModuleBuilder.Implement
     {
         private string copyLocation;
         private string projectName;
+        private string companyName;
 
         public void SetProjectName(String projectName)
         {
@@ -28,6 +29,17 @@ namespace UnityVSModuleBuilder.Implement
         public string GetCopyLocation()
         {
             return copyLocation;
+        }
+
+
+        public string GetCompanyName()
+        {
+            return companyName;
+        }
+
+        public void SetCompanyName(String companyName)
+        {
+            this.companyName = companyName;
         }
     }
 }

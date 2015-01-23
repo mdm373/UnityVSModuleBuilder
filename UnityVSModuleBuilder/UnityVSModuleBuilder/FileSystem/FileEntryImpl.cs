@@ -46,7 +46,7 @@ namespace UnityVSModuleBuilder.FileSystem
                 DirectoryInfo existingDirInfo = new DirectoryInfo(info.FullName);
                 String newDirName = Path.Combine(existingDirInfo.Parent.FullName, newName);
                 Directory.Move(existingDirInfo.FullName, newDirName);
-                info = new DirectoryInfo(newName);
+                info = new DirectoryInfo(newDirName);
             }
             else if(File.Exists(info.FullName))
             {

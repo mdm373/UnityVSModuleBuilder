@@ -13,9 +13,10 @@ namespace UnityVSModuleBuilder.Drivers
         {
             String projectName = "DriverProject";
             String copyLocation = "GeneratedDriverProject";
+            String companyName = "DriverCompany";
 
             TemplateProjectBuilder builder = TemplateProjectFactory.GetNewTemplateProjectBuilder();
-            BuildProjectRequest request = TemplateProjectFactory.GetNewRequest(projectName, copyLocation);
+            BuildProjectRequest request = TemplateProjectFactory.GetNewRequest(projectName, copyLocation, companyName);
 
             BuildProjectResponse response = builder.DoBuild(request);
             Logger.Log(response.ToString());

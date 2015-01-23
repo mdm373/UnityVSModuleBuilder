@@ -19,17 +19,20 @@ namespace UnityVSModuleBuilder.Implement
         private BuildProjectRequest request;
         private TemplateProjectBuilderImpl templateProjectBuilder;
         private BuildProjectResponse response;
-        private ProjectNameOverlay nameOverlay;
         private TemplateCopyController templateCopy;
+        private List<DefinedOverlay> overlays;
+        private DefinedOverlay firstOverlay;
         
         
 
         [SetUp]
         public void SetUp()
         {
-            this.nameOverlay = Substitute.For<ProjectNameOverlay>();
+            this.overlays = new List<DefinedOverlay>();
+            this.firstOverlay = Substitute.For<DefinedOverlay>();
+            this.overlays.Add(firstOverlay);
             this.templateCopy = Substitute.For<TemplateCopyController>();
-            this.templateProjectBuilder = TemplateProjectBuilderImpl.GetInstance(templateCopy, nameOverlay);
+            this.templateProjectBuilder = TemplateProjectBuilderImpl.GetInstance(templateCopy, overlays);
             GivenBuildProjectRequest();
             GivenBuildProjectRequestHasExpectedName();
             GivenBuildProjectRequestHasExpectedCopyLocation();
@@ -40,9 +43,9 @@ namespace UnityVSModuleBuilder.Implement
         {
             
             GivenTemplateCopySuccessful();
-            GivenNameOverlayIsSuccessful();
+            GivenOverlayIsSuccessful();
             WhenBuildProjectRequested();
-            ThenProjectNameOverlayRequestedWithExpectedNameAndLocation();
+            ThenOverlayRequestedWithExpectedRequest();
             ThenTemplateCopyRequestedWithExpectedLocation();
             ThenBuildProjectResponseIsSuccessful();
         }
@@ -75,19 +78,19 @@ namespace UnityVSModuleBuilder.Implement
         {
             GivenTemplateCopyFailure();
             WhenBuildProjectRequested();
-            ThenProjectNameOverlayNotRequested();
+            ThenOverlayNotRequested();
             ThenBuildProjectResponseIsFailure();
 
         }
 
-        private void ThenProjectNameOverlayNotRequested()
+        private void ThenOverlayNotRequested()
         {
-            nameOverlay.DidNotReceive().Overlay(Arg.Any<String>(), Arg.Any<String>());
+            firstOverlay.DidNotReceive().Overlay(Arg.Any<BuildProjectRequest>());
         }
 
         private void GivenNameOverlayIsFailure()
         {
-            nameOverlay.Overlay(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
+            firstOverlay.Overlay(Arg.Any<BuildProjectRequest>()).Returns(false);
         }
 
         private void ThenBuildProjectResponseIsFailure()
@@ -100,14 +103,14 @@ namespace UnityVSModuleBuilder.Implement
             Assert.True(response.IsSuccess());
         }
 
-        private void GivenNameOverlayIsSuccessful()
+        private void GivenOverlayIsSuccessful()
         {
-            nameOverlay.Overlay(Arg.Any<String>(), Arg.Any<String>()).Returns(true);
+            firstOverlay.Overlay(Arg.Any<BuildProjectRequest>()).Returns(true);
         }
 
-        private void ThenProjectNameOverlayRequestedWithExpectedNameAndLocation()
+        private void ThenOverlayRequestedWithExpectedRequest()
         {
-            nameOverlay.Received().Overlay(EXPECTED_PROJECT_NAME, EXPECTED_COPY_LOCATION);
+            firstOverlay.Received().Overlay(this.request);
         }
 
         private void GivenBuildProjectRequestHasExpectedName()
