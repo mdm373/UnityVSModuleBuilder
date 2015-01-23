@@ -42,7 +42,7 @@ namespace UnityVSModuleBuilder.Implement
             GivenTemplateCopySuccessful();
             GivenNameOverlayIsSuccessful();
             WhenBuildProjectRequested();
-            ThenProjectNameOverlayRequestedWithExpectedName();
+            ThenProjectNameOverlayRequestedWithExpectedNameAndLocation();
             ThenTemplateCopyRequestedWithExpectedLocation();
             ThenBuildProjectResponseIsSuccessful();
         }
@@ -82,12 +82,12 @@ namespace UnityVSModuleBuilder.Implement
 
         private void ThenProjectNameOverlayNotRequested()
         {
-            nameOverlay.DidNotReceive().Overlay(Arg.Any<String>());
+            nameOverlay.DidNotReceive().Overlay(Arg.Any<String>(), Arg.Any<String>());
         }
 
         private void GivenNameOverlayIsFailure()
         {
-            nameOverlay.Overlay(Arg.Any<String>()).Returns(false);
+            nameOverlay.Overlay(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
         }
 
         private void ThenBuildProjectResponseIsFailure()
@@ -102,12 +102,12 @@ namespace UnityVSModuleBuilder.Implement
 
         private void GivenNameOverlayIsSuccessful()
         {
-            nameOverlay.Overlay(Arg.Any<String>()).Returns(true);
+            nameOverlay.Overlay(Arg.Any<String>(), Arg.Any<String>()).Returns(true);
         }
 
-        private void ThenProjectNameOverlayRequestedWithExpectedName()
+        private void ThenProjectNameOverlayRequestedWithExpectedNameAndLocation()
         {
-            nameOverlay.Received().Overlay(EXPECTED_PROJECT_NAME);
+            nameOverlay.Received().Overlay(EXPECTED_PROJECT_NAME, EXPECTED_COPY_LOCATION);
         }
 
         private void GivenBuildProjectRequestHasExpectedName()

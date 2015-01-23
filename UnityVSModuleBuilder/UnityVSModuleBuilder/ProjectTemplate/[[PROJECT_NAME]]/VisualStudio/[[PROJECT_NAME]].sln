@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSGCore", "SSGTemplateProject\SSGTemplateProject.csproj", "{8162776B-4104-41F5-8BCC-F5631AB83EDD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "[[PROJECT_NAME]]", "[[PROJECT_NAME]]\[[PROJECT_NAME]].csproj", "{8162776B-4104-41F5-8BCC-F5631AB83EDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSGCoreEditor", "SSGTemplateProjectEditor\SSGTemplateProjectEditor.csproj", "{9B29C36A-F31D-4769-B33D-8F250A4C359E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "[[PROJECT_NAME]]Editor", "[[PROJECT_NAME]]Editor\[[PROJECT_NAME]]Editor.csproj", "{9B29C36A-F31D-4769-B33D-8F250A4C359E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

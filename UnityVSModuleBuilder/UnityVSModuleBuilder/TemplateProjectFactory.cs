@@ -24,7 +24,7 @@ namespace UnityVSModuleBuilder
         {
             FileSystemController fileSystem = new FileSystemControllerImpl();
             TemplateCopyController copyController = new TemplateCopyControllerImpl(fileSystem);
-            ProjectNameOverlay nameOverlay = new ProjectNameOverlayImpl();
+            ProjectNameOverlay nameOverlay = new ProjectNameOverlayImpl(fileSystem);
             return TemplateProjectBuilderImpl.GetInstance(copyController, nameOverlay);
         }
     }

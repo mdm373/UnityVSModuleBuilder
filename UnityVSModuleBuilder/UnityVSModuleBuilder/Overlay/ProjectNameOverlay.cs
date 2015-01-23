@@ -7,7 +7,7 @@ namespace UnityVSModuleBuilder.Overlay
 {
     public interface ProjectNameOverlay
     {
-        bool Overlay(string projectName);
+        bool Overlay(string projectName, string projectLocation);
         
     }
 }

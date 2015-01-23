@@ -8,5 +8,9 @@ namespace UnityVSModuleBuilder.FileSystem
     public interface FileSystemController
     {
         void DoFullDirectoryCopy(string from, string to);
+        List<FileEntry>.Enumerator GetFilesForLocationRecursive(String location);
+
+
+        
     }
 }

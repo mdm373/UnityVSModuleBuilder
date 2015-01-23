@@ -49,5 +49,34 @@ namespace UnityVSModuleBuilder.FileSystem
             }
 
         }
+
+        public List<FileEntry>.Enumerator GetFilesForLocationRecursive(String location)
+        {
+            List<FileEntry> files = new List<FileEntry>();
+            DirectoryInfo info = new DirectoryInfo(location);
+            if (!info.Exists)
+            {
+                Logger.Log("Warning: requested dirtory at '" + location + "' does not exist. Cannot list files recursive");
+            }
+            else
+            {
+                FileInfo[] directFiles = info.GetFiles();
+                foreach(FileInfo directFile in directFiles){
+                    FileEntry entry = new FileEntryImpl(directFile);
+                    files.Add(entry);
+                }
+                
+                DirectoryInfo[] dirs = info.GetDirectories();
+                foreach(DirectoryInfo dir in dirs){
+                    files.Add(new FileEntryImpl(dir));
+                    List<FileEntry>.Enumerator nestedFiles = GetFilesForLocationRecursive(dir.FullName);
+                    while (nestedFiles.MoveNext())
+                    {
+                        files.Add(nestedFiles.Current);
+                    }
+                }
+            }
+            return files.GetEnumerator();
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace UnityVSModuleBuilder.Implement
             bool isSuccessful = copyController.CopyTemplate(request.GetCopyLocation());
             if (isSuccessful)
             {
-                isSuccessful = nameOverlay.Overlay(request.GetProjectName());
+                isSuccessful = nameOverlay.Overlay(request.GetProjectName(), request.GetCopyLocation());
             }
             
             return BuildProjectResponseImpl.GetInstance(isSuccessful);

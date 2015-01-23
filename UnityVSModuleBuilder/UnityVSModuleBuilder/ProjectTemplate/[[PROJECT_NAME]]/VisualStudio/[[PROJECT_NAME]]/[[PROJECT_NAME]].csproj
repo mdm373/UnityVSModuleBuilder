@@ -7,8 +7,8 @@
     <ProjectGuid>{8162776B-4104-41F5-8BCC-F5631AB83EDD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SSGTemplateProject</RootNamespace>
-    <AssemblyName>SSGTemplateProject</AssemblyName>
+    <RootNamespace>[[PROJECT_NAME]]</RootNamespace>
+    <AssemblyName>[[PROJECT_NAME]]</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>

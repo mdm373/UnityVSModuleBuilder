@@ -1,19 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8162776B-4104-41F5-8BCC-F5631AB83EDD}</ProjectGuid>
+    <ProjectGuid>{9B29C36A-F31D-4769-B33D-8F250A4C359E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SSGTemplateProject</RootNamespace>
-    <AssemblyName>SSGTemplateProject</AssemblyName>
+    <RootNamespace>[[PROJECT_NAME]]Editor</RootNamespace>
+    <AssemblyName>[[PROJECT_NAME]]Editor</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <UnityRoot>C:\Program Files\Unity 5.0.0b9</UnityRoot>
+    <UnityRoot>C:\Program Files\Unity 5.0.0b9\</UnityRoot>
     <PluginsRoot>..\UnityGame\Assets\SSG\ManagedCode</PluginsRoot>
+    <PluginsEditorRoot>..\UnityGame\Assets\Editor\SSG\ManagedCode</PluginsEditorRoot>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,8 +24,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <UnityRoot>C:\Program Files\Unity 5.0.0b9</UnityRoot>
+    <UnityRoot>C:\Program Files\Unity 5.0.0b9\</UnityRoot>
     <PluginsRoot>..\UnityGame\Assets\SSG\ManagedCode</PluginsRoot>
+    <PluginsEditorRoot>..\UnityGame\Assets\Editor\SSG\ManagedCode</PluginsEditorRoot>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,31 +35,48 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <UnityRoot>C:\Program Files\Unity 5.0.0b9</UnityRoot>
+    <UnityRoot>C:\Program Files\Unity 5.0.0b9\</UnityRoot>
     <PluginsRoot>..\UnityGame\Assets\SSG\ManagedCode</PluginsRoot>
+    <PluginsEditorRoot>..\UnityGame\Assets\Editor\SSG\ManagedCode</PluginsEditorRoot>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NSubstitute">
+      <HintPath>lib\NSubstitute.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.core" />
+    <Reference Include="nunit.framework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnityEditor">
+      <HintPath>$(UnityRoot)\Editor\Data\Managed\UnityEditor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>$(UnityRoot)\Editor\Data\Managed\UnityEngine.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>$(UnityRoot)\Editor\Data\UnityExtensions\Unity\GUISystem\UnityEngine.UI.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SSGCore">
-      <HintPath>$(SolutionDir)$(PluginsRoot)\SSGCore.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SSGTemplateProject\SSGTemplateProject.csproj">
+      <Project>{8162776b-4104-41f5-8bcc-f5631ab83edd}</Project>
+      <Name>SSGCore</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)$(PluginsRoot)\$(TargetFileName)"</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)$(PluginsEditorRoot)\$(TargetFileName)"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
