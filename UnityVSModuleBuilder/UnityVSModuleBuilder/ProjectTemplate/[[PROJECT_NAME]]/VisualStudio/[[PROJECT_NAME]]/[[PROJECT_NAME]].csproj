@@ -12,8 +12,8 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <UnityRoot>C:\Program Files\Unity 5.0.0b9</UnityRoot>
-    <PluginsRoot>..\UnityGame\Assets\SSG\ManagedCode</PluginsRoot>
+    <UnityRoot>[[UNITY_LOCATION]]</UnityRoot>
+    <PluginsRoot>..\UnityGame\Assets\ManagedCode</PluginsRoot>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,8 +23,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <UnityRoot>C:\Program Files\Unity 5.0.0b9</UnityRoot>
-    <PluginsRoot>..\UnityGame\Assets\SSG\ManagedCode</PluginsRoot>
+    <UnityRoot>[[UNITY_LOCATION]]</UnityRoot>
+    <PluginsRoot>..\UnityGame\Assets\ManagedCode</PluginsRoot>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,8 +33,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <UnityRoot>C:\Program Files\Unity 5.0.0b9</UnityRoot>
-    <PluginsRoot>..\UnityGame\Assets\SSG\ManagedCode</PluginsRoot>
+    <UnityRoot>[[UNITY_LOCATION]]</UnityRoot>
+    <PluginsRoot>..\UnityGame\Assets\ManagedCode</PluginsRoot>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -51,9 +51,11 @@
       <HintPath>$(UnityRoot)\Editor\Data\UnityExtensions\Unity\GUISystem\UnityEngine.UI.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <!--
     <Reference Include="SSGCore">
       <HintPath>$(SolutionDir)$(PluginsRoot)\SSGCore.dll</HintPath>
-    </Reference>
+    </Reference> 
+    -->
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -73,5 +73,11 @@ namespace UnityVSModuleBuilder.FileSystem
             }
             return type;
         }
+
+
+        public String GetFilePath()
+        {
+            return info.FullName;
+        }
     }
 }

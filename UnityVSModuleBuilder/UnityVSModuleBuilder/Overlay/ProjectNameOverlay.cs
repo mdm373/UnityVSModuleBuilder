@@ -7,8 +7,6 @@ namespace UnityVSModuleBuilder.Overlay
 {
     public class ProjectNameOverlay : DefinedOverlayImpl
     {
-        private const string PROJECT_NAME_TAG = "[[PROJECT_NAME]]";
-
         public ProjectNameOverlay(FileSystem.FileSystemController fileSystem) : base(fileSystem) { }
 
         public override string GetDefinedValue(BuildProjectRequest request)
@@ -18,7 +16,7 @@ namespace UnityVSModuleBuilder.Overlay
 
         public override string GetDefinedTag()
         {
-            return PROJECT_NAME_TAG;
+            return OverlayConstants.PROJECT_NAME_TAG;
         }
     }
 }

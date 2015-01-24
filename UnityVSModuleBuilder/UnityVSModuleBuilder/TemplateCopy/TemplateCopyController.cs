@@ -7,6 +7,6 @@ namespace UnityVSModuleBuilder.TemplateCopy
 {
     public interface TemplateCopyController
     {
-        bool CopyTemplate(string copyLocation);
+        bool CopyAndCleanTemplate(string copyLocation);
     }
 }

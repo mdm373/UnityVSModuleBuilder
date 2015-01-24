@@ -1,36 +1,34 @@
-﻿using NSubstitute;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NSubstitute;
 
 namespace UnityVSModuleBuilder.Overlay
 {
     [TestFixture]
-    public class CompanyNameOverlayTest
+    class CompanyShortNameOverlayTest
     {
         private readonly DefinedOverlayTestHelper testHelper = new DefinedOverlayTestHelper();
-
 
         [SetUp]
         public void SetUp()
         {
-            testHelper.SetUp(new CompanyNameOverlayImpl(null));
+            testHelper.SetUp(new CompanyShortNameOverlay(null));
         }
 
         [Test]
         public void TestDefinedTag()
         {
-            testHelper.TestDefinedTag("[[COMPANY_NAME]]");
+            testHelper.TestDefinedTag("[[COMPANY_SHORT_NAME]]");
         }
 
         [Test]
         public void TestOverlayValue()
         {
-            testHelper.TestOverlayValue((request, expectedRequestValue) => { request.GetCompanyName().Returns(expectedRequestValue); return true; });
+            testHelper.TestOverlayValue((request, expectedRequestValue) => { request.GetCompanyShortName().Returns(expectedRequestValue); return true; });
         }
-
     }
 }

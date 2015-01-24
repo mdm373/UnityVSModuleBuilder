@@ -12,17 +12,7 @@ namespace UnityVSModuleBuilder
 {
     public class TemplateProjectFactory
     {
-        public static BuildProjectRequest GetNewRequest(
-            String projectName, 
-            String copyLocation,
-            String companyName)
-        {
-            BuildProjectRequestImpl request = new BuildProjectRequestImpl();
-            request.SetProjectName(projectName);
-            request.SetCopyLocation(copyLocation);
-            request.SetCompanyName(companyName);
-            return request;
-        }
+
 
         public static TemplateProjectBuilder GetNewTemplateProjectBuilder()
         {
@@ -31,6 +21,9 @@ namespace UnityVSModuleBuilder
             List<DefinedOverlay> overlays = new List<DefinedOverlay>();
             overlays.Add(new ProjectNameOverlay(fileSystem));
             overlays.Add(new CompanyNameOverlayImpl(fileSystem));
+            overlays.Add(new UnityLocationOverlay(fileSystem));
+            overlays.Add(new CompanyShortNameOverlay(fileSystem));
+            overlays.Add(new ModuleRepoOverlay(fileSystem));
             return TemplateProjectBuilderImpl.GetInstance(copyController, overlays);
         }
     }

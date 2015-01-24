@@ -6,18 +6,18 @@ using UnityVSModuleBuilder.FileSystem;
 
 namespace UnityVSModuleBuilder.Overlay
 {
-    public class CompanyNameOverlayImpl : DefinedOverlayImpl
+    public class UnityLocationOverlay : DefinedOverlayImpl
     {
-        public CompanyNameOverlayImpl(FileSystemController fileSystem) : base(fileSystem) { }
+        public UnityLocationOverlay(FileSystemController fs) : base(fs) { }
 
         public override string GetDefinedValue(BuildProjectRequest request)
         {
-            return request.GetCompanyName();
+            return request.GetUnityLocation();
         }
 
         public override string GetDefinedTag()
         {
-            return OverlayConstants.COMPANY_NAME_DEFINED_TAG;
+            return OverlayConstants.UNITY_LOCATION_DEFINED_TAG;
         }
     }
 }

@@ -15,7 +15,11 @@ namespace UnityVSModuleBuilder.TemplateCopy
     public class TemplateCopyControllerImplTest
     {
         private const string EXPECTED_COPY_LOCATION = "EXPECTED_COPY_LOCATION";
+        private const string EXPECTED_REM_TAG_FILE_NAME = "[[REM_TAG]]";
+        private const string EXPECTED_REM_TAG_FILE_PATH = "EXPECTED_REM_TAG_FILE_PATH";
         private const string EXPECTED_TEMPLATE_LOCATION = @"ProjectTemplate";
+        private const string EXPECTED_NON_REM_TAG_FILE_NAME = "EXPECTED_NON_REM_TAG_FILE_NAME";
+        private const string EXPECTED_NON_REM_TAG_FILE_PATH = "EXPECTED_NON_REM_TAG_FILE_PATH";
         private readonly Exception EXPECTED_FS_EXCEPTION = new Exception();
 
         private TemplateCopyController copyController;
@@ -23,23 +27,50 @@ namespace UnityVSModuleBuilder.TemplateCopy
         private FileSystemController fileSystem;
         private LoggingService loggingService;
         
+        
+        
+        
         [SetUp]
         public void SetUp()
         {
             this.loggingService = Substitute.For<LoggingService>();
             Logger.SetService(loggingService);
-
             this.fileSystem = Substitute.For<FileSystemController>();
+            
             this.copyController = new TemplateCopyControllerImpl(fileSystem);
         }
 
         [Test]
         public void TestCopyTemplateProject()
         {
+            GivenFileSystemContainsRemTagFileAndNonRemTagFile();
             WhenCopyRequestedForExpectedLocation();
             ThenFileSystemCopyRequestedFromTemplateLocationToExpectedLocation();
             ThenCopyRequestIsSuccssful();
+            ThenRemTagItemsAreDeleted();
+            ThenNonRemTagItemsAreNotDeleted();
         }
+
+        private void GivenFileSystemContainsRemTagFileAndNonRemTagFile()
+        {
+            List<FileEntry> expectedFiles = new List<FileEntry>();
+            FileEntry remTagFile = GetSubstitueFileEntry(EXPECTED_REM_TAG_FILE_NAME, EXPECTED_REM_TAG_FILE_PATH);
+            FileEntry nonRemTagFile = GetSubstitueFileEntry(EXPECTED_NON_REM_TAG_FILE_NAME, EXPECTED_NON_REM_TAG_FILE_PATH);
+            expectedFiles.Add(remTagFile);
+            expectedFiles.Add(nonRemTagFile);
+            fileSystem.GetFilesForLocationRecursive(EXPECTED_COPY_LOCATION).Returns(x => { return expectedFiles.GetEnumerator(); });
+        }
+
+        private static FileEntry GetSubstitueFileEntry(String fileName, String filePath)
+        {
+            FileEntry remTagFile = Substitute.For<FileEntry>();
+            remTagFile.GetFileType().Returns(FileType.FILE);
+            remTagFile.GetFileName().Returns(fileName);
+            remTagFile.GetFilePath().Returns(filePath);
+            return remTagFile;
+        }
+
+        
 
         [Test]
         public void TestCopyTemplateProjectFailure()
@@ -65,6 +96,16 @@ namespace UnityVSModuleBuilder.TemplateCopy
             fileSystem.When(x => x.DoFullDirectoryCopy(Arg.Any<String>(), Arg.Any<String>())).Do(x => { throw EXPECTED_FS_EXCEPTION; });
         }
 
+        private void ThenNonRemTagItemsAreNotDeleted()
+        {
+            fileSystem.DidNotReceive().DeleteFile(EXPECTED_NON_REM_TAG_FILE_PATH);
+        }
+
+        private void ThenRemTagItemsAreDeleted()
+        {
+            fileSystem.Received().DeleteFile(EXPECTED_REM_TAG_FILE_PATH);
+        }
+
         private void ThenCopyRequestIsSuccssful()
         {
             Assert.True(this.isSuccess);
@@ -72,7 +113,7 @@ namespace UnityVSModuleBuilder.TemplateCopy
 
         private void WhenCopyRequestedForExpectedLocation()
         {
-            isSuccess = copyController.CopyTemplate(EXPECTED_COPY_LOCATION);
+            isSuccess = copyController.CopyAndCleanTemplate(EXPECTED_COPY_LOCATION);
         }
 
         private void ThenFileSystemCopyRequestedFromTemplateLocationToExpectedLocation()

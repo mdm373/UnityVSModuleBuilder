@@ -15,5 +15,7 @@ namespace UnityVSModuleBuilder.FileSystem
         String GetFileName();
         void RenameFile(string newName);
         FileType GetFileType();
+
+        String GetFilePath();
     }
 }

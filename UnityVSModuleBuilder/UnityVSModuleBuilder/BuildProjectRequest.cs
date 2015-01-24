@@ -10,5 +10,8 @@ namespace UnityVSModuleBuilder
         String GetProjectName();
         String GetCopyLocation();
         String GetCompanyName();
+        String GetCompanyShortName();
+        String GetUnityLocation();
+        String GetModuleRepositoryLocation();
     }
 }

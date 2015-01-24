@@ -11,6 +11,8 @@ namespace UnityVSModuleBuilder.FileSystem
         List<FileEntry>.Enumerator GetFilesForLocationRecursive(String location);
 
 
-        
+
+
+        void DeleteFile(string fileLocation);
     }
 }

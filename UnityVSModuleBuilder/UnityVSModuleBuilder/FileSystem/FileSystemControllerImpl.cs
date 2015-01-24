@@ -78,5 +78,11 @@ namespace UnityVSModuleBuilder.FileSystem
             }
             return files.GetEnumerator();
         }
+
+
+        public void DeleteFile(string filePath)
+        {
+            File.Delete(filePath);
+        }
     }
 }

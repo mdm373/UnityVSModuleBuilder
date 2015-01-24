@@ -52,17 +52,17 @@ namespace UnityVSModuleBuilder.Implement
 
         private void ThenTemplateCopyRequestedWithExpectedLocation()
         {
-            this.templateCopy.Received().CopyTemplate(EXPECTED_COPY_LOCATION);
+            this.templateCopy.Received().CopyAndCleanTemplate(EXPECTED_COPY_LOCATION);
         }
 
         private void GivenTemplateCopySuccessful()
         {
-            this.templateCopy.CopyTemplate(Arg.Any<String>()).Returns(true);
+            this.templateCopy.CopyAndCleanTemplate(Arg.Any<String>()).Returns(true);
         }
 
         private void GivenTemplateCopyFailure()
         {
-            this.templateCopy.CopyTemplate(Arg.Any<String>()).Returns(false);
+            this.templateCopy.CopyAndCleanTemplate(Arg.Any<String>()).Returns(false);
         }
 
         [Test]

@@ -11,14 +11,18 @@ namespace UnityVSModuleBuilder.Drivers
     {
         public int Drive(string[] args)
         {
-            String projectName = "DriverProject";
-            String copyLocation = "GeneratedDriverProject";
-            String companyName = "DriverCompany";
-
+            BuildProjectRequestImpl.Builder requestBuilder = new BuildProjectRequestImpl.Builder();
+            requestBuilder.projectName = "DriverProject";
+            requestBuilder.copyLocation = "GeneratedDriverProject";
+            requestBuilder.companyName = "DriverCompany";
+            requestBuilder.companyShortName = "cn";
+            requestBuilder.unityLocation = @"C:\Program Files\Unity 5.0.0b9\";
+            requestBuilder.moduleRepositoryLocation = @"C:\temp\DriverTest\repo";
+            
+            BuildProjectRequest request = requestBuilder.Build();
             TemplateProjectBuilder builder = TemplateProjectFactory.GetNewTemplateProjectBuilder();
-            BuildProjectRequest request = TemplateProjectFactory.GetNewRequest(projectName, copyLocation, companyName);
-
             BuildProjectResponse response = builder.DoBuild(request);
+            
             Logger.Log(response.ToString());
             return 0;
         }
