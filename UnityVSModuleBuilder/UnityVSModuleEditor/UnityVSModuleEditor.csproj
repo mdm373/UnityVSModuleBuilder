@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B3790A0C-3137-44D3-8C24-F818FEC5F8CE}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{5E1A72A1-C42F-4DA1-BE37-7C7C42D82C0E}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnityVSModuleBuilder</RootNamespace>
-    <AssemblyName>UnityVSModuleBuilderDrivers</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>UnityVSModuleEditor</RootNamespace>
+    <AssemblyName>UnityVSModuleEditor</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -31,43 +30,38 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>UnityVSModuleBuilder.Driver</StartupObject>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnityEditor">
+      <HintPath>lib\UnityEditor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>lib\UnityEngine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Driver.cs" />
-    <Compile Include="Drivable.cs" />
-    <Compile Include="Drivers\FileSystemDriver.cs" />
-    <Compile Include="Drivers\TemplateProjectBuilderDriver.cs" />
-    <Compile Include="Drivers\VSModuleDelegateDriver.cs" />
+    <Compile Include="MSBuildProcess\MSBuild.cs" />
+    <Compile Include="StreamUtil.cs" />
+    <Compile Include="Unityapi.cs" />
+    <Compile Include="UnityApis\UnityApi.cs" />
+    <Compile Include="UnityApis\UnityApiImpl.cs" />
+    <Compile Include="VSModuleSettingsManager.cs" />
+    <Compile Include="VSModuleSettingsXMLModel.cs" />
+    <Compile Include="UnityVSModuleConfigWindow.cs" />
+    <Compile Include="VSModuleMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\UnityVSModuleBuilder\UnityVSModuleBuilder.csproj">
-      <Project>{182bd9f7-1b95-4b2d-afc2-6b6fa80a98d0}</Project>
-      <Name>UnityVSModuleBuilder</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UnityVSModuleEditor\UnityVSModuleEditor.csproj">
-      <Project>{5e1a72a1-c42f-4da1-be37-7c7c42d82c0e}</Project>
-      <Name>UnityVSModuleEditor</Name>
-    </ProjectReference>
+    <Compile Include="VSModuleSettingsTO.cs" />
+    <Compile Include="VSModuleDelegate.cs" />
+    <Compile Include="VSProjectManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>rmdir $(TargetDir) /s /q</PreBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

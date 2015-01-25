@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -63,6 +63,7 @@
     <Compile Include="Overlay\CompanyShortNameOverlay.cs" />
     <Compile Include="Overlay\DefinedOverlay.cs" />
     <Compile Include="Overlay\DefinedOverlayImpl.cs" />
+    <Compile Include="Overlay\EditorManagedCodeOverlay.cs" />
     <Compile Include="Overlay\ModuleRepoOverlay.cs" />
     <Compile Include="Overlay\OverlayConstants.cs" />
     <Compile Include="Overlay\ProjectNameOverlay.cs" />
@@ -149,9 +150,6 @@
     <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\ProjectSettings\TimeManager.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\VisualStudio\[[PROJECT_NAME]].suo">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\ProjectSettings\ProjectVersion.txt">
@@ -176,7 +174,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\UnityVSModuleEditor\UnityVSModuleEditor.csproj">
+      <Project>{5e1a72a1-c42f-4da1-be37-7c7c42d82c0e}</Project>
+      <Name>UnityVSModuleEditor</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

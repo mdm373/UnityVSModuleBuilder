@@ -61,6 +61,7 @@
     <Compile Include="Overlay\DefinedOverlayTestHelper.cs" />
     <Compile Include="Overlay\CompanyShortNameOverlayTest.cs" />
     <Compile Include="Overlay\DefinedOverlayImplTest.cs" />
+    <Compile Include="Overlay\EditorManagedCodeOverlayTest.cs" />
     <Compile Include="Overlay\ModuleRepoOverlayTest.cs" />
     <Compile Include="Overlay\ProjectNameOverlayTest.cs" />
     <Compile Include="Overlay\UnityLocationOverlayTest.cs" />

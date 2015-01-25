@@ -24,6 +24,7 @@ namespace UnityVSModuleBuilder
             overlays.Add(new UnityLocationOverlay(fileSystem));
             overlays.Add(new CompanyShortNameOverlay(fileSystem));
             overlays.Add(new ModuleRepoOverlay(fileSystem));
+            overlays.Add(new EditorManagedCodeOverlay(fileSystem));
             return TemplateProjectBuilderImpl.GetInstance(copyController, overlays);
         }
     }

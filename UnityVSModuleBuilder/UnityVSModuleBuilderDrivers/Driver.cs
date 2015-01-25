@@ -14,10 +14,13 @@ namespace UnityVSModuleBuilder
         /*
         * Swap out provided driver class to run alternate drivers
         */
-        private static Drivable GetDriverinstance()
+        private static List<Drivable> GetDriverinstances()
         {
-            //return new FileSystemDriver();
-            return new TemplateProjectBuilderDriver();
+            List<Drivable> drivers= new List<Drivable>();
+            //drivers.Add(new FileSystemDriver());
+            drivers.Add(new TemplateProjectBuilderDriver());
+            //drivers.Add(new VSModuleDelegateDriver());
+            return drivers;
         }
 
         public static int Main(string[] args)
@@ -25,7 +28,9 @@ namespace UnityVSModuleBuilder
             int returnCode = 0;
             try
             {
-                returnCode = GetDriverinstance().Drive(args);
+                foreach(Drivable driver in GetDriverinstances()){
+                    returnCode = driver.Drive(args);
+                }   
             }
             catch (Exception e)
             {

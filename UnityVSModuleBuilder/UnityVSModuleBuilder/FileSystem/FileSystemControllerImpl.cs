@@ -84,5 +84,24 @@ namespace UnityVSModuleBuilder.FileSystem
         {
             File.Delete(filePath);
         }
+
+
+        public void DoFileCopy(FileEntry origional, string destinationDirectory)
+        {
+            String name = origional.GetFileName();
+            String newLocation = Path.Combine(destinationDirectory, name);
+            File.Copy(origional.GetFilePath(), newLocation);
+        }
+
+        public FileEntry GetFile(string fileLocation)
+        {
+            FileEntry entry = null;
+            FileInfo info = new FileInfo(fileLocation);
+            if (info.Exists)
+            {
+                entry = new FileEntryImpl(info);
+            }
+            return entry;
+        }
     }
 }

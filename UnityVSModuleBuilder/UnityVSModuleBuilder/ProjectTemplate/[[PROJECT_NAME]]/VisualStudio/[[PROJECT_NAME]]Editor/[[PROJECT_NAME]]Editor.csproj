@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -11,7 +11,8 @@
     <AssemblyName>[[PROJECT_NAME]]Editor</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <UnityRoot>[[UNITY_LOCATION]]</UnityRoot>
     <PluginsRoot>..\UnityGame\Assets\ManagedCode</PluginsRoot>
     <PluginsEditorRoot>..\UnityGame\Assets\Editor\ManagedCode</PluginsEditorRoot>
@@ -51,28 +52,20 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <!--
     <Reference Include="UnityEditor">
       <HintPath>$(UnityRoot)\Editor\Data\Managed\UnityEditor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    -->
     <Reference Include="UnityEngine">
       <HintPath>$(UnityRoot)\Editor\Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    
-  </ItemGroup>
-  <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\[[PROJECT_NAME]]\[[PROJECT_NAME]].csproj">
       <Project>{8162776b-4104-41f5-8bcc-f5631ab83edd}</Project>
       <Name>[[PROJECT_NAME]]</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)$(PluginsEditorRoot)\$(TargetFileName)"</PostBuildEvent>

@@ -33,7 +33,6 @@ namespace UnityVSModuleBuilder.FileSystem
             
         }
 
-
         public string GetFileName()
         {
             return info.Name;
