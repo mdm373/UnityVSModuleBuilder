@@ -12,5 +12,6 @@ namespace UnityVSModuleEditor.UnityApis
         void LogException(Exception e);
         void LogWarning(String message);
         String GetAssetFolder();
+        void ExportRootAssets(string assetPathname, String exportFileName);
     }
 }

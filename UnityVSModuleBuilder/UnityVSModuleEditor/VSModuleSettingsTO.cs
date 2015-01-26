@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityVSModuleEditor.XMLStore;
 
 namespace UnityVSModuleEditor
 {
     public class VSModuleSettingsTO
     {
-        private readonly VSModuleSettingsXMLModel model;
+        private readonly VSModuleSettingsXmlModel model;
 
-        public VSModuleSettingsTO(VSModuleSettingsXMLModel model)
+        public VSModuleSettingsTO(VSModuleSettingsXmlModel model)
         {
             this.model = model;
         }
@@ -49,7 +50,7 @@ namespace UnityVSModuleEditor
             model.unityInstallLocation = p;
         }
 
-        public VSModuleSettingsXMLModel GetXmlModel()
+        public VSModuleSettingsXmlModel GetXmlModel()
         {
             return model;
         }

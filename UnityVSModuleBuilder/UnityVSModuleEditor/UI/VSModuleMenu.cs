@@ -5,7 +5,7 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 
-namespace UnityVSModuleEditor
+namespace UnityVSModuleEditor.UI
 {
     
     public class VSModuleMenu : MonoBehaviour

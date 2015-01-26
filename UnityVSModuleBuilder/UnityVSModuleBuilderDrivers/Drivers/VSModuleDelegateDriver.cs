@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using UnityVSModuleEditor;
 using UnityVSModuleEditor.UnityApis;
+using UnityVSModuleEditor.XMLStore;
 
 namespace UnityVSModuleBuilder.Drivers
 {
@@ -12,10 +12,14 @@ namespace UnityVSModuleBuilder.Drivers
     {
         public int Drive(string[] args)
         {
-            VSModuleDelegate vsModuleDelegate = new VSModuleDelegate(new MockUnityApi());
-            VSModuleSettingsTO to =  vsModuleDelegate.RetrieveModuleSettingsTO();
-            to.SetUnityInstallLocation(@"C:\Temp\SomethingElse");
+            UnityApi unityApi = new MockUnityApi();
+            VSModuleDelegate vsModuleDelegate = new VSModuleDelegate(unityApi, new VSModuleXmlSerializer(unityApi));
+
+            VSModuleSettingsTO to = vsModuleDelegate.RetrieveModuleSettingsTO();
+            to.SetUnityInstallLocation("junk");
             vsModuleDelegate.SaveModuleSettingsTO(to);
+
+            //vsModuleDelegate.ExportModuleToRepository();
             return 0;
         }
     }
@@ -45,6 +49,12 @@ namespace UnityVSModuleBuilder.Drivers
         public string GetAssetFolder()
         {
             return @"F:\Projects\unity\UnityVSModuleBuilder\UnityVSModuleBuilder\UnityVSModuleBuilderDrivers\bin\Debug\GeneratedDriverProject\DriverProject\UnityGame\Assets";
+        }
+
+
+        public void ExportRootAssets(string assetPathname, string exportFileName)
+        {
+            Console.Out.WriteLine("MockUnityApi.ExportRootAssets('" + assetPathname + "', '" + exportFileName + "')");
         }
     }
 }

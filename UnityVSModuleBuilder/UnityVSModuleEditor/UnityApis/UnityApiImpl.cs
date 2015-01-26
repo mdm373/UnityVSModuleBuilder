@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEditor;
 using UnityEngine;
 
 namespace UnityVSModuleEditor.UnityApis
@@ -31,6 +32,13 @@ namespace UnityVSModuleEditor.UnityApis
         public string GetAssetFolder()
         {
             return Application.dataPath;
+        }
+
+
+        public void ExportRootAssets(string assetPathname, String exportFileName)
+        {
+            ExportPackageOptions options = ExportPackageOptions.IncludeDependencies | ExportPackageOptions.Recurse;
+            AssetDatabase.ExportPackage(assetPathname, exportFileName, options);
         }
     }
 }

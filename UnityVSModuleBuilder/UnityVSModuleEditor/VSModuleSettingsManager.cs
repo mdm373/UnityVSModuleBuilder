@@ -4,8 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
-using UnityVSModuleEditor.MSBuildProcess;
 using UnityVSModuleEditor.UnityApis;
+using UnityVSModuleEditor.XMLStore;
 
 namespace UnityVSModuleEditor
 {
@@ -13,10 +13,12 @@ namespace UnityVSModuleEditor
     {
         private const string CONFIG_FILE_LOCATION = @"Editor\ModuleConfig.xml";
         private readonly UnityApi unityApi;
+        private readonly VSModuleXmlSerializer serializer;
 
-        public VSModuleSettingsManager(UnityApi unityApi)
+        public VSModuleSettingsManager(UnityApi unityApi, VSModuleXmlSerializer serializer)
         {
             this.unityApi = unityApi;
+            this.serializer = serializer;
         }
 
         public bool SaveModuleSettingsTO(VSModuleSettingsTO to)
@@ -41,7 +43,6 @@ namespace UnityVSModuleEditor
             try
             {
                 to = GetTOFromFile();
-                unityApi.Log("VSModule Settings Loaded from '" + CONFIG_FILE_LOCATION + '\'');
             }
             catch (Exception e)
             {
@@ -70,7 +71,7 @@ namespace UnityVSModuleEditor
                 unityApi.LogWarning("Config File Not Found On Save. Creating new VSModule Config file at '" + CONFIG_FILE_LOCATION + '\'');
                 File.Create(info.FullName);
             }
-            SerializeTO(info, to);
+            serializer.SerializeModel(info, to.GetXmlModel());
         }
 
         private VSModuleSettingsTO GetTOFromFile()
@@ -79,7 +80,8 @@ namespace UnityVSModuleEditor
             FileInfo info = GetSettingsFileInfo();
             if (info.Exists)
             {
-                to = GetDeserializedTO(info);
+                VSModuleSettingsXmlModel model = serializer.GetDeserializedModel(info);
+                to = new VSModuleSettingsTO(model);
             }
             else
             {
@@ -96,61 +98,13 @@ namespace UnityVSModuleEditor
 
         private VSModuleSettingsTO GetDefaultTO()
         {
-            VSModuleSettingsXMLModel model = new VSModuleSettingsXMLModel();
+            VSModuleSettingsXmlModel model = new VSModuleSettingsXmlModel();
             return new VSModuleSettingsTO(model);
         }
 
-        private VSModuleSettingsTO GetDeserializedTO(FileInfo info)
-        {
-            FileStream fileStream = null;
-            VSModuleSettingsTO to = null;
-            try
-            {
-                XmlSerializer serializer = GetVSModuleSettingsXmlModelSerializer();
-                fileStream = new FileStream(info.FullName, FileMode.Open);
-                VSModuleSettingsXMLModel deserialized = (VSModuleSettingsXMLModel)serializer.Deserialize(fileStream);
-                to = new VSModuleSettingsTO(deserialized);
-            }
-            catch (Exception e)
-            {
-                unityApi.LogError("Exception deserializing VSModule Settings. See Log for exception details");
-                unityApi.LogException(e);
-            }
-            finally
-            {
-                StreamUtil.CloseFileStream(fileStream, unityApi);
-            }
+        
 
-
-            return to;
-
-        }
-
-        private void SerializeTO(FileInfo info, VSModuleSettingsTO to)
-        {
-            FileStream fileStream = null;
-            try
-            {
-                XmlSerializer serializer = GetVSModuleSettingsXmlModelSerializer();
-                fileStream = new FileStream(info.FullName, FileMode.Create);
-                serializer.Serialize(fileStream, to.GetXmlModel());
-            }
-            catch (Exception e)
-            {
-                unityApi.LogError("Exception serializing VSModule Settings. See Log for exception details");
-                unityApi.LogException(e);
-            }
-            finally
-            {
-                StreamUtil.CloseFileStream(fileStream, unityApi);
-            }
-            
-            
-        }
-
-        private XmlSerializer GetVSModuleSettingsXmlModelSerializer()
-        {
-            return new XmlSerializer(typeof(VSModuleSettingsXMLModel));
-        }
+      
+        
     }
 }

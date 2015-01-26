@@ -3,22 +3,26 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml.Serialization;
-using UnityVSModuleEditor.MSBuildProcess;
 using UnityVSModuleEditor.UnityApis;
+using UnityVSModuleEditor.XMLStore;
 
 namespace UnityVSModuleEditor
 {
-    class VSProjectManager
+    class VSModuleProjectManager
     {
         private readonly UnityApi unityApi;
+        private string UNITY_ROOT_PATTERN = @"<UnityRoot>.*</UnityRoot>";
+        private string UNITYROOT_OPEN_TAG = @"<UnityRoot>";
+        private string UNITYROOT_CLOSE_TAG = @"</UnityRoot>";
 
-        public VSProjectManager(UnityApi unityApi)
+        public VSModuleProjectManager(UnityApi unityApi)
         {
             this.unityApi = unityApi;
         }
 
-        public void UpdateVisualStudioProjects(VSModuleSettingsXMLModel origional, VSModuleSettingsXMLModel updated)
+        public void UpdateVisualStudioProjects(VSModuleSettingsXmlModel origional, VSModuleSettingsXmlModel updated)
         {
             if (!origional.unityInstallLocation.Equals(updated.unityInstallLocation))
             {
@@ -29,34 +33,26 @@ namespace UnityVSModuleEditor
                 FileInfo editorInfo = new FileInfo(editorProject);
                 UpdateVSProjUnityLocation(mainInfo, origional.unityInstallLocation, updated.unityInstallLocation);
                 UpdateVSProjUnityLocation(editorInfo, origional.unityInstallLocation, updated.unityInstallLocation);
-                unityApi.Log("Visual Studio Projects Updated For Unity Location Change.");
+                
             }
         }
 
         private void UpdateVSProjUnityLocation(FileInfo projectFile, string origionalValue, string updatedValue)
         {
-            FileStream fileStream = null;
-            Project project = null;
             try
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(Project));
-                fileStream = new FileStream(projectFile.FullName, FileMode.Open);
-                project = (Project)serializer.Deserialize(fileStream);
-                StreamUtil.CloseFileStream(fileStream, unityApi);
-                project.propertyGroup1.unityRoot.text = updatedValue;
-                project.propertyGroup2.unityRoot.text = updatedValue;
-                project.propertyGroup3.unityRoot.text = updatedValue;
-                fileStream = new FileStream(projectFile.FullName, FileMode.Create);
-                serializer.Serialize(fileStream, project);
+                String projectText = File.ReadAllText(projectFile.FullName);
+                Regex expression = new Regex(UNITY_ROOT_PATTERN);
+                String replacement = UNITYROOT_OPEN_TAG + updatedValue + UNITYROOT_CLOSE_TAG;
+                String replaced = expression.Replace(projectText, replacement);
+
+                File.WriteAllText(projectFile.FullName, replaced);
+
             }
             catch (Exception e)
             {
                 unityApi.LogError("Exception Updating visual studio project'" + projectFile.FullName + '\'');
                 unityApi.LogException(e);
-            }
-            finally
-            {
-                StreamUtil.CloseFileStream(fileStream, unityApi);
             }
         }
 

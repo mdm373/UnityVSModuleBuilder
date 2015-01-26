@@ -47,19 +47,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MSBuildProcess\MSBuild.cs" />
+    <Compile Include="VSModuleImportManager.cs" />
     <Compile Include="StreamUtil.cs" />
-    <Compile Include="Unityapi.cs" />
     <Compile Include="UnityApis\UnityApi.cs" />
     <Compile Include="UnityApis\UnityApiImpl.cs" />
+    <Compile Include="VSModuleFactory.cs" />
     <Compile Include="VSModuleSettingsManager.cs" />
-    <Compile Include="VSModuleSettingsXMLModel.cs" />
-    <Compile Include="UnityVSModuleConfigWindow.cs" />
-    <Compile Include="VSModuleMenu.cs" />
+    <Compile Include="XMLStore\VSModuleDependencyXmlModel.cs" />
+    <Compile Include="XMLStore\VSModuleSettingsXmlModel.cs" />
+    <Compile Include="UI\UnityVSModuleConfigWindow.cs" />
+    <Compile Include="UI\VSModuleMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VSModuleSettingsTO.cs" />
     <Compile Include="VSModuleDelegate.cs" />
-    <Compile Include="VSProjectManager.cs" />
+    <Compile Include="VSModuleProjectManager.cs" />
+    <Compile Include="XMLStore\VSModuleXmlSerializer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

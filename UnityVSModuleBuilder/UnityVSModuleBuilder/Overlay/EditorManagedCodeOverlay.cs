@@ -26,7 +26,8 @@ namespace UnityVSModuleBuilder.Overlay
             FileEntry entry = fileSystem.GetFile(EDITOR_DLL_FILE_LOCATION);
             if (entry != null)
             {
-                String destinationDirectory = Path.Combine(request.GetCopyLocation(), request.GetProjectName(), UNITY_EDITOR_ASSETS_LOCATION);
+                String destinationDirectory = Path.Combine(request.GetCopyLocation(), request.GetProjectName());
+                destinationDirectory = Path.Combine(destinationDirectory, UNITY_EDITOR_ASSETS_LOCATION);
                 fileSystem.DoFileCopy(entry, destinationDirectory);
                 result = true;
             }

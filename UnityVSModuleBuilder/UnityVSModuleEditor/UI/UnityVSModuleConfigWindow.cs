@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityVSModuleEditor.UnityApis;
 
-namespace UnityVSModuleEditor
+namespace UnityVSModuleEditor.UI
 {
     public class UnityVSModuleConfigWindow : EditorWindow
     {
@@ -17,31 +17,28 @@ namespace UnityVSModuleEditor
         private const String REPO_LOCATION_LABEL = "Repo Location";
         private const string UNITY_INSTALL_DIR_LABEL = "Unity Install Dir";
         private const string APPLY_BUTTON_TEXT = "Apply";
+        private const string MODULE_INFO_HEADER_TEXT = "Module Info";
+        private const string EXPORT_TO_REPO_BUTTON_TEXT = "Export To Repo";
 
         private VSModuleDelegate vsModuleDelegate;
         private Vector2 windowScrollPosition;
         private Vector2 dependencyScroll;
         private GUIStyle headerStyle;
         private GUILayoutOption commandWidth;
-        private bool isGuiInitialized;
         private VSModuleSettingsTO vsModuleSettingsTO;
         private GUILayoutOption labelWidth;
-        
         private GUILayoutOption dependencyHeight;
 
         private String companyNameLabel = String.Empty;
         private String projectNameLabel = String.Empty;
         private String companyShortNameLabel = String.Empty;
         
+        
         private void InitGui()
         {
-            if (!isGuiInitialized)
-            {
-                isGuiInitialized = true;
-                CreateStyleOptions();
-                PopulateVSModuleSettings();
-                InitializeConfigLabels();
-            }
+            CreateStyleOptions();
+            PopulateVSModuleSettings();
+            InitializeConfigLabels();
         }
 
         private void InitializeConfigLabels()
@@ -53,8 +50,11 @@ namespace UnityVSModuleEditor
 
         private void PopulateVSModuleSettings()
         {
-            vsModuleDelegate = new VSModuleDelegate(new UnityApiImpl());
-            vsModuleSettingsTO = vsModuleDelegate.RetrieveModuleSettingsTO();    
+            if (vsModuleSettingsTO == null || vsModuleDelegate == null)
+            {
+                vsModuleDelegate = VSModuleFactory.GetDelegate();
+                vsModuleSettingsTO = vsModuleDelegate.RetrieveModuleSettingsTO();    
+            }
         }
 
         private void CreateStyleOptions()
@@ -84,11 +84,20 @@ namespace UnityVSModuleEditor
             GUILayout.Label(CONFIGURATION_LABEL, headerStyle);
             GUILayout.BeginHorizontal();
             GUILayout.Label(REPO_LOCATION_LABEL, labelWidth);
-            vsModuleSettingsTO.SetRepoLocation(GUILayout.TextField(vsModuleSettingsTO.GetRepoLocation()));
+            String repoLocation = GUILayout.TextField(vsModuleSettingsTO.GetRepoLocation());
+            if(repoLocation != null){
+                vsModuleSettingsTO.SetRepoLocation(repoLocation);
+            }
+            
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
             GUILayout.Label(UNITY_INSTALL_DIR_LABEL, labelWidth);
-            vsModuleSettingsTO.SetUnityInstallLocation(GUILayout.TextField(vsModuleSettingsTO.GetUnityInstallLocation()));
+            String installLocation = GUILayout.TextField(vsModuleSettingsTO.GetUnityInstallLocation());
+            if (installLocation != null)
+            {
+                vsModuleSettingsTO.SetUnityInstallLocation(installLocation);
+            }
+                
             GUILayout.EndHorizontal();
 
             if (GUILayout.Button(APPLY_BUTTON_TEXT, commandWidth))
@@ -126,13 +135,13 @@ namespace UnityVSModuleEditor
         private void DrawModuleInfoArea()
         {
             GUILayout.BeginVertical(GUI.skin.box);
-            GUILayout.Label("Module Info", headerStyle);
+            GUILayout.Label(MODULE_INFO_HEADER_TEXT, headerStyle);
             GUILayout.Label(projectNameLabel);
             GUILayout.Label(companyNameLabel);
             GUILayout.Label(companyShortNameLabel);
-            if (GUILayout.Button("Export To Repo", commandWidth))
+            if (GUILayout.Button(EXPORT_TO_REPO_BUTTON_TEXT, commandWidth))
             {
-
+                vsModuleDelegate.ExportModuleToRepository();
             }
             GUILayout.EndVertical();
         }

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace UnityVSModuleEditor
+namespace UnityVSModuleEditor.XMLStore
 {
     [XmlRootAttribute("ModuleConfig")]
-    public class VSModuleSettingsXMLModel
+    public class VSModuleSettingsXmlModel
     {
         [XmlAttribute("projectName")]
         public string projectName = String.Empty;
