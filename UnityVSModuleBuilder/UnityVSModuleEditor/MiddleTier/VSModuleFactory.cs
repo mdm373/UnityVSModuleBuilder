@@ -5,7 +5,7 @@ using System.Text;
 using UnityVSModuleEditor.UnityApis;
 using UnityVSModuleEditor.XMLStore;
 
-namespace UnityVSModuleEditor
+namespace UnityVSModuleEditor.MiddleTier
 {
     public class VSModuleFactory
     {

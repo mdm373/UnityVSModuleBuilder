@@ -47,20 +47,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="VSModuleImportManager.cs" />
+    <Compile Include="MiddleTier\VSModuleConstants.cs" />
+    <Compile Include="MiddleTier\VSModuleDependencyManager.cs" />
+    <Compile Include="MiddleTier\VSModuleDependencyTO.cs" />
+    <Compile Include="MiddleTier\VSModuleImportManager.cs" />
     <Compile Include="StreamUtil.cs" />
+    <Compile Include="UI\DependencyPromptWindow.cs" />
     <Compile Include="UnityApis\UnityApi.cs" />
     <Compile Include="UnityApis\UnityApiImpl.cs" />
-    <Compile Include="VSModuleFactory.cs" />
-    <Compile Include="VSModuleSettingsManager.cs" />
+    <Compile Include="MiddleTier\VSModuleFactory.cs" />
+    <Compile Include="MiddleTier\VSModuleSettingsManager.cs" />
     <Compile Include="XMLStore\VSModuleDependencyXmlModel.cs" />
     <Compile Include="XMLStore\VSModuleSettingsXmlModel.cs" />
     <Compile Include="UI\UnityVSModuleConfigWindow.cs" />
     <Compile Include="UI\VSModuleMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VSModuleSettingsTO.cs" />
-    <Compile Include="VSModuleDelegate.cs" />
-    <Compile Include="VSModuleProjectManager.cs" />
+    <Compile Include="MiddleTier\VSModuleSettingsTO.cs" />
+    <Compile Include="MiddleTier\VSModuleDelegate.cs" />
+    <Compile Include="MiddleTier\VSModuleProjectManager.cs" />
     <Compile Include="XMLStore\VSModuleXmlSerializer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

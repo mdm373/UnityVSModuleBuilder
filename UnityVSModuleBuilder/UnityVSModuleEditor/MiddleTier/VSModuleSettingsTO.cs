@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityVSModuleEditor.XMLStore;
 
-namespace UnityVSModuleEditor
+namespace UnityVSModuleEditor.MiddleTier
 {
     public class VSModuleSettingsTO
     {

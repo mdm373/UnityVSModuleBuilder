@@ -17,7 +17,7 @@ namespace UnityVSModuleEditor.XMLStore
             this.unityApi = unityApi;
         }
 
-        public void SerializeModel(FileInfo info, VSModuleSettingsXmlModel model)
+        public void SerializeSettingsModel(FileInfo info, VSModuleSettingsXmlModel model)
         {
             FileStream fileStream = null;
             try
@@ -37,7 +37,7 @@ namespace UnityVSModuleEditor.XMLStore
             }
         }
 
-        public VSModuleSettingsXmlModel GetDeserializedModel(FileInfo info)
+        public VSModuleSettingsXmlModel GetDeserializedSettings(FileInfo info)
         {
             FileStream fileStream = null;
             VSModuleSettingsXmlModel model = null;
@@ -65,6 +65,54 @@ namespace UnityVSModuleEditor.XMLStore
         private XmlSerializer GetVSModuleSettingsXmlModelSerializer()
         {
             return new XmlSerializer(typeof(VSModuleSettingsXmlModel));
+        }
+
+        public VSModuleDependencyXmlModel GetDeserializedDependency(FileInfo dependencyFileInfo)
+        {
+            FileStream fileStream = null;
+            VSModuleDependencyXmlModel model = null;
+            try
+            {
+                XmlSerializer serializer = GetVSModuleDependencyXmlModelSerializer();
+                fileStream = new FileStream(dependencyFileInfo.FullName, FileMode.Open);
+                model = (VSModuleDependencyXmlModel)serializer.Deserialize(fileStream);
+            }
+            catch (Exception e)
+            {
+                unityApi.LogError("Exception deserializing VSModule Dependency XML. See Log for exception details", e);
+            }
+            finally
+            {
+                StreamUtil.CloseFileStream(fileStream, unityApi);
+            }
+
+
+            return model;
+        }
+
+        private XmlSerializer GetVSModuleDependencyXmlModelSerializer()
+        {
+            return new XmlSerializer(typeof(VSModuleDependencyXmlModel));
+        }
+
+        internal void SerializeDependencyModel(FileInfo info, VSModuleDependencyXmlModel model)
+        {
+            FileStream fileStream = null;
+            try
+            {
+                XmlSerializer serializer = GetVSModuleDependencyXmlModelSerializer();
+                fileStream = new FileStream(info.FullName, FileMode.Create);
+                serializer.Serialize(fileStream, model);
+            }
+            catch (Exception e)
+            {
+                unityApi.LogError("Exception Serializing VSModule Dependencies. See Log for Exception Details");
+                unityApi.LogException(e);
+            }
+            finally
+            {
+                StreamUtil.CloseFileStream(fileStream, unityApi);
+            }
         }
     }
 }

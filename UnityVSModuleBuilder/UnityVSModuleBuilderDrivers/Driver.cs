@@ -36,8 +36,8 @@ namespace UnityVSModuleBuilder
                 Logger.LogError("Exception running driver.", e);
                 returnCode = 1337;
             }
-            Console.Out.WriteLine("Driver Finished. Press Any Key To Continue.");
-            Console.In.ReadLine();
+            //Console.Out.WriteLine("Driver Finished. Press Any Key To Continue.");
+            //Console.In.ReadLine();
             return returnCode;
         }
     }

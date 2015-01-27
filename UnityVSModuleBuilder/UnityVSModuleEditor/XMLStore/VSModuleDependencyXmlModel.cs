@@ -18,7 +18,7 @@ namespace UnityVSModuleEditor.XMLStore
         [XmlAttribute("ProjectName")]
         public String projectName;
 
-        [XmlAttribute("CompanyName")]
-        public String companyName;
+        [XmlAttribute("CompanyShortName")]
+        public String companyShortName;
     }
 }

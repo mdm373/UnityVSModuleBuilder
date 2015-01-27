@@ -35,10 +35,22 @@ namespace UnityVSModuleEditor.UnityApis
         }
 
 
-        public void ExportRootAssets(string assetPathname, String exportFileName)
+        public void ExportRootAssets(string[] assetPaths, String exportFileName)
         {
             ExportPackageOptions options = ExportPackageOptions.IncludeDependencies | ExportPackageOptions.Recurse;
-            AssetDatabase.ExportPackage(assetPathname, exportFileName, options);
+            AssetDatabase.ExportPackage(assetPaths, exportFileName, options);
+        }
+
+        public void ImportRootAssets(String importFileName)
+        {
+            AssetDatabase.ImportPackage(importFileName, false);
+        }
+
+
+        public void LogError(string p, Exception e)
+        {
+            LogError(p);
+            LogException(e);
         }
     }
 }

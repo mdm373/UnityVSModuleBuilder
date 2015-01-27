@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityVSModuleEditor;
+using UnityVSModuleEditor.MiddleTier;
 using UnityVSModuleEditor.UnityApis;
 using UnityVSModuleEditor.XMLStore;
 
@@ -16,10 +17,10 @@ namespace UnityVSModuleBuilder.Drivers
             VSModuleDelegate vsModuleDelegate = new VSModuleDelegate(unityApi, new VSModuleXmlSerializer(unityApi));
 
             VSModuleSettingsTO to = vsModuleDelegate.RetrieveModuleSettingsTO();
-            to.SetUnityInstallLocation("junk");
-            vsModuleDelegate.SaveModuleSettingsTO(to);
+            //to.SetUnityInstallLocation("junk");
+            //vsModuleDelegate.SaveModuleSettingsTO(to);
 
-            //vsModuleDelegate.ExportModuleToRepository();
+            vsModuleDelegate.AddModuleDependency("cn", "someOtherProject");
             return 0;
         }
     }
@@ -52,9 +53,21 @@ namespace UnityVSModuleBuilder.Drivers
         }
 
 
-        public void ExportRootAssets(string assetPathname, string exportFileName)
+        public void ExportRootAssets(string[] assetPathname, string exportFileName)
         {
             Console.Out.WriteLine("MockUnityApi.ExportRootAssets('" + assetPathname + "', '" + exportFileName + "')");
+        }
+
+
+        public void LogError(string p, Exception e)
+        {
+            
+        }
+
+
+        public void ImportRootAssets(string importFileName)
+        {
+            Console.Out.WriteLine("MockUnityApi.ImportRootAssets('" + importFileName + "')");
         }
     }
 }
