@@ -7,7 +7,7 @@ using UnityVSModuleBuilder.TemplateCopy;
 
 namespace UnityVSModuleBuilder.Implement
 {
-    public class TemplateProjectBuilderImpl : TemplateProjectBuilder
+    internal class TemplateProjectBuilderImpl : TemplateProjectBuilder
     {
         private readonly List<DefinedOverlay> overlays;
         private readonly TemplateCopyController copyController;

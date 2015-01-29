@@ -5,7 +5,7 @@ using System.Text;
 
 namespace UnityVSModuleEditor.UnityApis
 {
-    public interface UnityApi
+    internal interface UnityApi
     {
         void Log(String message);
         void LogError(String message);

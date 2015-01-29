@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace UnityVSModuleBuilder.Logging
+namespace UnityVSModuleCommon.Logging
 {
-    class ConsoleLoggingService : LoggingService
+    public class ConsoleLoggingService : LoggingService
     {
         public void Log(string message)
         {

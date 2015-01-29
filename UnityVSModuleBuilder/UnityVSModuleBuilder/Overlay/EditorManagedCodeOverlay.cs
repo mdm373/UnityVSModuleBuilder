@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using UnityVSModuleBuilder.FileSystem;
-using UnityVSModuleBuilder.Logging;
+using UnityVSModuleCommon.FileSystem;
+using UnityVSModuleCommon.Logging;
 
 namespace UnityVSModuleBuilder.Overlay
 {
-    public class EditorManagedCodeOverlay : DefinedOverlay
+    internal class EditorManagedCodeOverlay : DefinedOverlay
     {
         private const string EDITOR_DLL_FILE_LOCATION = "UnityVSModuleEditor.dll";
+        private const string COMMON_DLL_FILE_LOCATION = "UnityVSModuleCommon.dll";
         private const string UNITY_EDITOR_ASSETS_LOCATION = @"UnityGame\Assets\Editor";
-
+        
         private readonly FileSystemController fileSystem;
-
         
         public EditorManagedCodeOverlay(FileSystemController fileSystem)
         {
@@ -22,8 +22,15 @@ namespace UnityVSModuleBuilder.Overlay
         }
         public bool Overlay(BuildProjectRequest request)
         {
+            bool result = CopyManagedCode(request, EDITOR_DLL_FILE_LOCATION);
+            result = result && CopyManagedCode(request, COMMON_DLL_FILE_LOCATION);
+            return result;
+        }
+
+        private bool CopyManagedCode(BuildProjectRequest request, string managedCodeFileLocation)
+        {
             bool result = false;
-            FileEntry entry = fileSystem.GetFile(EDITOR_DLL_FILE_LOCATION);
+            FileEntry entry = fileSystem.GetFile(managedCodeFileLocation);
             if (entry != null)
             {
                 String destinationDirectory = Path.Combine(request.GetCopyLocation(), request.GetProjectName());
@@ -33,7 +40,7 @@ namespace UnityVSModuleBuilder.Overlay
             }
             else
             {
-                Logger.Log("Failed to copy'" + EDITOR_DLL_FILE_LOCATION + "' to unity editor assets. File Did Not Exist.");
+                Logger.Log("Failed to copy'" + managedCodeFileLocation + "' to unity editor assets. File Did Not Exist.");
             }
             return result;
         }

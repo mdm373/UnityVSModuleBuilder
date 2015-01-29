@@ -8,7 +8,7 @@ using UnityVSModuleEditor.UnityApis;
 
 namespace UnityVSModuleEditor.XMLStore
 {
-    public class VSModuleXmlSerializer
+    internal class VSModuleXmlSerializer
     {
         private readonly UnityApi unityApi;
 

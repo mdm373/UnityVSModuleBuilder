@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityVSModuleBuilder.FileSystem;
-using UnityVSModuleBuilder.Logging;
+using UnityVSModuleCommon.FileSystem;
+using UnityVSModuleCommon.Logging;
 
 namespace UnityVSModuleBuilder.TemplateCopy
 {
-    public class TemplateCopyControllerImpl : TemplateCopyController
+    internal class TemplateCopyControllerImpl : TemplateCopyController
     {
         private const string TEMPLATE_LOCATION = @"ProjectTemplate";
         private const string REM_TAG_FILE_NAME = "[[REM_TAG]]";
@@ -15,7 +15,7 @@ namespace UnityVSModuleBuilder.TemplateCopy
         private readonly FileSystemController fileSystem;
         
 
-        public TemplateCopyControllerImpl(FileSystem.FileSystemController fileSystem)
+        public TemplateCopyControllerImpl(FileSystemController fileSystem)
         {
             this.fileSystem = fileSystem;
         }

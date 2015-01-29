@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityVSModuleBuilder.FileSystem;
+using UnityVSModuleCommon.FileSystem;
 
 namespace UnityVSModuleBuilder.Overlay
 {
-    public class UnityLocationOverlay : DefinedOverlayImpl
+    internal class UnityLocationOverlay : DefinedOverlayImpl
     {
         public UnityLocationOverlay(FileSystemController fs) : base(fs) { }
 

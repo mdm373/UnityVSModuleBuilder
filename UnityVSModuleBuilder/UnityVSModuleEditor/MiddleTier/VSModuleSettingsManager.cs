@@ -9,7 +9,7 @@ using UnityVSModuleEditor.XMLStore;
 
 namespace UnityVSModuleEditor.MiddleTier
 {
-    class VSModuleSettingsManager
+    internal class VSModuleSettingsManager
     {
         private readonly UnityApi unityApi;
         private readonly VSModuleXmlSerializer serializer;

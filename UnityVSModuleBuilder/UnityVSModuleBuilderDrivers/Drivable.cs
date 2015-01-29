@@ -5,7 +5,7 @@ using System.Text;
 
 namespace UnityVSModuleBuilder
 {
-    public interface Drivable
+    internal interface Drivable
     {
         int Drive(string[] args);
     }

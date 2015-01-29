@@ -4,9 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using UnityVSModuleBuilder.FileSystem;
-using UnityVSModuleBuilder.Logging;
+using UnityVSModuleCommon.FileSystem;
+using UnityVSModuleCommon.Logging;
 
 namespace UnityVSModuleBuilder.Overlay
 {
@@ -14,6 +13,7 @@ namespace UnityVSModuleBuilder.Overlay
     public class EditorManagedCodeOverlayTest
     {
         private const string EDITOR_DLL_FILE_LOCATION = "UnityVSModuleEditor.dll";
+        private const string COMMON_DLL_FILE_LOCATION = "UnityVSModuleCommon.dll";
         private const string EXPECTED_PROJECT_NAME = "EXPECTED_PROJECT_NAME";
         private const string EXPECTED_COPY_LOCATION = "EXPECTED_COPY_LOCATION";
         private const string EXPECTED_UNITY_EDITOR_ASSET_LOCATION = @"EXPECTED_COPY_LOCATION\EXPECTED_PROJECT_NAME\UnityGame\Assets\Editor";
@@ -24,8 +24,8 @@ namespace UnityVSModuleBuilder.Overlay
         private BuildProjectRequest request;
         private bool isSuccessful;
         private LoggingService loggingService;
+        private FileEntry expectedCommonDllFile;
         
-
         [SetUp]
         public void SetUp(){
             this.loggingService = Substitute.For<LoggingService>();
@@ -33,22 +33,20 @@ namespace UnityVSModuleBuilder.Overlay
             this.fileSystem = Substitute.For<FileSystemController>();
             this.overlay = new EditorManagedCodeOverlay(fileSystem);
             this.expectedEditorDLLFile = Substitute.For<FileEntry>();
+            this.expectedCommonDllFile = Substitute.For<FileEntry>();
             this.request = Substitute.For<BuildProjectRequest>();
         }
 
         [Test]
-        public void TestEditorDLLCopiedToTemplateLocation()
+        public void TestManagedCodeCopiedToTemplateLocation()
         {
             GivenFileSystemHasEditorDLL();
+            GivenFileSystemHasCommonDLL();
             GivenRequestHasProjectNameAndCopyLocation();
             WhenOverlayRequested();
-            ThenDLLCopiedToUnityEditorAssetDirectory();
+            ThenEditorDLLCopiedToUnityEditorAssetDirectory();
+            ThenCommonDLLCopiedToUnityEditorAssetDirectory();
             ThenOverlaySuccessful();
-        }
-
-        private void ThenOverlaySuccessful()
-        {
-            Assert.True(isSuccessful);
         }
 
         [Test]
@@ -58,6 +56,11 @@ namespace UnityVSModuleBuilder.Overlay
             WhenOverlayRequested();
             ThenIssueIsLogged();
             ThenOverlayIsFailure();
+        }
+
+        private void ThenOverlaySuccessful()
+        {
+            Assert.True(isSuccessful);
         }
 
         private void ThenOverlayIsFailure()
@@ -76,9 +79,14 @@ namespace UnityVSModuleBuilder.Overlay
             fileSystem.GetFile(EDITOR_DLL_FILE_LOCATION).Returns(result);
         }
 
-        private void ThenDLLCopiedToUnityEditorAssetDirectory()
+        private void ThenEditorDLLCopiedToUnityEditorAssetDirectory()
         {
             fileSystem.Received().DoFileCopy(expectedEditorDLLFile, EXPECTED_UNITY_EDITOR_ASSET_LOCATION);
+        }
+
+        private void ThenCommonDLLCopiedToUnityEditorAssetDirectory()
+        {
+            fileSystem.Received().DoFileCopy(expectedCommonDllFile, EXPECTED_UNITY_EDITOR_ASSET_LOCATION);
         }
 
         private void GivenRequestHasProjectNameAndCopyLocation()
@@ -90,6 +98,11 @@ namespace UnityVSModuleBuilder.Overlay
         private void GivenFileSystemHasEditorDLL()
         {
             fileSystem.GetFile(EDITOR_DLL_FILE_LOCATION).Returns(expectedEditorDLLFile);
+        }
+
+        private void GivenFileSystemHasCommonDLL()
+        {
+            fileSystem.GetFile(COMMON_DLL_FILE_LOCATION).Returns(expectedCommonDllFile);
         }
 
         private void WhenOverlayRequested()

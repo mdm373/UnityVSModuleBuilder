@@ -9,7 +9,7 @@ using UnityVSModuleEditor.XMLStore;
 
 namespace UnityVSModuleBuilder.Drivers
 {
-    class VSModuleDelegateDriver : Drivable
+    internal class VSModuleDelegateDriver : Drivable
     {
         public int Drive(string[] args)
         {
@@ -25,7 +25,7 @@ namespace UnityVSModuleBuilder.Drivers
         }
     }
 
-    public class MockUnityApi : UnityApi 
+    internal class MockUnityApi : UnityApi 
     {
         public void Log(string message)
         {

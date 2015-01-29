@@ -25,6 +25,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,15 +51,8 @@
   <ItemGroup>
     <Compile Include="BuildProjectRequest.cs" />
     <Compile Include="BuildProjectResponse.cs" />
-    <Compile Include="FileSystem\FileEntry.cs" />
-    <Compile Include="FileSystem\FileEntryImpl.cs" />
-    <Compile Include="FileSystem\FileSystemController.cs" />
-    <Compile Include="FileSystem\FileSystemControllerImpl.cs" />
-    <Compile Include="BuildProjectRequestImpl.cs" />
+    <Compile Include="Implement\BuildProjectRequestImpl.cs" />
     <Compile Include="Implement\BuildProjectResponseImpl.cs" />
-    <Compile Include="Logging\ConsoleLoggingService.cs" />
-    <Compile Include="Logging\Logger.cs" />
-    <Compile Include="Logging\LoggingService.cs" />
     <Compile Include="Overlay\CompanyNameOverlay.cs" />
     <Compile Include="Overlay\CompanyShortNameOverlay.cs" />
     <Compile Include="Overlay\DefinedOverlay.cs" />
@@ -175,6 +169,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\UnityVSModuleCommon\UnityVSModuleCommon.csproj">
+      <Project>{90ea66a4-5c21-42ed-a0c2-6bcc9ece484c}</Project>
+      <Name>UnityVSModuleCommon</Name>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\UnityVSModuleEditor\UnityVSModuleEditor.csproj">
       <Project>{5e1a72a1-c42f-4da1-be37-7c7c42d82c0e}</Project>
       <Name>UnityVSModuleEditor</Name>

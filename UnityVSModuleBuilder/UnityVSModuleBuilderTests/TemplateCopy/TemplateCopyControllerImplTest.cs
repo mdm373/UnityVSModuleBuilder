@@ -4,10 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using UnityVSModuleBuilder;
-using UnityVSModuleBuilder.FileSystem;
-using UnityVSModuleBuilder.Logging;
+using UnityVSModuleCommon.FileSystem;
+using UnityVSModuleCommon.Logging;
 
 namespace UnityVSModuleBuilder.TemplateCopy
 {

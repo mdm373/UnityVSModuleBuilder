@@ -7,7 +7,7 @@ using UnityVSModuleEditor.XMLStore;
 
 namespace UnityVSModuleEditor.MiddleTier
 {
-    public class VSModuleFactory
+    internal class VSModuleFactory
     {
         public static VSModuleDelegate GetDelegate()
         {

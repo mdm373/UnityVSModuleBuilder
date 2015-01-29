@@ -5,7 +5,7 @@ using System.Text;
 
 namespace UnityVSModuleEditor.MiddleTier
 {
-    public class VSModuleDependencyTO
+    internal class VSModuleDependencyTO
     {
         private readonly List<VSModuleDependencyItem> dependencies;
 

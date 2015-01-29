@@ -5,7 +5,7 @@ using System.Text;
 
 namespace UnityVSModuleBuilder.Implement
 {
-    class BuildProjectResponseImpl : BuildProjectResponse
+    internal class BuildProjectResponseImpl : BuildProjectResponse
     {
         private readonly bool isSuccess;
 

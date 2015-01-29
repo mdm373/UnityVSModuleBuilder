@@ -5,7 +5,7 @@ using System.Text;
 
 namespace UnityVSModuleBuilder.TemplateCopy
 {
-    public interface TemplateCopyController
+    internal interface TemplateCopyController
     {
         bool CopyAndCleanTemplate(string copyLocation);
     }

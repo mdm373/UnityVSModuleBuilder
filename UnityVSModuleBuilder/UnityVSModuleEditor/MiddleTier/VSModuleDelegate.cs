@@ -9,7 +9,7 @@ using UnityVSModuleEditor.XMLStore;
 
 namespace UnityVSModuleEditor.MiddleTier
 {
-    public class VSModuleDelegate
+    internal class VSModuleDelegate
     {
         private readonly VSModuleSettingsManager vsSettingsManager;
         private readonly VSModuleProjectManager vsProjectManager;

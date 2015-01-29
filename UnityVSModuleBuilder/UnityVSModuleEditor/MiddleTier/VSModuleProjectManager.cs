@@ -10,7 +10,7 @@ using UnityVSModuleEditor.XMLStore;
 
 namespace UnityVSModuleEditor.MiddleTier
 {
-    class VSModuleProjectManager
+    internal class VSModuleProjectManager
     {
         private readonly UnityApi unityApi;
         private const string UNITY_ROOT_PATTERN = @"<UnityRoot>.*</UnityRoot>";
@@ -90,10 +90,10 @@ namespace UnityVSModuleEditor.MiddleTier
                 AddDependencies(toAdd, mainProject, DEPENDENCY_ITEM_FORMAT);
 
                 FileInfo editorProject = GetEditorProjectFile(settings.GetProjectName());
-                RemoveDependencies(toRemove, mainProject, DEPENDENCY_ITEM_FORMAT);
-                RemoveDependencies(toRemove, mainProject, DEPENDENCY_ITEM_EDITOR_FORMAT);
-                AddDependencies(toAdd, mainProject, DEPENDENCY_ITEM_FORMAT);
-                AddDependencies(toAdd, mainProject, DEPENDENCY_ITEM_EDITOR_FORMAT);
+                RemoveDependencies(toRemove, editorProject, DEPENDENCY_ITEM_FORMAT);
+                RemoveDependencies(toRemove, editorProject, DEPENDENCY_ITEM_EDITOR_FORMAT);
+                AddDependencies(toAdd, editorProject, DEPENDENCY_ITEM_FORMAT);
+                AddDependencies(toAdd, editorProject, DEPENDENCY_ITEM_EDITOR_FORMAT);
                 isUpdated = true;
             }
             catch (Exception e)

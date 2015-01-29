@@ -16,12 +16,12 @@ namespace UnityVSModuleEditor.UI
         private const int DEPENDENCY_HEIGHT = 200;
         private const string CONFIGURATION_LABEL = "Configuration";
         private const string REPO_LOCATION_LABEL = "Repo location";
-        private const string UNITY_INSTALL_DIR_LABEL = "Unity install dir";
+        private const string UNITY_INSTALL_DIR_LABEL = "Unity install location";
         private const string APPLY_BUTTON_TEXT = "Apply";
         private const string MODULE_INFO_HEADER_TEXT = "Module info";
         private const string EXPORT_TO_REPO_BUTTON_TEXT = "Export to repo";
         private const string  DEPENDENCY_HEADER_TEXT = "Dependency modules";
-        private const string DEPENDENCY_ADD_BUTTON_TEXT = "Add from repo";
+        private const string DEPENDENCY_ADD_BUTTON_TEXT = "Import from repo";
         private const string DEPENDENCY_SELECT_ALL_BUTTON_TEXT = "Select all";
         private const string DEPENDENCY_SELECT_NONE_BUTTON_TEXT = "Select none";
         private const string DEPENDENCY_UPDATE_BUTTON_TEXT = "Update selected";
@@ -42,10 +42,6 @@ namespace UnityVSModuleEditor.UI
         private VSModuleDependencyTO vsDependencyTO;
         private List<bool> dependencySelections;
         
-        
-        
-        
-        
         private void InitGui()
         {
             CreateStyleOptions();
@@ -58,11 +54,17 @@ namespace UnityVSModuleEditor.UI
         {
             if (dependencySelections == null)
             {
-                dependencySelections = new List<Boolean>();
-                for (int selectionIndex = 0; selectionIndex < vsDependencyTO.GetDependencyCount(); selectionIndex++)
-                {
-                    dependencySelections.Add(false);
-                }
+                PopulateDependencySelections();
+            }
+            
+        }
+
+        private void PopulateDependencySelections()
+        {
+            dependencySelections = new List<Boolean>();
+            for (int selectionIndex = 0; selectionIndex < vsDependencyTO.GetDependencyCount(); selectionIndex++)
+            {
+                dependencySelections.Add(false);
             }
         }
 
@@ -102,12 +104,21 @@ namespace UnityVSModuleEditor.UI
 
         public void OnGUI()
         {
-            InitGui();
-            windowScrollPosition = GUILayout.BeginScrollView(windowScrollPosition);
-            DrawConfigurationArea();
-            DrawModuleInfoArea();
-            DrawDependencyInfoArea();
-            GUILayout.EndScrollView();
+            try
+            {
+                InitGui();
+                windowScrollPosition = GUILayout.BeginScrollView(windowScrollPosition);
+                DrawConfigurationArea();
+                DrawModuleInfoArea();
+                DrawDependencyInfoArea();
+                GUILayout.EndScrollView();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Unexpected Exception Rendering VSModule UI. See Logged Error For Details.");
+                Debug.LogException(e);
+            }
+            
         }
 
         private void DrawConfigurationArea()
@@ -144,6 +155,8 @@ namespace UnityVSModuleEditor.UI
             String companyName = window.GetCompanyName().Trim();
             String projectName = window.GetProjectName().Trim();
             vsModuleDelegate.AddModuleDependency(companyName, projectName);
+            vsDependencyTO = vsModuleDelegate.RetrieveModuleDependenciesTO();
+            PopulateDependencySelections();
         }
 
         private void DrawDependencyInfoArea()
@@ -185,12 +198,14 @@ namespace UnityVSModuleEditor.UI
             GUILayout.EndHorizontal();
             List<VSModuleDependencyItem>.Enumerator items = this.vsDependencyTO.GetDependencies();
             int itemIndex = 0;
+            GUILayout.BeginVertical(GUI.skin.box);
             while (items.MoveNext())
             {
                 String label = items.Current.GetCompanyShortName() + ":" + items.Current.GetProjectName();
                 dependencySelections[itemIndex] = GUILayout.Toggle(dependencySelections[itemIndex], label);
                 itemIndex++;
             }
+            GUILayout.EndVertical();
         }
 
         private void DrawModuleInfoArea()

@@ -7,7 +7,7 @@ using UnityVSModuleEditor.UnityApis;
 
 namespace UnityVSModuleEditor.MiddleTier
 {
-    class VSModuleImportManager
+    internal class VSModuleImportManager
     {
         private const string UNITYPACKAGE_EXTENSION = ".unitypackage";
         private const string ASSET_FOLDER_NAME = "Assets";

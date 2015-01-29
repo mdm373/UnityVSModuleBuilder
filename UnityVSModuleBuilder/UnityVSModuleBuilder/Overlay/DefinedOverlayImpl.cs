@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityVSModuleBuilder.FileSystem;
-using UnityVSModuleBuilder.Logging;
+using UnityVSModuleCommon.FileSystem;
+using UnityVSModuleCommon.Logging;
+
 
 namespace UnityVSModuleBuilder.Overlay
 {
-    public abstract class DefinedOverlayImpl : DefinedOverlay
+    internal abstract class DefinedOverlayImpl : DefinedOverlay
     {
         
         private readonly FileSystemController fileSystem;
         
 
-        public DefinedOverlayImpl(FileSystem.FileSystemController fileSystem)
+        public DefinedOverlayImpl(FileSystemController fileSystem)
         {
             this.fileSystem = fileSystem;
         }

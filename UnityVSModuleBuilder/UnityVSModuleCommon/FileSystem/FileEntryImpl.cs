@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace UnityVSModuleBuilder.FileSystem
+namespace UnityVSModuleCommon.FileSystem
 {
-    class FileEntryImpl : FileEntry
+    internal class FileEntryImpl : FileEntry
     {
         private FileSystemInfo info;
 

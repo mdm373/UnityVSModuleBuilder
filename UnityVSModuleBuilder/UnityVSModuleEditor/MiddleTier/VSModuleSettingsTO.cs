@@ -6,7 +6,7 @@ using UnityVSModuleEditor.XMLStore;
 
 namespace UnityVSModuleEditor.MiddleTier
 {
-    public class VSModuleSettingsTO
+    internal class VSModuleSettingsTO
     {
         private readonly VSModuleSettingsXmlModel model;
 

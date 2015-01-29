@@ -4,9 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityVSModuleBuilder.FileSystem;
-using UnityVSModuleBuilder;
-using UnityVSModuleBuilder.Logging;
+using UnityVSModuleCommon.FileSystem;
+using UnityVSModuleCommon.Logging;
 
 namespace UnityVSModuleBuilder.Overlay
 {

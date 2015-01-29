@@ -5,7 +5,7 @@ using System.Text;
 
 namespace UnityVSModuleBuilder.Overlay
 {
-    class OverlayConstants
+    internal class OverlayConstants
     {
         public const string COMPANY_NAME_DEFINED_TAG = "[[COMPANY_NAME]]";
         public const string PROJECT_NAME_TAG = "[[PROJECT_NAME]]";

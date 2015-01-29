@@ -8,10 +8,12 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UnityVSModuleBuilder</RootNamespace>
-    <AssemblyName>UnityVSModuleBuilderDrivers</AssemblyName>
+    <AssemblyName>UnityVSModuleDrivers</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -22,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -59,6 +62,10 @@
       <Project>{182bd9f7-1b95-4b2d-afc2-6b6fa80a98d0}</Project>
       <Name>UnityVSModuleBuilder</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UnityVSModuleCommon\UnityVSModuleCommon.csproj">
+      <Project>{90ea66a4-5c21-42ed-a0c2-6bcc9ece484c}</Project>
+      <Name>UnityVSModuleCommon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UnityVSModuleEditor\UnityVSModuleEditor.csproj">
       <Project>{5e1a72a1-c42f-4da1-be37-7c7c42d82c0e}</Project>
       <Name>UnityVSModuleEditor</Name>
@@ -68,6 +75,13 @@
   <PropertyGroup>
     <PreBuildEvent>rmdir $(TargetDir) /s /q</PreBuildEvent>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

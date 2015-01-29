@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityVSModuleBuilder.FileSystem;
+using UnityVSModuleCommon.FileSystem;
 
 namespace UnityVSModuleBuilder.Overlay
 {
-    public class ModuleRepoOverlay : DefinedOverlayImpl
+    internal class ModuleRepoOverlay : DefinedOverlayImpl
     {
         public ModuleRepoOverlay(FileSystemController fs) : base(fs) { }
 

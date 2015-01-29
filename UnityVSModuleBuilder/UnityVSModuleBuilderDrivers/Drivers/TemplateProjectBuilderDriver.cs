@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityVSModuleBuilder.Logging;
+using UnityVSModuleBuilder.Implement;
+using UnityVSModuleCommon.Logging;
 
 namespace UnityVSModuleBuilder.Drivers
 {
-    class TemplateProjectBuilderDriver : Drivable
+    internal class TemplateProjectBuilderDriver : Drivable
     {
         public int Drive(string[] args)
         {

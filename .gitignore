@@ -11,3 +11,7 @@ UnityVSModuleBuilder/UnityVSModuleBuilderDrivers/obj/
 UnityVSModuleBuilder/UnityVSModuleEditor/lib/
 UnityVSModuleBuilder/UnityVSModuleEditor/bin/
 UnityVSModuleBuilder/UnityVSModuleEditor/obj/
+UnityVSModuleBuilder/UnityVSModuleCommon/bin/
+UnityVSModuleBuilder/UnityVSModuleCommon/obj/
+UnityVSModuleBuilder/UnityVSModuleEditorTests/bin/
+UnityVSModuleBuilder/UnityVSModuleEditorTests/obj/

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityVSModuleBuilder.FileSystem;
+using UnityVSModuleCommon.FileSystem;
 using UnityVSModuleBuilder.Implement;
 using UnityVSModuleBuilder.Overlay;
 using UnityVSModuleBuilder.TemplateCopy;
@@ -15,7 +15,7 @@ namespace UnityVSModuleBuilder
 
         public static TemplateProjectBuilder GetNewTemplateProjectBuilder()
         {
-            FileSystemController fileSystem = new FileSystemControllerImpl();
+            FileSystemController fileSystem = FileSystemFactory.GetNewFileSystemController();
             TemplateCopyController copyController = new TemplateCopyControllerImpl(fileSystem);
             List<DefinedOverlay> overlays = new List<DefinedOverlay>();
             overlays.Add(new ProjectNameOverlay(fileSystem));

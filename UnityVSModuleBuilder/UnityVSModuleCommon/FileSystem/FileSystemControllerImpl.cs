@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using UnityVSModuleBuilder.Logging;
+using UnityVSModuleCommon.Logging;
 
-namespace UnityVSModuleBuilder.FileSystem
+namespace UnityVSModuleCommon.FileSystem
 {
-    public class FileSystemControllerImpl : FileSystemController
+    internal class FileSystemControllerImpl : FileSystemController
     {
         public void DoFullDirectoryCopy(string from, string to)
         {

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityVSModuleBuilder.FileSystem;
+using UnityVSModuleCommon.FileSystem;
 
 namespace UnityVSModuleBuilder.Overlay
 {
-    public class CompanyShortNameOverlay : DefinedOverlayImpl
+    internal class CompanyShortNameOverlay : DefinedOverlayImpl
     {
         public CompanyShortNameOverlay(FileSystemController fs) : base(fs) { }
 

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace UnityVSModuleBuilder.Overlay
 {
-    public interface DefinedOverlay
+    internal interface DefinedOverlay
     {
         bool Overlay(BuildProjectRequest request);
         

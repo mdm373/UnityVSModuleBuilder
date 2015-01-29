@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7AC0F630-AE5F-4D73-9D1F-C684BA74D120}</ProjectGuid>
+    <ProjectGuid>{2D1C0163-CDED-4A71-AF54-4A9F094E6DB4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnityVSModuleBuilder</RootNamespace>
-    <AssemblyName>UnityVSModuleBuilderTests</AssemblyName>
+    <RootNamespace>UnityVSModuleEditor</RootNamespace>
+    <AssemblyName>UnityVSModuleEditorTests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -22,8 +23,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,12 +31,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NSubstitute">
-      <HintPath>..\packages\NSubstitute.1.8.1.0\lib\net35\NSubstitute.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
@@ -50,27 +45,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implement\BuildProjectRequestImplTest.cs" />
-    <Compile Include="Overlay\CompanyNameOverlayTest.cs" />
-    <Compile Include="Overlay\DefinedOverlayTestHelper.cs" />
-    <Compile Include="Overlay\CompanyShortNameOverlayTest.cs" />
-    <Compile Include="Overlay\DefinedOverlayImplTest.cs" />
-    <Compile Include="Overlay\EditorManagedCodeOverlayTest.cs" />
-    <Compile Include="Overlay\ModuleRepoOverlayTest.cs" />
-    <Compile Include="Overlay\ProjectNameOverlayTest.cs" />
-    <Compile Include="Overlay\UnityLocationOverlayTest.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TemplateCopy\TemplateCopyControllerImplTest.cs" />
-    <Compile Include="Implement\TemplateProjectBuilderTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UnityVSModuleBuilder\UnityVSModuleBuilder.csproj">
-      <Project>{182bd9f7-1b95-4b2d-afc2-6b6fa80a98d0}</Project>
-      <Name>UnityVSModuleBuilder</Name>
-    </ProjectReference>
     <ProjectReference Include="..\UnityVSModuleCommon\UnityVSModuleCommon.csproj">
       <Project>{90ea66a4-5c21-42ed-a0c2-6bcc9ece484c}</Project>
       <Name>UnityVSModuleCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnityVSModuleEditor\UnityVSModuleEditor.csproj">
+      <Project>{5e1a72a1-c42f-4da1-be37-7c7c42d82c0e}</Project>
+      <Name>UnityVSModuleEditor</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -85,21 +70,16 @@
   <Target Name="RunUnitTest">
     <NUnit Assemblies="$(ProjectName).csproj" ToolPath="..\packages\NUnit.Runners.2.6.2\tools" DisableShadowCopy="true" Force32Bit="false" ProjectConfiguration="$(Configuration)" FrameworkToUse="net-4.5" WorkingDirectory="$(ProjectDir)" ContinueOnError="false" />
   </Target>
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <MSBuildCommunityTasksPath>$(SolutionDir)\.build</MSBuildCommunityTasksPath>
-  </PropertyGroup>
-  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild" DependsOnTargets="RunUnitTest">
-  </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild" DependsOnTargets="RunUnitTest">
   </Target>
 </Project>
