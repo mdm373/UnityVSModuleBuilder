@@ -44,6 +44,7 @@
     <Compile Include="FileSystem\FileSystemController.cs" />
     <Compile Include="FileSystem\FileSystemControllerImpl.cs" />
     <Compile Include="FileSystem\FileSystemFactory.cs" />
+    <Compile Include="FileSystem\Path.cs" />
     <Compile Include="Logging\ConsoleLoggingService.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Logging\LoggingService.cs" />

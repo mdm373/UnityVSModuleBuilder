@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
+using UnityVSModuleEditor;
 
 namespace UnityVSModuleEditor.UnityApis
 {

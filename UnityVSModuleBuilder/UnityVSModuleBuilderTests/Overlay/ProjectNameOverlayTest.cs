@@ -32,7 +32,7 @@ namespace UnityVSModuleBuilder.Overlay
         }
 
         [Test]
-        public void TestProjectValue()
+        public void TestProjectNameOverlayValue()
         {
             GivenRequestWithProjectName();
             WhenGettingValueFromRequest();

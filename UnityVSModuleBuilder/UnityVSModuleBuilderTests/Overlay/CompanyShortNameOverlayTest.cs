@@ -19,13 +19,13 @@ namespace UnityVSModuleBuilder.Overlay
         }
 
         [Test]
-        public void TestDefinedTag()
+        public void TestCompanyShortNameDefinedTag()
         {
             testHelper.TestDefinedTag("[[COMPANY_SHORT_NAME]]");
         }
 
         [Test]
-        public void TestOverlayValue()
+        public void TestCompanyShortNameOverlayValue()
         {
             testHelper.TestOverlayValue((request, expectedRequestValue) => { request.GetCompanyShortName().Returns(expectedRequestValue); return true; });
         }

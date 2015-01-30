@@ -19,13 +19,13 @@ namespace UnityVSModuleBuilder.Overlay
         }
 
         [Test]
-        public void TestDefinedTag()
+        public void TestUnityLocationDefinedTag()
         {
             testHelper.TestDefinedTag("[[UNITY_LOCATION]]");
         }
 
         [Test]
-        public void TestOverlayValue()
+        public void TestUnityLocationOverlayValue()
         {
             testHelper.TestOverlayValue((request, expectedRequestValue) => { request.GetUnityLocation().Returns(expectedRequestValue); return true; });
         }

@@ -19,13 +19,13 @@ namespace UnityVSModuleBuilder.Overlay
         }
 
         [Test]
-        public void TestDefinedTag()
+        public void TestModuleRepositoryDefinedTag()
         {
             testHelper.TestDefinedTag("[[MODULE_REPO]]");
         }
 
         [Test]
-        public void TestOverlayValue()
+        public void TestModuleRepositoryOverlayValue()
         {
             testHelper.TestOverlayValue((request, expectedRequestValue) => { request.GetModuleRepositoryLocation().Returns(expectedRequestValue); return true; });
         }

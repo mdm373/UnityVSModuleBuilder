@@ -76,7 +76,7 @@ namespace UnityVSModuleBuilder.Overlay
         private void GivenFileSystemHasNoEditorDLL()
         {
             FileEntry result = null;
-            fileSystem.GetFile(EDITOR_DLL_FILE_LOCATION).Returns(result);
+            fileSystem.GetExistingFile(EDITOR_DLL_FILE_LOCATION).Returns(result);
         }
 
         private void ThenEditorDLLCopiedToUnityEditorAssetDirectory()
@@ -97,12 +97,12 @@ namespace UnityVSModuleBuilder.Overlay
 
         private void GivenFileSystemHasEditorDLL()
         {
-            fileSystem.GetFile(EDITOR_DLL_FILE_LOCATION).Returns(expectedEditorDLLFile);
+            fileSystem.GetExistingFile(EDITOR_DLL_FILE_LOCATION).Returns(expectedEditorDLLFile);
         }
 
         private void GivenFileSystemHasCommonDLL()
         {
-            fileSystem.GetFile(COMMON_DLL_FILE_LOCATION).Returns(expectedCommonDllFile);
+            fileSystem.GetExistingFile(COMMON_DLL_FILE_LOCATION).Returns(expectedCommonDllFile);
         }
 
         private void WhenOverlayRequested()

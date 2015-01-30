@@ -11,8 +11,12 @@ namespace UnityVSModuleCommon.FileSystem
         void DoFileCopy(FileEntry origional, string destinationDirectory);
         List<FileEntry>.Enumerator GetFilesForLocationRecursive(String location);
         void DeleteFile(string fileLocation);
-        FileEntry GetFile(string fileLocation);
+        FileEntry GetExistingFile(string fileLocation);
+        FileEntry GetExistingOrNewlyCreatedFile(string fileLocation);
+        FileEntry CreateNotPresentFile(string fileLocation);
 
-        
+
+
+        void DoCreateDirectory(string moduleRepoLocation);
     }
 }

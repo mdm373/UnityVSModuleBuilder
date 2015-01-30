@@ -10,7 +10,13 @@ using UnityVSModuleEditor.XMLStore;
 
 namespace UnityVSModuleEditor.MiddleTier
 {
-    internal class VSModuleProjectManager
+    internal interface VSModuleProjectManager
+    {
+        void UpdateVSProjectsForProjectSettings(VSModuleSettingsTO origional, VSModuleSettingsTO updated);
+        bool UpdateVSProjectsForDependencies(VSModuleDependencyTO origional, VSModuleDependencyTO updated, VSModuleSettingsTO settings);
+    }
+
+    internal class VSModuleProjectManagerImpl : VSModuleProjectManager
     {
         private readonly UnityApi unityApi;
         private const string UNITY_ROOT_PATTERN = @"<UnityRoot>.*</UnityRoot>";
@@ -26,19 +32,19 @@ namespace UnityVSModuleEditor.MiddleTier
                                                 "    </Reference>";
         private const string ITEM_GROUP_MATCH = "<ItemGroup>";
 
-        public VSModuleProjectManager(UnityApi unityApi)
+        public VSModuleProjectManagerImpl(UnityApi unityApi)
         {
             this.unityApi = unityApi;
         }
 
-        public void UpdateVisualStudioProjects(VSModuleSettingsXmlModel origional, VSModuleSettingsXmlModel updated)
+        public void UpdateVSProjectsForProjectSettings(VSModuleSettingsTO origional, VSModuleSettingsTO updated)
         {
-            if (!origional.unityInstallLocation.Equals(updated.unityInstallLocation))
+            if (!origional.GetUnityInstallLocation().Equals(updated.GetUnityInstallLocation()))
             {
-                FileInfo mainInfo = GetMainProjectFile(origional.projectName);
-                FileInfo editorInfo = GetEditorProjectFile(origional.projectName);
-                UpdateVSProjUnityLocation(mainInfo, origional.unityInstallLocation, updated.unityInstallLocation);
-                UpdateVSProjUnityLocation(editorInfo, origional.unityInstallLocation, updated.unityInstallLocation);
+                FileInfo mainInfo = GetMainProjectFile(origional.GetProjectName());
+                FileInfo editorInfo = GetEditorProjectFile(origional.GetProjectName());
+                UpdateVSProjUnityLocation(mainInfo, origional.GetProjectName(), updated.GetUnityInstallLocation());
+                UpdateVSProjUnityLocation(editorInfo, origional.GetUnityInstallLocation(), updated.GetUnityInstallLocation());
                 
             }
         }
@@ -77,7 +83,7 @@ namespace UnityVSModuleEditor.MiddleTier
         }
 
 
-        internal bool UpdateVisualStudioProjects(VSModuleDependencyTO origional, VSModuleDependencyTO updated, VSModuleSettingsTO settings)
+        public bool UpdateVSProjectsForDependencies(VSModuleDependencyTO origional, VSModuleDependencyTO updated, VSModuleSettingsTO settings)
         {
             bool isUpdated = false;
             try

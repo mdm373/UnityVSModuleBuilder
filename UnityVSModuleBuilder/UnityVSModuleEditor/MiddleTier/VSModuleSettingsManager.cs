@@ -1,23 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Xml.Serialization;
+using UnityVSModuleCommon.FileSystem;
+using UnityVSModuleCommon.Logging;
 using UnityVSModuleEditor.UnityApis;
 using UnityVSModuleEditor.XMLStore;
 
 namespace UnityVSModuleEditor.MiddleTier
 {
-    internal class VSModuleSettingsManager
+    internal interface VSModuleSettingsManager
+    {
+        bool SaveModuleSettingsTO(VSModuleSettingsTO to);
+        VSModuleSettingsTO RetrieveModuleSettingsTO();
+    }
+
+    internal class VSModuleSettingsManagerImpl : VSModuleSettingsManager
     {
         private readonly UnityApi unityApi;
-        private readonly VSModuleXmlSerializer serializer;
+        private readonly XmlSerializerWrapper serializer;
+        private FileSystemController fsController;
 
-        public VSModuleSettingsManager(UnityApi unityApi, VSModuleXmlSerializer serializer)
+        public VSModuleSettingsManagerImpl(UnityApi unityApi, XmlSerializerWrapper serializer, FileSystemController fsController)
         {
             this.unityApi = unityApi;
             this.serializer = serializer;
+            this.fsController = fsController;
         }
 
         public bool SaveModuleSettingsTO(VSModuleSettingsTO to)
@@ -45,7 +53,7 @@ namespace UnityVSModuleEditor.MiddleTier
             }
             catch (Exception e)
             {
-                unityApi.LogError("Could Not Populate VSModule Settings. Unexpected Error. See Exception for Details.");
+                Logger.LogError("Could Not Populate VSModule Settings. Unexpected Error. See Exception for Details.");
                 unityApi.LogException(e);
                 to = GetDefaultTO();
             }
@@ -53,7 +61,7 @@ namespace UnityVSModuleEditor.MiddleTier
             {
                 if (to == null)
                 {
-                    unityApi.LogWarning("Using Default VSModule Settings. See log for error details loading settings from file.");
+                    Logger.Log("Using Default VSModule Settings. See log for error details loading settings from file.");
                     to = GetDefaultTO();
                 }
             }
@@ -64,41 +72,71 @@ namespace UnityVSModuleEditor.MiddleTier
 
         private void SendToToFile(VSModuleSettingsTO to)
         {
-            FileInfo info = GetSettingsFileInfo();
-            if (!info.Exists)
+            FileEntry info = GetSettingsFileInfo(true);
+            if(info != null)
             {
-                unityApi.LogWarning("Config File Not Found On Save. Creating new VSModule Config file at '" + VSModuleConstants.CONFIG_FILE_ASSET_LOCATION + '\'');
-                File.Create(info.FullName);
+                VSModuleSettingsXmlModel model = TranslateTOtoModel(to);
+                serializer.SerializeToFile<VSModuleSettingsXmlModel>(info, model);
             }
-            serializer.SerializeSettingsModel(info, to.GetXmlModel());
+            
         }
 
         private VSModuleSettingsTO GetTOFromFile()
         {
             VSModuleSettingsTO to = null;
-            FileInfo info = GetSettingsFileInfo();
-            if (info.Exists)
+            FileEntry info = GetSettingsFileInfo(false);
+            if (info != null && info.IsPresent())
             {
-                VSModuleSettingsXmlModel model = serializer.GetDeserializedSettings(info);
-                to = new VSModuleSettingsTO(model);
+                VSModuleSettingsXmlModel model = serializer.GetDeserialized<VSModuleSettingsXmlModel>(info);
+                if (model != null)
+                {
+                    to = TranslateModeltoTO(model);
+                }
             }
             else
             {
-                unityApi.LogWarning("Could not initialize VSModule settings. Config File Not Found From Asset Root. '" + VSModuleConstants.CONFIG_FILE_ASSET_LOCATION + '\'');
+                Logger.LogError("Could not initialize VSModule settings. Config File Not Found From Asset Root. '" + VSModuleConstants.CONFIG_FILE_ASSET_LOCATION + '\'');
             }
             return to;
         }
 
-        private FileInfo GetSettingsFileInfo()
+        private VSModuleSettingsTO TranslateModeltoTO(VSModuleSettingsXmlModel model)
+        {
+            VSModuleSettingsTO.Builder builder = new VSModuleSettingsTO.Builder();
+            builder.ProjectName = model.projectName;
+            builder.CompanyName = model.companyName;
+            builder.CompanyShortName = model.companyShortName;
+            builder.RepoLocation = model.repoLocation;
+            builder.UnityInstallLocation = model.unityInstallLocation;
+            return builder.Build();
+        }
+
+        private VSModuleSettingsXmlModel TranslateTOtoModel(VSModuleSettingsTO to)
+        {
+            VSModuleSettingsXmlModel model = new VSModuleSettingsXmlModel();
+            model.projectName = to.GetProjectName();
+            model.companyName = to.GetCompanyName();
+            model.companyShortName = to.GetCompanyShortName();
+            model.repoLocation = to.GetRepoLocation();
+            model.unityInstallLocation = to.GetUnityInstallLocation();
+            return model;
+        }
+
+        private FileEntry GetSettingsFileInfo(bool isCreateIfNotPresent)
         {
             String filePath = Path.Combine(unityApi.GetAssetFolder(), VSModuleConstants.CONFIG_FILE_ASSET_LOCATION);
-            return new FileInfo(filePath);
+            FileEntry entry = null;
+            if(isCreateIfNotPresent){
+                entry = fsController.GetExistingOrNewlyCreatedFile(filePath);
+            } else {
+                entry = fsController.GetExistingFile(filePath);
+            }
+            return entry;
         }
 
         private VSModuleSettingsTO GetDefaultTO()
         {
-            VSModuleSettingsXmlModel model = new VSModuleSettingsXmlModel();
-            return new VSModuleSettingsTO(model);
+            return new VSModuleSettingsTO.Builder().Build();
         }
 
         

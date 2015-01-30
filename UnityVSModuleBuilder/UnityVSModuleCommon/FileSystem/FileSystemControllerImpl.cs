@@ -92,7 +92,7 @@ namespace UnityVSModuleCommon.FileSystem
             File.Copy(origional.GetFilePath(), newLocation);
         }
 
-        public FileEntry GetFile(string fileLocation)
+        public FileEntry GetExistingFile(string fileLocation)
         {
             FileEntry entry = null;
             FileInfo info = new FileInfo(fileLocation);
@@ -101,6 +101,41 @@ namespace UnityVSModuleCommon.FileSystem
                 entry = new FileEntryImpl(info);
             }
             return entry;
+        }
+
+        public FileEntry CreateNotPresentFile(string fileLocation)
+        {
+            FileEntry file = null;
+            bool isPresent = Directory.Exists(fileLocation);
+            isPresent = isPresent || File.Exists(fileLocation);
+            FileStream stream = null;
+            try{
+                if(!isPresent){
+                    stream = File.Create(fileLocation);
+                    file = GetExistingFile(fileLocation);
+                }
+            } catch(Exception e){
+                Logger.LogError("Exception creating File at '" + fileLocation + "'.", e);
+            } finally{
+                stream.Close();
+            }
+            return file;
+        }
+
+        public FileEntry GetExistingOrNewlyCreatedFile(string fileLocation)
+        {
+            FileEntry entry = GetExistingFile(fileLocation);
+            if (entry == null)
+            {
+                entry = CreateNotPresentFile(fileLocation);
+            }
+            return entry;
+        }
+
+
+        public void DoCreateDirectory(string moduleRepoLocation)
+        {
+            Directory.CreateDirectory(moduleRepoLocation);
         }
     }
 }

@@ -1,22 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
+using UnityVSModuleCommon.FileSystem;
+using UnityVSModuleCommon.Logging;
 using UnityVSModuleEditor.UnityApis;
 using UnityVSModuleEditor.XMLStore;
 
 namespace UnityVSModuleEditor.MiddleTier
 {
-    internal class VSModuleDependencyManager
+    internal interface VSModuleDependencyManager
+    {
+        VSModuleDependencyTO GetDependencyTO();
+        bool AddDependency(string companyShortName, string projectName);
+    }
+    
+    internal class VSModuleDependencyManagerImpl : VSModuleDependencyManager
     {
         private readonly UnityApi unityApi;
-        private VSModuleXmlSerializer serializer;
+        private XmlSerializerWrapper serializer;
+        private FileSystemController fileSystemController;
 
-        public VSModuleDependencyManager(UnityApi unityApi, VSModuleXmlSerializer serializer)
+        public VSModuleDependencyManagerImpl(UnityApi unityApi, XmlSerializerWrapper serializer, FileSystemController fsController)
         {
             this.unityApi = unityApi;
             this.serializer = serializer;
+            this.fileSystemController = fsController;
         }
 
         public VSModuleDependencyTO GetDependencyTO()
@@ -24,8 +33,8 @@ namespace UnityVSModuleEditor.MiddleTier
             VSModuleDependencyTO to = null;
             try
             {
-                FileInfo dependencyFileInfo = GetDependencyFileInfo();
-                if (dependencyFileInfo.Exists)
+                FileEntry dependencyFileInfo = GetDependencyFileInfo(false);
+                if (dependencyFileInfo != null && dependencyFileInfo.IsPresent())
                 {
                     to = GetToFromSerializer(dependencyFileInfo);
                 }
@@ -47,16 +56,23 @@ namespace UnityVSModuleEditor.MiddleTier
             return to;
         }
 
-        private FileInfo GetDependencyFileInfo()
+        private FileEntry GetDependencyFileInfo(bool isCreatedIfNotPresent)
         {
             String dependencyFilePath = Path.Combine(unityApi.GetAssetFolder(), VSModuleConstants.DEPENDENCY_FILE_LOCATION);
-            return new FileInfo(dependencyFilePath);
+            FileEntry entry = null;
+            if (isCreatedIfNotPresent)
+            {
+                entry = this.fileSystemController.GetExistingFile(dependencyFilePath);
+            } else {
+                entry = this.fileSystemController.GetExistingOrNewlyCreatedFile(dependencyFilePath);
+            }
+            return entry;
         }
 
-        private VSModuleDependencyTO GetToFromSerializer(FileInfo dependencyFileInfo)
+        private VSModuleDependencyTO GetToFromSerializer(FileEntry dependencyFileInfo)
         {
             VSModuleDependencyTO to = null;
-            VSModuleDependencyXmlModel model = serializer.GetDeserializedDependency(dependencyFileInfo);
+            VSModuleDependencyXmlModel model = serializer.GetDeserialized<VSModuleDependencyXmlModel>(dependencyFileInfo);
             if (model != null)
             {
                 to = TranslateModelToTo(model);
@@ -80,7 +96,7 @@ namespace UnityVSModuleEditor.MiddleTier
             return to;
         }
 
-        internal bool AddDependency(string companyShortName, string projectName)
+        public bool AddDependency(string companyShortName, string projectName)
         {
             bool isAdded = false;
             try
@@ -88,7 +104,7 @@ namespace UnityVSModuleEditor.MiddleTier
                 VSModuleDependencyTO to = GetDependencyTO();
                 if (IsDependencyPresent(to, companyShortName, projectName))
                 {
-                    unityApi.LogError("Cannot Add Dependency. Dependency Already Present");
+                    Logger.LogError("Cannot Add Dependency. Dependency Already Present");
                 }
                 else
                 {
@@ -110,8 +126,8 @@ namespace UnityVSModuleEditor.MiddleTier
             item.companyShortName = companyShortName;
             item.projectName = projectName;
             model.dependencies.Add(item);
-            FileInfo dependencyFileInfo = GetDependencyFileInfo();
-            serializer.SerializeDependencyModel(dependencyFileInfo, model);
+            FileEntry dependencyFileInfo = GetDependencyFileInfo(true);
+            serializer.SerializeToFile <VSModuleDependencyXmlModel>(dependencyFileInfo, model);
         }
 
         private VSModuleDependencyXmlModel TranslateTOtoModel(VSModuleDependencyTO to)

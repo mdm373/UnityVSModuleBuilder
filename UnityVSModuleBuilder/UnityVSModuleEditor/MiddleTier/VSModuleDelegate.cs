@@ -3,37 +3,53 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Xml.Serialization;
+using UnityVSModuleCommon.FileSystem;
+using UnityVSModuleCommon.Logging;
 using UnityVSModuleEditor.UnityApis;
 using UnityVSModuleEditor.XMLStore;
 
 namespace UnityVSModuleEditor.MiddleTier
 {
-    internal class VSModuleDelegate
+    internal interface VSModuleDelegate
+    {
+        void SaveModuleSettingsTO(VSModuleSettingsTO to);
+        void ExportModuleToRepository();
+        VSModuleSettingsTO RetrieveModuleSettingsTO();
+        VSModuleDependencyTO RetrieveModuleDependenciesTO();
+        void AddModuleDependency(String companyShortName, String projectName);
+        
+    }
+
+    internal class VSModuleDelegateImpl : VSModuleDelegate
     {
         private readonly VSModuleSettingsManager vsSettingsManager;
         private readonly VSModuleProjectManager vsProjectManager;
-        private readonly UnityApi unityApi;
-        private readonly VSModuleImportManager vsModuleImportExportManager;
-        private VSModuleDependencyManager vsDependencyManager;
+        private readonly VSModuleImportExportManager vsModuleImportExportManager;
+        private readonly VSModuleDependencyManager vsDependencyManager;
 
-        public VSModuleDelegate(UnityApi unityApi, VSModuleXmlSerializer serializer)
+        public VSModuleDelegateImpl(VSModuleSettingsManager vsSettingsManager,
+                VSModuleProjectManager vsProjectManager,
+                VSModuleImportExportManager vsModuleImportExportManager,
+                VSModuleDependencyManager vsDependencyManager)
         {
-            this.vsSettingsManager = new VSModuleSettingsManager(unityApi, serializer);
-            this.vsProjectManager = new VSModuleProjectManager(unityApi);
-            this.vsDependencyManager = new VSModuleDependencyManager(unityApi, serializer);
-            this.vsModuleImportExportManager = new VSModuleImportManager(unityApi);
-            this.unityApi = unityApi;
+            this.vsSettingsManager = vsSettingsManager;
+            this.vsProjectManager = vsProjectManager;
+            this.vsDependencyManager = vsDependencyManager;
+            this.vsModuleImportExportManager = vsModuleImportExportManager;
         }
 
         public void SaveModuleSettingsTO(VSModuleSettingsTO to)
         {
             VSModuleSettingsTO origional = vsSettingsManager.RetrieveModuleSettingsTO();
             if(vsSettingsManager.SaveModuleSettingsTO(to)){
-                unityApi.Log("VSModule Settings Saved.");
+                Logger.Log("VSModule Settings Saved.");
                 
-                vsProjectManager.UpdateVisualStudioProjects(origional.GetXmlModel(), to.GetXmlModel());
-                unityApi.Log("Visual Studio Projects Updated For Unity Location Change.");
+                vsProjectManager.UpdateVSProjectsForProjectSettings(origional, to);
+                Logger.Log("Visual Studio Projects Updated For Unity Location Change.");
+            }
+            else
+            {
+                Logger.LogError("Failure Saving Settings. See Log For Error Information.");
             }
         }
 
@@ -42,7 +58,11 @@ namespace UnityVSModuleEditor.MiddleTier
             VSModuleSettingsTO to = vsSettingsManager.RetrieveModuleSettingsTO();
             if (to != null)
             {
-                unityApi.Log("VSModule Settings Loaded.");
+                Logger.Log("VSModule Settings Loaded.");
+            }
+            else
+            {
+                Logger.LogError("Failed To Retrieve Module Settings. See Log For Error Details.");
             }
             return to;
         }
@@ -50,36 +70,61 @@ namespace UnityVSModuleEditor.MiddleTier
         public void ExportModuleToRepository()
         {
             VSModuleSettingsTO to = RetrieveModuleSettingsTO();
+            if (to != null)
+            {
+                ExportModuleToRepository(to);
+            }
+            else
+            {
+                Logger.LogError("Failed to Export Module To Repository. Project Settings Not Found. See Log For Error Details.");
+            }
+            
+
+        }
+
+        private void ExportModuleToRepository(VSModuleSettingsTO to)
+        {
             bool isExported = vsModuleImportExportManager.ExportModule(to);
             if (isExported)
             {
-                unityApi.Log("VSModule Exported To Repository.");
+                Logger.Log("VSModule Exported To Repository.");
             }
-
+            else
+            {
+                Logger.LogError("Failed To Export Module To Repository. See Log For Error Details.");
+            }
         }
 
         public VSModuleDependencyTO RetrieveModuleDependenciesTO()
         {
             VSModuleDependencyTO to = vsDependencyManager.GetDependencyTO();
-            unityApi.Log("VSModule Dependencies Loaded.");
+            if (to == null)
+            {
+                Logger.LogError("Failed To Retrieve Module Dependencies. See Log For Error Details.");
+            }
+            else
+            {
+                Logger.Log("VSModule Dependencies Loaded.");
+            }
+            
             return to;
         }
 
         public void AddModuleDependency(String companyShortName, String projectName)
         {
-            VSModuleDependencyTO origional =  vsDependencyManager.GetDependencyTO();
+            VSModuleDependencyTO origional = vsDependencyManager.GetDependencyTO();
             bool isAdded = vsDependencyManager.AddDependency(companyShortName, projectName);
             VSModuleSettingsTO settings = vsSettingsManager.RetrieveModuleSettingsTO();
             if (isAdded && settings != null)
             {
                 VSModuleDependencyTO updated = vsDependencyManager.GetDependencyTO();
-                isAdded = vsProjectManager.UpdateVisualStudioProjects(origional, updated, settings);
+                isAdded = vsProjectManager.UpdateVSProjectsForDependencies(origional, updated, settings);
                 if (isAdded)
                 {
                     isAdded = vsModuleImportExportManager.ImportModule(companyShortName, projectName, settings);
                     if (isAdded)
                     {
-                        unityApi.Log("Dependency '" + companyShortName + "' '" + projectName + "' added.");
+                        Logger.Log("Dependency '" + companyShortName + "' '" + projectName + "' added.");
                     }
                 }
             }       

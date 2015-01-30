@@ -14,7 +14,7 @@ namespace UnityVSModuleBuilder.Drivers
         public int Drive(string[] args)
         {
             UnityApi unityApi = new MockUnityApi();
-            VSModuleDelegate vsModuleDelegate = new VSModuleDelegate(unityApi, new VSModuleXmlSerializer(unityApi));
+            VSModuleDelegate vsModuleDelegate = VSModuleFactory.GetNewDelegate(unityApi);
 
             VSModuleSettingsTO to = vsModuleDelegate.RetrieveModuleSettingsTO();
             //to.SetUnityInstallLocation("junk");

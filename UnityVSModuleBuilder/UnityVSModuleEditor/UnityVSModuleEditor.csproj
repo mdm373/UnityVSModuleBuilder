@@ -52,7 +52,8 @@
     <Compile Include="MiddleTier\VSModuleDependencyManager.cs" />
     <Compile Include="MiddleTier\VSModuleDependencyTO.cs" />
     <Compile Include="MiddleTier\VSModuleImportManager.cs" />
-    <Compile Include="StreamUtil.cs" />
+    <Compile Include="UnityApis\UnityApiFactory.cs" />
+    <Compile Include="XMLStore\StreamUtil.cs" />
     <Compile Include="UI\DependencyPromptWindow.cs" />
     <Compile Include="UnityApis\UnityApi.cs" />
     <Compile Include="UnityApis\UnityApiImpl.cs" />
@@ -66,7 +67,7 @@
     <Compile Include="MiddleTier\VSModuleSettingsTO.cs" />
     <Compile Include="MiddleTier\VSModuleDelegate.cs" />
     <Compile Include="MiddleTier\VSModuleProjectManager.cs" />
-    <Compile Include="XMLStore\VSModuleXmlSerializer.cs" />
+    <Compile Include="XMLStore\XmlSerializerWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UnityVSModuleCommon\UnityVSModuleCommon.csproj">

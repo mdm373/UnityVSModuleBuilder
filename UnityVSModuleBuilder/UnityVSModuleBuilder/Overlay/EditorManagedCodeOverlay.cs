@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using UnityVSModuleCommon.FileSystem;
@@ -30,7 +29,7 @@ namespace UnityVSModuleBuilder.Overlay
         private bool CopyManagedCode(BuildProjectRequest request, string managedCodeFileLocation)
         {
             bool result = false;
-            FileEntry entry = fileSystem.GetFile(managedCodeFileLocation);
+            FileEntry entry = fileSystem.GetExistingFile(managedCodeFileLocation);
             if (entry != null)
             {
                 String destinationDirectory = Path.Combine(request.GetCopyLocation(), request.GetProjectName());

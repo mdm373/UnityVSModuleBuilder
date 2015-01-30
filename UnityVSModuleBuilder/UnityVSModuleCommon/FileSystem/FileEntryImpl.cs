@@ -78,5 +78,11 @@ namespace UnityVSModuleCommon.FileSystem
         {
             return info.FullName;
         }
+
+
+        public bool IsPresent()
+        {
+            return info.Exists;
+        }
     }
 }

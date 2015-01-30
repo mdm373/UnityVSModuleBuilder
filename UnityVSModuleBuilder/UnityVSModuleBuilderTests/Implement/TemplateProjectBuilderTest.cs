@@ -50,21 +50,6 @@ namespace UnityVSModuleBuilder.Implement
             ThenBuildProjectResponseIsSuccessful();
         }
 
-        private void ThenTemplateCopyRequestedWithExpectedLocation()
-        {
-            this.templateCopy.Received().CopyAndCleanTemplate(EXPECTED_COPY_LOCATION);
-        }
-
-        private void GivenTemplateCopySuccessful()
-        {
-            this.templateCopy.CopyAndCleanTemplate(Arg.Any<String>()).Returns(true);
-        }
-
-        private void GivenTemplateCopyFailure()
-        {
-            this.templateCopy.CopyAndCleanTemplate(Arg.Any<String>()).Returns(false);
-        }
-
         [Test]
         public void TestProjectBuildNameOverlayFailure()
         {
@@ -81,6 +66,21 @@ namespace UnityVSModuleBuilder.Implement
             ThenOverlayNotRequested();
             ThenBuildProjectResponseIsFailure();
 
+        }
+
+        private void ThenTemplateCopyRequestedWithExpectedLocation()
+        {
+            this.templateCopy.Received().CopyAndCleanTemplate(EXPECTED_COPY_LOCATION);
+        }
+
+        private void GivenTemplateCopySuccessful()
+        {
+            this.templateCopy.CopyAndCleanTemplate(Arg.Any<String>()).Returns(true);
+        }
+
+        private void GivenTemplateCopyFailure()
+        {
+            this.templateCopy.CopyAndCleanTemplate(Arg.Any<String>()).Returns(false);
         }
 
         private void ThenOverlayNotRequested()

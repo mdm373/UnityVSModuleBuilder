@@ -79,7 +79,8 @@ namespace UnityVSModuleEditor.UI
         {
             if (vsModuleDelegate == null)
             {
-                vsModuleDelegate = VSModuleFactory.GetDelegate();
+                UnityApi api = UnityApiFactory.GetUnityApi();
+                vsModuleDelegate = VSModuleFactory.GetNewDelegate(api);
             }
             if (vsModuleSettingsTO == null)
             {

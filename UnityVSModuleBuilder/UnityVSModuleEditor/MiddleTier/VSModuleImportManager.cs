@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
+using UnityVSModuleCommon.FileSystem;
+using UnityVSModuleCommon.Logging;
 using UnityVSModuleEditor.UnityApis;
 
 namespace UnityVSModuleEditor.MiddleTier
 {
-    internal class VSModuleImportManager
+    internal interface VSModuleImportExportManager
+    {
+        bool ExportModule(VSModuleSettingsTO to);
+        bool ImportModule(string companyShortName, string projectName, VSModuleSettingsTO settingsTO);
+    }
+
+    internal class VSModuleImportExportManagerImpl : VSModuleImportExportManager
     {
         private const string UNITYPACKAGE_EXTENSION = ".unitypackage";
         private const string ASSET_FOLDER_NAME = "Assets";
@@ -15,10 +22,12 @@ namespace UnityVSModuleEditor.MiddleTier
         private const string MANAGED_CODE_FOLDER_NAME = "ManagedCode";
 
         private readonly UnityApi unityApi;
+        private readonly FileSystemController fsController;
         
-        public VSModuleImportManager(UnityApi unityApi)
+        public VSModuleImportExportManagerImpl(UnityApi unityApi, FileSystemController fsController)
         {
             this.unityApi = unityApi;
+            this.fsController = fsController;
         }
 
         public bool ExportModule(VSModuleSettingsTO to)
@@ -28,20 +37,20 @@ namespace UnityVSModuleEditor.MiddleTier
             {
                 String assetRoot = unityApi.GetAssetFolder();
                 String moduleInfoPath = Path.Combine(assetRoot, VSModuleConstants.CONFIG_FILE_ASSET_LOCATION);
+                FileEntry moduleInfoFile = fsController.GetExistingFile(moduleInfoPath);
                 
                 String repoLocation = to.GetRepoLocation();
                 
                 String companyProjectPath = to.GetCompanyShortName() + Path.DirectorySeparatorChar + to.GetProjectName();
                 String moduleRepoLocation = GetRepoLocation(to.GetCompanyShortName(), to.GetProjectName(), to.GetRepoLocation());
-                Directory.CreateDirectory(moduleRepoLocation);
+                fsController.DoCreateDirectory(moduleRepoLocation);
 
                 ExportPackage(moduleRepoLocation, companyProjectPath, to.GetProjectName());
-                File.Copy(moduleInfoPath, Path.Combine(moduleRepoLocation, VSModuleConstants.CONFIG_FILE_NAME), true);
+                fsController.DoFileCopy(moduleInfoFile, moduleRepoLocation);
             }
             catch (Exception e)
             {
-                unityApi.LogError("Unexpected Exception Exporting Module To Repository. See Log For Error Details.");
-                unityApi.LogException(e);
+                Logger.LogError("Unexpected Exception Exporting Module To Repository. See Log For Error Details.", e);
                 isExported = false;
             }
             return isExported;
@@ -69,7 +78,7 @@ namespace UnityVSModuleEditor.MiddleTier
         }
 
 
-        internal bool ImportModule(string companyShortName, string projectName, VSModuleSettingsTO settingsTO)
+        public bool ImportModule(string companyShortName, string projectName, VSModuleSettingsTO settingsTO)
         {
             bool isImported = true;
             try

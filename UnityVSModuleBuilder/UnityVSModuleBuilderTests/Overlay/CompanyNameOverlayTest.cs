@@ -20,13 +20,13 @@ namespace UnityVSModuleBuilder.Overlay
         }
 
         [Test]
-        public void TestDefinedTag()
+        public void TestCompanyNameDefinedTag()
         {
             testHelper.TestDefinedTag("[[COMPANY_NAME]]");
         }
 
         [Test]
-        public void TestOverlayValue()
+        public void TestCompanyNameOverlayValue()
         {
             testHelper.TestOverlayValue((request, expectedRequestValue) => { request.GetCompanyName().Returns(expectedRequestValue); return true; });
         }
