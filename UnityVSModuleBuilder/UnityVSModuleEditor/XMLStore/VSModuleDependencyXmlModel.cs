@@ -7,13 +7,13 @@ using System.Xml.Serialization;
 namespace UnityVSModuleEditor.XMLStore
 {
     [XmlRootAttribute("VSModuleDependency")]
-    internal class VSModuleDependencyXmlModel
+    public class VSModuleDependencyXmlModel
     {
         [XmlElement("DepenceyEntry")]
         public List<DependencyItem> dependencies;
     }
 
-    internal class DependencyItem
+    public class DependencyItem
     {
         [XmlAttribute("ProjectName")]
         public String projectName;

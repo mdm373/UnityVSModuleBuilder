@@ -21,7 +21,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -51,7 +52,8 @@
     <Compile Include="MiddleTier\VSModuleConstants.cs" />
     <Compile Include="MiddleTier\VSModuleDependencyManager.cs" />
     <Compile Include="MiddleTier\VSModuleDependencyTO.cs" />
-    <Compile Include="MiddleTier\VSModuleImportManager.cs" />
+    <Compile Include="MiddleTier\VSModuleImportExportManager.cs" />
+    <Compile Include="UI\UnityLoggingService.cs" />
     <Compile Include="UnityApis\UnityApiFactory.cs" />
     <Compile Include="XMLStore\StreamUtil.cs" />
     <Compile Include="UI\DependencyPromptWindow.cs" />

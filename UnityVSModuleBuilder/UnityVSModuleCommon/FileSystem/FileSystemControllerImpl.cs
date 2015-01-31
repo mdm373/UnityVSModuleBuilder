@@ -89,7 +89,7 @@ namespace UnityVSModuleCommon.FileSystem
         {
             String name = origional.GetFileName();
             String newLocation = Path.Combine(destinationDirectory, name);
-            File.Copy(origional.GetFilePath(), newLocation);
+            File.Copy(origional.GetFilePath(), newLocation, true);
         }
 
         public FileEntry GetExistingFile(string fileLocation)
@@ -133,9 +133,20 @@ namespace UnityVSModuleCommon.FileSystem
         }
 
 
-        public void DoCreateDirectory(string moduleRepoLocation)
+        public bool DoCreateDirectory(string directoryLocation)
         {
-            Directory.CreateDirectory(moduleRepoLocation);
+            bool isCreated = false;
+            try
+            {
+                DirectoryInfo dir = Directory.CreateDirectory(directoryLocation);
+                isCreated = dir.Exists;
+            }
+            catch (Exception e)
+            {
+                Logger.LogError("Failed to create directory'" + directoryLocation +"' see logged error for details.", e);
+            }
+            
+            return isCreated;
         }
     }
 }

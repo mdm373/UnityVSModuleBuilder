@@ -32,7 +32,7 @@ namespace UnityVSModuleEditor.MiddleTier
 
         public bool ExportModule(VSModuleSettingsTO to)
         {
-            bool isExported = true;
+            bool isExported = false;
             try
             {
                 String assetRoot = unityApi.GetAssetFolder();
@@ -43,10 +43,12 @@ namespace UnityVSModuleEditor.MiddleTier
                 
                 String companyProjectPath = to.GetCompanyShortName() + Path.DirectorySeparatorChar + to.GetProjectName();
                 String moduleRepoLocation = GetRepoLocation(to.GetCompanyShortName(), to.GetProjectName(), to.GetRepoLocation());
-                fsController.DoCreateDirectory(moduleRepoLocation);
-
-                ExportPackage(moduleRepoLocation, companyProjectPath, to.GetProjectName());
-                fsController.DoFileCopy(moduleInfoFile, moduleRepoLocation);
+                if (fsController.DoCreateDirectory(moduleRepoLocation))
+                {
+                    ExportPackage(moduleRepoLocation, companyProjectPath, to.GetProjectName());
+                    fsController.DoFileCopy(moduleInfoFile, moduleRepoLocation);
+                    isExported = true;
+                }
             }
             catch (Exception e)
             {
@@ -80,12 +82,21 @@ namespace UnityVSModuleEditor.MiddleTier
 
         public bool ImportModule(string companyShortName, string projectName, VSModuleSettingsTO settingsTO)
         {
-            bool isImported = true;
+            bool isImported = false;
             try
             {
                 String repoLocation = GetRepoLocation(companyShortName, projectName, settingsTO.GetRepoLocation());
                 String import = Path.Combine(repoLocation, projectName + UNITYPACKAGE_EXTENSION);
-                unityApi.ImportRootAssets(import);
+                FileEntry importFile = fsController.GetExistingFile(import);
+                if (importFile != null && importFile.IsPresent())
+                {
+                    unityApi.ImportRootAssets(import);
+                    isImported = true;
+                }
+                else
+                {
+                    Logger.LogError("Failed To Import Dependency Module Assets at '" + import + "'. File Not Found In Repo.");
+                }   
             }
             catch (Exception e)
             {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
+using UnityVSModuleCommon.Logging;
 using UnityVSModuleEditor.MiddleTier;
 using UnityVSModuleEditor.UnityApis;
 
@@ -41,7 +42,14 @@ namespace UnityVSModuleEditor.UI
         private String companyShortNameLabel = String.Empty;
         private VSModuleDependencyTO vsDependencyTO;
         private List<bool> dependencySelections;
-        
+
+        public UnityVSModuleConfigWindow()
+        {
+            Logger.SetService(UnityLoggingService.INSTANCE);
+            UnityApi api = UnityApiFactory.GetUnityApi();
+            vsModuleDelegate = VSModuleFactory.GetNewDelegate(api);
+        }
+
         private void InitGui()
         {
             CreateStyleOptions();
@@ -79,8 +87,7 @@ namespace UnityVSModuleEditor.UI
         {
             if (vsModuleDelegate == null)
             {
-                UnityApi api = UnityApiFactory.GetUnityApi();
-                vsModuleDelegate = VSModuleFactory.GetNewDelegate(api);
+                
             }
             if (vsModuleSettingsTO == null)
             {
@@ -224,4 +231,5 @@ namespace UnityVSModuleEditor.UI
         }
 
     }
+
 }

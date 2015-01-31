@@ -40,18 +40,18 @@ namespace UnityVSModuleEditor.MiddleTier
                 }
                 else
                 {
-                    unityApi.Log("Dependency Info Not Found For Module.");
+                    Logger.Log("Dependency Info Not Found For Module.");
                 }
                 if (to == null)
                 {
-                    unityApi.Log("Creating new default dependency info for failed load.");
+                    Logger.Log("Creating new default dependency info for failed load.");
                     to = new VSModuleDependencyTO(new List<VSModuleDependencyItem>());
                 }
                 
             }
             catch (Exception e)
             {
-                unityApi.LogError("Unexpected Exception occurred getting dependency info for VSModule.", e);
+                Logger.LogError("Unexpected Exception occurred getting dependency info for VSModule.", e);
             }
             return to;
         }
@@ -62,9 +62,9 @@ namespace UnityVSModuleEditor.MiddleTier
             FileEntry entry = null;
             if (isCreatedIfNotPresent)
             {
-                entry = this.fileSystemController.GetExistingFile(dependencyFilePath);
-            } else {
                 entry = this.fileSystemController.GetExistingOrNewlyCreatedFile(dependencyFilePath);
+            } else {
+                entry = this.fileSystemController.GetExistingFile(dependencyFilePath);
             }
             return entry;
         }
@@ -114,7 +114,7 @@ namespace UnityVSModuleEditor.MiddleTier
             }
             catch (Exception e)
             {
-                unityApi.LogError("Unexpected Exception Adding Dependency. See Error Log For Details", e);
+                Logger.LogError("Unexpected Exception Adding Dependency. See Error Log For Details", e);
             }
             return isAdded;
         }

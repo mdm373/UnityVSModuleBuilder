@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 namespace UnityVSModuleEditor.XMLStore
 {
     [XmlRootAttribute("ModuleConfig")]
-    internal class VSModuleSettingsXmlModel
+    public class VSModuleSettingsXmlModel
     {
         [XmlAttribute("projectName")]
         public string projectName = String.Empty;
