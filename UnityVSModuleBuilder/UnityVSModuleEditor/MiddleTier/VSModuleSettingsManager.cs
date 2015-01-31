@@ -132,7 +132,13 @@ namespace UnityVSModuleEditor.MiddleTier
 
         private VSModuleSettingsTO GetDefaultTO()
         {
-            return new VSModuleSettingsTO.Builder().Build();
+            VSModuleSettingsTO.Builder builder = new VSModuleSettingsTO.Builder();
+            builder.CompanyName = String.Empty;
+            builder.CompanyShortName = String.Empty;
+            builder.ProjectName = String.Empty;
+            builder.UnityInstallLocation = String.Empty;
+            builder.RepoLocation = String.Empty;
+            return builder.Build();
         }
 
         
