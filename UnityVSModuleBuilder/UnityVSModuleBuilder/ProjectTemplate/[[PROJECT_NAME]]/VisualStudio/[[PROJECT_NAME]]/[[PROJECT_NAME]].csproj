@@ -37,7 +37,9 @@
     <UnityRoot>[[UNITY_LOCATION]]</UnityRoot>
     <PluginsRoot>..\UnityGame\Assets\ManagedCode</PluginsRoot>
   </PropertyGroup>
-  <!--DepRefsGroup--><ItemGroup>
+  <ItemGroup>
+<!--DepRefsGroup-->
+<!--EndDepRefsGroup-->
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

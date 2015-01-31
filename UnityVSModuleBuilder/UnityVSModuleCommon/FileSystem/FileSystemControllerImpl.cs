@@ -115,7 +115,7 @@ namespace UnityVSModuleCommon.FileSystem
             } catch(Exception e){
                 Logger.LogError("Exception creating File at '" + fileLocation + "'.", e);
             } finally{
-                stream.Close();
+                StreamUtil.CloseFileStream(stream);
             }
             return file;
         }

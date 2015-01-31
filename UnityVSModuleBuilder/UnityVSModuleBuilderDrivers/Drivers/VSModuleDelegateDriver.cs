@@ -14,7 +14,7 @@ namespace UnityVSModuleBuilder.Drivers
             //to.SetUnityInstallLocation("junk");
             //vsModuleDelegate.SaveModuleSettingsTO(to);
 
-            vsModuleDelegate.AddModuleDependency("cn", "someOtherProject");
+            vsModuleDelegate.AddModuleDependency("cn", "DriverProject");
             return 0;
         }
     }
@@ -43,7 +43,7 @@ namespace UnityVSModuleBuilder.Drivers
 
         public string GetAssetFolder()
         {
-            return @"F:\Projects\unity\UnityVSModuleBuilder\UnityVSModuleBuilder\UnityVSModuleBuilderDrivers\bin\Debug\GeneratedDriverProject\DriverProject\UnityGame\Assets";
+            return @"F:\Projects\unity\UnityVSModuleBuilder\UnityVSModuleBuilder\UnityVSModuleBuilderDrivers\bin\Debug\GeneratedDriverProject\DriverProject2\UnityGame\Assets";
         }
 
 
