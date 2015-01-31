@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityVSModuleCommon.FileSystem;
+﻿using System.Collections.Generic;
 using UnityVSModuleBuilder.Implement;
 using UnityVSModuleBuilder.Overlay;
 using UnityVSModuleBuilder.TemplateCopy;
+using UnityVSModuleCommon.FileSystem;
 
 namespace UnityVSModuleBuilder
 {

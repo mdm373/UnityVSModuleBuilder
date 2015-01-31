@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityVSModuleEditor.MiddleTier;
 
-namespace UnityVSModuleEditor.UnityApis
+namespace UnityVSModuleEditor.UI
 {
     internal class UnityApiFactory
     {

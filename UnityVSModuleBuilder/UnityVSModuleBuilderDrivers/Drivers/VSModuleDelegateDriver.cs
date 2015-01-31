@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityVSModuleEditor;
 using UnityVSModuleEditor.MiddleTier;
-using UnityVSModuleEditor.UnityApis;
-using UnityVSModuleEditor.XMLStore;
 
 namespace UnityVSModuleBuilder.Drivers
 {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityVSModuleEditor.XMLStore;
-
+﻿
 namespace UnityVSModuleEditor.MiddleTier
 {
     internal class VSModuleSettingsTO

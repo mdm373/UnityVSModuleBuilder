@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace UnityVSModuleCommon.FileSystem
 {
@@ -17,6 +14,7 @@ namespace UnityVSModuleCommon.FileSystem
         FileType GetFileType();
         String GetFilePath();
         bool IsPresent();
-
+        string ReadAllText();
+        void WriteAllText(string text);
     }
 }

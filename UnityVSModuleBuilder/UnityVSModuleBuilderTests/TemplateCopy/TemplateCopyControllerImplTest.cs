@@ -2,10 +2,8 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityVSModuleCommon.FileSystem;
-using UnityVSModuleCommon.Logging;
+using UnityVSModuleCommon;
 
 namespace UnityVSModuleBuilder.TemplateCopy
 {

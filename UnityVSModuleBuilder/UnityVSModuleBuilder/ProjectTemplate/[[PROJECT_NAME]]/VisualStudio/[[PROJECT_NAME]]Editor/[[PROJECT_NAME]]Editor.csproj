@@ -40,7 +40,7 @@
     <PluginsRoot>..\UnityGame\Assets\ManagedCode</PluginsRoot>
     <PluginsEditorRoot>..\UnityGame\Assets\Editor\ManagedCode</PluginsEditorRoot>
   </PropertyGroup>
-  <ItemGroup>
+  <!--DepRefsGroup--><ItemGroup>
     <Reference Include="NSubstitute">
       <HintPath>lib\NSubstitute.dll</HintPath>
     </Reference>

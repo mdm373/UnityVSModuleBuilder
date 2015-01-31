@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using UnityVSModuleBuilder;
 using UnityVSModuleCommon.FileSystem;
-using UnityVSModuleCommon.Logging;
+using UnityVSModuleCommon;
 
 namespace UnityVSModuleBuilder.Drivers
 {

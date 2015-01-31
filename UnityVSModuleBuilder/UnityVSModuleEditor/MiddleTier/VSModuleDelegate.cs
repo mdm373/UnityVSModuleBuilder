@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using UnityVSModuleCommon.FileSystem;
-using UnityVSModuleCommon.Logging;
-using UnityVSModuleEditor.UnityApis;
-using UnityVSModuleEditor.XMLStore;
+using UnityVSModuleCommon;
 
 namespace UnityVSModuleEditor.MiddleTier
 {

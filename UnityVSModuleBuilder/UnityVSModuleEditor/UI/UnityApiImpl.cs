@@ -5,8 +5,9 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 using UnityVSModuleEditor;
+using UnityVSModuleEditor.MiddleTier;
 
-namespace UnityVSModuleEditor.UnityApis
+namespace UnityVSModuleEditor.UI
 {
     internal class UnityApiImpl : UnityApi
     {

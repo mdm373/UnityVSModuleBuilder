@@ -54,11 +54,10 @@
     <Compile Include="MiddleTier\VSModuleDependencyTO.cs" />
     <Compile Include="MiddleTier\VSModuleImportExportManager.cs" />
     <Compile Include="UI\UnityLoggingService.cs" />
-    <Compile Include="UnityApis\UnityApiFactory.cs" />
-    <Compile Include="XMLStore\StreamUtil.cs" />
+    <Compile Include="UI\UnityApiFactory.cs" />
     <Compile Include="UI\DependencyPromptWindow.cs" />
-    <Compile Include="UnityApis\UnityApi.cs" />
-    <Compile Include="UnityApis\UnityApiImpl.cs" />
+    <Compile Include="MiddleTier\UnityApi.cs" />
+    <Compile Include="UI\UnityApiImpl.cs" />
     <Compile Include="MiddleTier\VSModuleFactory.cs" />
     <Compile Include="MiddleTier\VSModuleSettingsManager.cs" />
     <Compile Include="XMLStore\VSModuleDependencyXmlModel.cs" />

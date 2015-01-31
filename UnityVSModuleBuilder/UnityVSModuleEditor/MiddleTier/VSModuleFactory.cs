@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityVSModuleCommon.FileSystem;
-using UnityVSModuleEditor.UnityApis;
+﻿using UnityVSModuleCommon.FileSystem;
 using UnityVSModuleEditor.XMLStore;
 
 namespace UnityVSModuleEditor.MiddleTier
@@ -15,7 +10,7 @@ namespace UnityVSModuleEditor.MiddleTier
             FileSystemController fsController = FileSystemFactory.GetNewFileSystemController();
             XmlSerializerWrapper serializer = new XmlSerializerWrapperImpl();
             VSModuleSettingsManagerImpl vsSettingsManager = new VSModuleSettingsManagerImpl(unityApi, serializer, fsController);
-            VSModuleProjectManagerImpl vsProjectManager = new VSModuleProjectManagerImpl(unityApi);
+            VSModuleProjectManagerImpl vsProjectManager = new VSModuleProjectManagerImpl(unityApi, fsController);
             VSModuleDependencyManagerImpl vsDependencyManager = new VSModuleDependencyManagerImpl(unityApi, serializer, fsController);
             VSModuleImportExportManagerImpl vsImportManager = new VSModuleImportExportManagerImpl(unityApi, fsController);
             return new VSModuleDelegateImpl(vsSettingsManager, vsProjectManager, vsImportManager, vsDependencyManager);

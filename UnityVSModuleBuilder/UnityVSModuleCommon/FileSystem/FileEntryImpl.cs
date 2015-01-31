@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace UnityVSModuleCommon.FileSystem
 {
@@ -83,6 +80,17 @@ namespace UnityVSModuleCommon.FileSystem
         public bool IsPresent()
         {
             return info.Exists;
+        }
+
+
+        public string ReadAllText()
+        {
+            return File.ReadAllText(info.FullName);
+        }
+
+        public void WriteAllText(string text)
+        {
+            File.WriteAllText(info.FullName, text);
         }
     }
 }

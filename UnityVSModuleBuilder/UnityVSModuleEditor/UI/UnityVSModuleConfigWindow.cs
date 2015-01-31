@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEditor;
 using UnityEngine;
-using UnityVSModuleCommon.Logging;
+using UnityVSModuleCommon;
 using UnityVSModuleEditor.MiddleTier;
-using UnityVSModuleEditor.UnityApis;
 
 namespace UnityVSModuleEditor.UI
 {

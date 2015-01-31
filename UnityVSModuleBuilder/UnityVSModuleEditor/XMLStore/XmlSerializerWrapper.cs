@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Xml.Serialization;
+using UnityVSModuleCommon;
 using UnityVSModuleCommon.FileSystem;
-using UnityVSModuleCommon.Logging;
 
 namespace UnityVSModuleEditor.XMLStore
 {
