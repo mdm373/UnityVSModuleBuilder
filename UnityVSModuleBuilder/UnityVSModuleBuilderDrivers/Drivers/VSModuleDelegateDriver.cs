@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityVSModuleEditor.MiddleTier;
 
 namespace UnityVSModuleBuilder.Drivers
@@ -15,6 +16,13 @@ namespace UnityVSModuleBuilder.Drivers
             //vsModuleDelegate.SaveModuleSettingsTO(to);
 
             vsModuleDelegate.AddModuleDependency("cn", "DriverProject");
+            vsModuleDelegate.AddModuleDependency("cn", "DriverProject0");
+
+            VSModuleDependencyItem removeItem = new VSModuleDependencyItem("cn", "DriverProject");
+            List<VSModuleDependencyItem> removeItems = new List<VSModuleDependencyItem>();
+            removeItems.Add(removeItem);
+            vsModuleDelegate.RemoveDependencies(removeItems.GetEnumerator());
+            VSModuleDependencyTO updatedDeps = vsModuleDelegate.RetrieveModuleDependenciesTO();
             return 0;
         }
     }

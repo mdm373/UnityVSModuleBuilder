@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityVSModuleCommon;
 
 namespace UnityVSModuleEditor.MiddleTier
@@ -10,7 +11,9 @@ namespace UnityVSModuleEditor.MiddleTier
         VSModuleSettingsTO RetrieveModuleSettingsTO();
         VSModuleDependencyTO RetrieveModuleDependenciesTO();
         void AddModuleDependency(String companyShortName, String projectName);
-        
+        void UpdateModuleDependencies(System.Collections.Generic.List<VSModuleDependencyItem>.Enumerator enumerator);
+
+        void RemoveDependencies(List<VSModuleDependencyItem>.Enumerator enumerator);
     }
 
     internal class VSModuleDelegateImpl : VSModuleDelegate
@@ -122,5 +125,48 @@ namespace UnityVSModuleEditor.MiddleTier
                 }
             }       
         }
+
+        public void UpdateModuleDependencies(List<VSModuleDependencyItem>.Enumerator enumerator)
+        {
+            try
+            {
+                VSModuleSettingsTO settings = vsSettingsManager.RetrieveModuleSettingsTO();
+                VSModuleDependencyTO existingDependencies = vsDependencyManager.GetDependencyTO();
+                while (enumerator.MoveNext())
+                {
+                    VSModuleDependencyItem item = enumerator.Current;
+                    if (existingDependencies.ContainsMatchingItem(item))
+                    {
+                        vsModuleImportExportManager.ImportModule(item.GetCompanyShortName(), item.GetProjectName(), settings);
+                    }
+                    else
+                    {
+                        Logger.LogError("Cannot add dependency item '" + item.GetDisplayValue() + "'. Current project does not depend on item.");
+                    }
+                }
+                Logger.Log("VSModule Dependencies Updated.");
+            }
+            catch (Exception e)
+            {
+                Logger.LogError("Unexpected exception updating dependencies for project. See log for error details.", e);
+            }
+        }
+
+
+        public void RemoveDependencies(List<VSModuleDependencyItem>.Enumerator enumerator)
+        {
+            try
+            {
+                VSModuleSettingsTO settings = vsSettingsManager.RetrieveModuleSettingsTO();
+                VSModuleDependencyTO original = vsDependencyManager.GetDependencyTO();
+                vsDependencyManager.RemoveDependencies(enumerator); //Enumerator Consumed
+                VSModuleDependencyTO updated = vsDependencyManager.GetDependencyTO();
+                vsProjectManager.UpdateVSProjectsForDependencies(original, updated, settings);
+                Logger.Log("VSModule Dependency References Removed. (Assets Not Removed From Project)");
+            } catch(Exception e){
+                Logger.LogError("Unexpected exception removing dependencies for project. See log for error details.", e);
+            }
+        }
+
     }
 }

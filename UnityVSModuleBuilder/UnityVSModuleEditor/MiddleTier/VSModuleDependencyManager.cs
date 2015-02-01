@@ -10,6 +10,9 @@ namespace UnityVSModuleEditor.MiddleTier
     {
         VSModuleDependencyTO GetDependencyTO();
         bool AddDependency(string companyShortName, string projectName);
+
+
+        void RemoveDependencies(List<VSModuleDependencyItem>.Enumerator enumerator);
     }
     
     internal class VSModuleDependencyManagerImpl : VSModuleDependencyManager
@@ -123,8 +126,13 @@ namespace UnityVSModuleEditor.MiddleTier
             item.companyShortName = companyShortName;
             item.projectName = projectName;
             model.dependencies.Add(item);
+            SaveModel(model);
+        }
+
+        private void SaveModel(VSModuleDependencyXmlModel model)
+        {
             FileEntry dependencyFileInfo = GetDependencyFileInfo(true);
-            serializer.SerializeToFile <VSModuleDependencyXmlModel>(dependencyFileInfo, model);
+            serializer.SerializeToFile<VSModuleDependencyXmlModel>(dependencyFileInfo, model);
         }
 
         private VSModuleDependencyXmlModel TranslateTOtoModel(VSModuleDependencyTO to)
@@ -157,6 +165,33 @@ namespace UnityVSModuleEditor.MiddleTier
                 }
             }
             return isDependencyPresent;
+        }
+
+
+        public void RemoveDependencies(List<VSModuleDependencyItem>.Enumerator removeRequested)
+        {
+            VSModuleDependencyTO existing = GetDependencyTO();
+            List<VSModuleDependencyItem> toRemove = new List<VSModuleDependencyItem>();
+            while (removeRequested.MoveNext())
+            {
+                VSModuleDependencyItem item = removeRequested.Current;
+                if (existing.ContainsMatchingItem(item))
+                {
+                    toRemove.Add(item);
+                }
+            }
+            List<VSModuleDependencyItem> updatedItems = new List<VSModuleDependencyItem>();
+            List<VSModuleDependencyItem>.Enumerator existingItems = existing.GetDependencies();
+            while (existingItems.MoveNext())
+            {
+                if (!toRemove.Contains(existingItems.Current))
+                {
+                    updatedItems.Add(existingItems.Current);
+                }
+            }
+            VSModuleDependencyTO updatedTO = new VSModuleDependencyTO(updatedItems);
+            VSModuleDependencyXmlModel model = TranslateTOtoModel(updatedTO);
+            SaveModel(model);
         }
     }
 }

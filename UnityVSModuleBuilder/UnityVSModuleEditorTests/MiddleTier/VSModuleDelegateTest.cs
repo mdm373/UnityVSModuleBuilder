@@ -11,13 +11,17 @@ namespace UnityVSModuleEditor.MiddleTier
     {
         private const string EXPECTED_COMPANY_SHORT_NAME= "EXPECTED_COMPANY_SHORT_NAME";
         private const string EXPECTED_PROJECT_NAME = "EXPECTED_PROJECT_NAME";
+        private const string EXISTING_DEP_COMAPNY_NAME = "EXISTING_DEP_COMAPNY_NAME";
+        private const string EXISTING_DEP_PROJECT_NAME = "EXISTING_DEP_PROJECT_NAME";
+        private const string UNKOWN_PROJECT_NAME = "UNKOWN_PROJECT_NAME";
+        private const string UKNOWN_COMPANY_SHORT_NAME = "UKNOWN_COMPANY_SHORT_NAME";
 
         private VSModuleSettingsManager vsSettingsManager;
         private VSModuleProjectManager vsProjectManager;
-        private VSModuleImportExportManager vsModuleImportExportManager;
+        private VSModuleImportExportManager vsImportExportManager;
         private VSModuleDependencyManager vsDependencyManager;
         
-        private VSModuleDelegateImpl vsModuleDelegate;
+        private VSModuleDelegate vsModuleDelegate;
         private VSModuleSettingsTO to;
         private VSModuleSettingsTO existingSettings;
         private LoggingService loggingService;
@@ -25,20 +29,27 @@ namespace UnityVSModuleEditor.MiddleTier
         private VSModuleDependencyTO existingDependencyTO;
         private VSModuleDependencyTO retrievedDependencyTO;
         private VSModuleDependencyTO updatedDepdencyTO;
-
+        private List<VSModuleDependencyItem> toUpdateList;
+        private VSModuleDependencyItem existingDependency;
+        private VSModuleDependencyItem unknownDependency;
+        private List<VSModuleDependencyItem> toRemoveList;
+        
         [SetUp]
         public void SetUp()
         {
+            existingDependency = new VSModuleDependencyItem(EXISTING_DEP_COMAPNY_NAME, EXISTING_DEP_PROJECT_NAME);
+            toRemoveList = new List<VSModuleDependencyItem>();
+            toUpdateList = new List<VSModuleDependencyItem>();
             loggingService = Substitute.For<LoggingService>();
             Logger.SetService(loggingService);
             vsSettingsManager = Substitute.For<VSModuleSettingsManager>();
             vsProjectManager = Substitute.For<VSModuleProjectManager>();
-            vsModuleImportExportManager = Substitute.For<VSModuleImportExportManager>();
+            vsImportExportManager = Substitute.For<VSModuleImportExportManager>();
             vsDependencyManager = Substitute.For<VSModuleDependencyManager>();
 
             vsModuleDelegate = new VSModuleDelegateImpl(vsSettingsManager, 
                 vsProjectManager, 
-                vsModuleImportExportManager, 
+                vsImportExportManager, 
                 vsDependencyManager);
         }
 
@@ -139,6 +150,94 @@ namespace UnityVSModuleEditor.MiddleTier
             ThenImportManagerImportsDependencyModule(); 
         }
 
+        [Test]
+        public void TestDependencyUpdate()
+        {
+            GivenSettingsManagerProvidesExistingSettingsTO();
+            GivenDependencyManagerProvidesExistingDependencies();
+            GivenProvidedExistingDependenciesToUpdate();
+            WhenDependencyUpdateRequested();
+            ThenImportManagerImportRequestedForEachDependency();
+        }
+
+        [Test]
+        public void TestDependencyUpdateError()
+        {
+            GivenSettingsManagerRetrievalThrowsException();
+            WhenDependencyUpdateRequested();
+            ThenImportManagerImportNotRequested();
+            ThenErrorWithExceptionLogged();
+        }
+
+        [Test]
+        public void TestUnknownDependencyUpdate()
+        {
+            GivenSettingsManagerProvidesExistingSettingsTO();
+            GivenDependencyManagerProvidesExistingDependencies();
+            GivenProvidedUnknownDependenceisToUpdate();
+            WhenDependencyUpdateRequested();
+            ThenImportManagerImportNotRequested();
+            ThenErrorLogged();
+        }
+
+        [Test]
+        public void TestDependencyRemoved()
+        {
+            GivenSettingsManagerProvidesExistingSettingsTO();
+            GivenDependencyManagerProvidesExistingDependenciesThenUpdatedDependencies();
+            GivenExistingDependencyInRemoveList();
+            WhenDependencyRemoveRequested();
+            ThenDependencyManagerRemovesDependency();
+            ThenProjectManagerUpdatesForDependencyChange();
+            
+        }
+
+        private void GivenExistingDependencyInRemoveList()
+        {
+            toRemoveList.Add(existingDependency);
+        }
+
+        private void WhenDependencyRemoveRequested()
+        {
+            vsModuleDelegate.RemoveDependencies(toRemoveList.GetEnumerator());
+        }
+
+        private void ThenDependencyManagerRemovesDependency()
+        {
+            vsDependencyManager.Received().RemoveDependencies(Arg.Any<List<VSModuleDependencyItem>.Enumerator>());
+        }
+
+        private void GivenProvidedUnknownDependenceisToUpdate()
+        {
+            unknownDependency = new VSModuleDependencyItem(UKNOWN_COMPANY_SHORT_NAME, UNKOWN_PROJECT_NAME);
+            toUpdateList.Add(unknownDependency);
+        }
+
+        private void ThenImportManagerImportNotRequested()
+        {
+            vsImportExportManager.DidNotReceive().ImportModule(Arg.Any<String>(), Arg.Any<string>(), Arg.Any<VSModuleSettingsTO>());
+        }
+
+        private void GivenSettingsManagerRetrievalThrowsException()
+        {
+            this.vsSettingsManager.When(x => x.RetrieveModuleSettingsTO()).Do(x => { throw new Exception(); });
+        }
+
+        private void GivenProvidedExistingDependenciesToUpdate()
+        {
+            toUpdateList.Add(existingDependency);
+        }
+
+        private void ThenImportManagerImportRequestedForEachDependency()
+        {
+            vsImportExportManager.Received().ImportModule(EXISTING_DEP_COMAPNY_NAME, EXISTING_DEP_PROJECT_NAME, existingSettings);
+        }
+
+        private void WhenDependencyUpdateRequested()
+        {
+            vsModuleDelegate.UpdateModuleDependencies(toUpdateList.GetEnumerator());
+        }
+
         private void ThenDependencyManagerAddsDependency()
         {
             this.vsDependencyManager.Received().AddDependency(EXPECTED_COMPANY_SHORT_NAME, EXPECTED_PROJECT_NAME);
@@ -151,7 +250,7 @@ namespace UnityVSModuleEditor.MiddleTier
 
         private void ThenImportManagerImportsDependencyModule()
         {
-            vsModuleImportExportManager.Received().ImportModule(EXPECTED_COMPANY_SHORT_NAME, EXPECTED_PROJECT_NAME, existingSettings);
+            vsImportExportManager.Received().ImportModule(EXPECTED_COMPANY_SHORT_NAME, EXPECTED_PROJECT_NAME, existingSettings);
         }
 
         private void WhenDependencyAddRequested()
@@ -191,7 +290,9 @@ namespace UnityVSModuleEditor.MiddleTier
 
         private void GivenDependencyManagerProvidesExistingDependencies()
         {
-            existingDependencyTO = new VSModuleDependencyTO(new List<VSModuleDependencyItem>());
+            List<VSModuleDependencyItem> depList = new List<VSModuleDependencyItem>();
+            depList.Add(existingDependency);
+            existingDependencyTO = new VSModuleDependencyTO(depList);
             this.vsDependencyManager.GetDependencyTO().Returns(existingDependencyTO);
         }
 
@@ -218,7 +319,7 @@ namespace UnityVSModuleEditor.MiddleTier
 
         private void ThenExportManagerExportNotRequested()
         {
-            this.vsModuleImportExportManager.DidNotReceive().ExportModule(Arg.Any<VSModuleSettingsTO>());
+            this.vsImportExportManager.DidNotReceive().ExportModule(Arg.Any<VSModuleSettingsTO>());
         }
 
         private void GivenSettingsManagerProvidesNoExstingSettingsTO()
@@ -229,7 +330,7 @@ namespace UnityVSModuleEditor.MiddleTier
 
         private void GivenExportManagerExportsWithFailure()
         {
-            this.vsModuleImportExportManager.ExportModule(existingSettings).Returns(false);
+            this.vsImportExportManager.ExportModule(existingSettings).Returns(false);
         }
 
         private void ThenLoggerLogsSuccessMessage()
@@ -239,12 +340,12 @@ namespace UnityVSModuleEditor.MiddleTier
 
         private void GivenExportManagerExportsSuccessfully()
         {
-            this.vsModuleImportExportManager.ExportModule(existingSettings).Returns(true);
+            this.vsImportExportManager.ExportModule(existingSettings).Returns(true);
         }
 
         private void ThenExportManagerExportRequestedWithSettings()
         {
-            this.vsModuleImportExportManager.Received().ExportModule(existingSettings);
+            this.vsImportExportManager.Received().ExportModule(existingSettings);
         }
 
         private void WhenExportRequested()
@@ -255,6 +356,11 @@ namespace UnityVSModuleEditor.MiddleTier
         private void ThenErrorLogged()
         {
             loggingService.Received().LogError(Arg.Any<String>());
+        }
+
+        private void ThenErrorWithExceptionLogged()
+        {
+            loggingService.Received().LogError(Arg.Any<String>(), Arg.Any<Exception>());
         }
 
         private void ThenProjectManagerSettingsUpdateNotRequested()

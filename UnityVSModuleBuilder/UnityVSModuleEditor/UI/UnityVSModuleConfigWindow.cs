@@ -38,7 +38,7 @@ namespace UnityVSModuleEditor.UI
         private String projectNameLabel = String.Empty;
         private String companyShortNameLabel = String.Empty;
         private VSModuleDependencyTO vsDependencyTO;
-        private List<bool> dependencySelections;
+        private List<DependencySelection> dependencySelections;
 
         public UnityVSModuleConfigWindow()
         {
@@ -66,10 +66,13 @@ namespace UnityVSModuleEditor.UI
 
         private void PopulateDependencySelections()
         {
-            dependencySelections = new List<Boolean>();
-            for (int selectionIndex = 0; selectionIndex < vsDependencyTO.GetDependencyCount(); selectionIndex++)
-            {
-                dependencySelections.Add(false);
+            dependencySelections = new List<DependencySelection>();
+            vsDependencyTO = vsModuleDelegate.RetrieveModuleDependenciesTO();
+            List<VSModuleDependencyItem>.Enumerator items =  vsDependencyTO.GetDependencies();
+            while(items.MoveNext()){
+                DependencySelection selection = new DependencySelection();
+                selection.item = items.Current;
+                dependencySelections.Add(selection);
             }
         }
 
@@ -82,17 +85,9 @@ namespace UnityVSModuleEditor.UI
 
         private void PopulateVSModuleTOs()
         {
-            if (vsModuleDelegate == null)
-            {
-                
-            }
             if (vsModuleSettingsTO == null)
             {
                 vsModuleSettingsTO = vsModuleDelegate.RetrieveModuleSettingsTO();    
-            }
-            if (vsDependencyTO == null)
-            {
-                vsDependencyTO = vsModuleDelegate.RetrieveModuleDependenciesTO();
             }
         }
 
@@ -189,28 +184,91 @@ namespace UnityVSModuleEditor.UI
             
             GUILayout.EndScrollView();
             GUILayout.EndVertical();
-            GUILayout.Button(DEPENDENCY_UPDATE_BUTTON_TEXT, commandWidth);
-            GUILayout.Button(DEPENCENY_REMOVE_BUTTON_TEXT, commandWidth);
+            if (GUILayout.Button(DEPENDENCY_UPDATE_BUTTON_TEXT, commandWidth))
+            {
+                UpdateSelectedDependencies();
+            }
+            if (GUILayout.Button(DEPENCENY_REMOVE_BUTTON_TEXT, commandWidth))
+            {
+                RemoveSelectedDependencies();
+                
+            }
 
             GUILayout.EndVertical();
+        }
+
+        private void RemoveSelectedDependencies()
+        {
+            if (PopConfirmRemoveDependencyDialog())
+            {
+                List<VSModuleDependencyItem> selected =  GetSelectedDependencies();
+                vsModuleDelegate.RemoveDependencies(selected.GetEnumerator());
+                PopulateDependencySelections();
+            }
+        }
+
+        private bool PopConfirmRemoveDependencyDialog()
+        {
+            return EditorUtility.DisplayDialog("Confirm Dependency Removal", "Are you sure you want to remove the selected dependencies?", "Yes", "No");
+        }
+
+        private void UpdateSelectedDependencies()
+        {
+            List<VSModuleDependencyItem> selected = GetSelectedDependencies();
+            vsModuleDelegate.UpdateModuleDependencies(selected.GetEnumerator());
+        }
+
+        private List<VSModuleDependencyItem> GetSelectedDependencies()
+        {
+            List<VSModuleDependencyItem> selected = new List<VSModuleDependencyItem>();
+            foreach (DependencySelection selection in dependencySelections)
+            {
+                if (selection.isSelected)
+                {
+                    selected.Add(selection.item);
+                }
+            }
+            return selected;
         }
 
         private void DrawDependencyTree()
         {
             GUILayout.BeginHorizontal();
-            GUILayout.Button(DEPENDENCY_SELECT_ALL_BUTTON_TEXT, GUILayout.Width(75));
-            GUILayout.Button(DEPENDENCY_SELECT_NONE_BUTTON_TEXT, GUILayout.Width(100));
+            if (GUILayout.Button(DEPENDENCY_SELECT_ALL_BUTTON_TEXT, GUILayout.Width(75)))
+            {
+                SelectAllDependencies();
+            }
+            if (GUILayout.Button(DEPENDENCY_SELECT_NONE_BUTTON_TEXT, GUILayout.Width(100)))
+            {
+                SelectNoDependencies();
+            }
             GUILayout.EndHorizontal();
             List<VSModuleDependencyItem>.Enumerator items = this.vsDependencyTO.GetDependencies();
-            int itemIndex = 0;
             GUILayout.BeginVertical(GUI.skin.box);
-            while (items.MoveNext())
+            foreach (DependencySelection selection in dependencySelections)
             {
-                String label = items.Current.GetCompanyShortName() + ":" + items.Current.GetProjectName();
-                dependencySelections[itemIndex] = GUILayout.Toggle(dependencySelections[itemIndex], label);
-                itemIndex++;
+                String label = selection.item.GetDisplayValue();
+                selection.isSelected = GUILayout.Toggle(selection.isSelected, label);
             }
             GUILayout.EndVertical();
+        }
+
+        private void SelectNoDependencies()
+        {
+            SetAllDependenciesSelected(false);
+        }
+
+        private void SelectAllDependencies()
+        {
+            SetAllDependenciesSelected(true);
+        }
+
+        private void SetAllDependenciesSelected(bool isSelected)
+        {
+            for (int dependencyIndex = 0; dependencyIndex < dependencySelections.Count; dependencyIndex++)
+            {
+                dependencySelections[dependencyIndex].isSelected = isSelected;
+            }
         }
 
         private void DrawModuleInfoArea()
@@ -229,4 +287,10 @@ namespace UnityVSModuleEditor.UI
 
     }
 
+
+    class DependencySelection
+    {
+        public VSModuleDependencyItem item;
+        public bool isSelected;
+    }
 }

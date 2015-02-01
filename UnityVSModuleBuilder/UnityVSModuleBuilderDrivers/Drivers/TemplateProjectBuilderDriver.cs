@@ -8,7 +8,7 @@ namespace UnityVSModuleBuilder.Drivers
         public int Drive(string[] args)
         {
             BuildProjectRequestImpl.Builder requestBuilder = new BuildProjectRequestImpl.Builder();
-            requestBuilder.projectName = "DriverProject2";
+            requestBuilder.projectName = "DriverProject3";
             requestBuilder.copyLocation = "GeneratedDriverProject";
             requestBuilder.companyName = "DriverCompany";
             requestBuilder.companyShortName = "cn";

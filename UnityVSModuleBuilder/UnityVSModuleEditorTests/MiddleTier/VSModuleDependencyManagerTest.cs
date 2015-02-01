@@ -28,12 +28,15 @@ namespace UnityVSModuleEditor.MiddleTier
         private DependencyItem dependencyItem;
         private bool isAdded;
         private LoggingService loggingService;
+        private VSModuleDependencyItem existingRemoveItem;
+        private List<VSModuleDependencyItem> removeList;
         
         
         
         [SetUp]
         public void SetUp()
         {
+            removeList = new List<VSModuleDependencyItem>();
             loggingService = Substitute.For<LoggingService>();
             Logger.SetService(loggingService);
             deserializedModel = new VSModuleDependencyXmlModel();
@@ -89,6 +92,29 @@ namespace UnityVSModuleEditor.MiddleTier
             ThenErrorIsLogged();
         }
 
+        [Test]
+        public void TestDependencyRemoval()
+        {
+            GivenUnityAPIHasExpectedAssetFolder();
+            GivenDependencyFileExists();
+            GivenSerializerHasModelForFile();
+            GivenModelHasExpectedDependencyItems();
+            GivenExistingExpectedItemInRemoveRequestList();
+            WhenDependencyRemoveRequested();
+            ThenModelSerializedWithoutRemovedItems();
+        }
+        
+        private void WhenDependencyRemoveRequested()
+        {
+            manager.RemoveDependencies(removeList.GetEnumerator());
+        }
+
+        private void GivenExistingExpectedItemInRemoveRequestList()
+        {
+            existingRemoveItem = new VSModuleDependencyItem(EXPECTED_EXISTING_COMPANY_SHORT_NAME, EXPECTED_EXISTING_PROJECT_NAME);
+            removeList.Add(existingRemoveItem);
+        }
+
         private void ThenErrorIsLogged()
         {
             loggingService.Received().LogError(Arg.Any<String>());
@@ -123,6 +149,17 @@ namespace UnityVSModuleEditor.MiddleTier
         private void ThenModelSerializedWithAddedItems()
         {
             serializer.Received().SerializeToFile<VSModuleDependencyXmlModel>(Arg.Is<FileEntry>(dependencyFile), Arg.Is<VSModuleDependencyXmlModel>( x => ValidateNewDependencyAdded(x)));
+        }
+
+        private void ThenModelSerializedWithoutRemovedItems()
+        {
+            serializer.Received().SerializeToFile<VSModuleDependencyXmlModel>(Arg.Is<FileEntry>(dependencyFile), Arg.Is<VSModuleDependencyXmlModel>(x => ValidateExistingDependencyRemoved(x)));
+        }
+
+        private bool ValidateExistingDependencyRemoved(VSModuleDependencyXmlModel x)
+        {
+            Assert.AreEqual(0, x.dependencies.Count);
+            return true;
         }
 
         private static bool ValidateNewDependencyAdded(VSModuleDependencyXmlModel x)
