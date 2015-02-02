@@ -53,6 +53,7 @@
     <Compile Include="MiddleTier\VSModuleDependencyManager.cs" />
     <Compile Include="MiddleTier\VSModuleDependencyTO.cs" />
     <Compile Include="MiddleTier\VSModuleImportExportManager.cs" />
+    <Compile Include="MiddleTier\VSModuleUnityManager.cs" />
     <Compile Include="UI\UnityLoggingService.cs" />
     <Compile Include="UI\UnityApiFactory.cs" />
     <Compile Include="UI\DependencyPromptWindow.cs" />

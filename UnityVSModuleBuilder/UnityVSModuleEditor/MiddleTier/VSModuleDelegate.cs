@@ -14,24 +14,29 @@ namespace UnityVSModuleEditor.MiddleTier
         void UpdateModuleDependencies(System.Collections.Generic.List<VSModuleDependencyItem>.Enumerator enumerator);
 
         void RemoveDependencies(List<VSModuleDependencyItem>.Enumerator enumerator);
+
+        void UpdateUnitySettings();
     }
 
     internal class VSModuleDelegateImpl : VSModuleDelegate
     {
         private readonly VSModuleSettingsManager vsSettingsManager;
         private readonly VSModuleProjectManager vsProjectManager;
-        private readonly VSModuleImportExportManager vsModuleImportExportManager;
+        private readonly VSModuleImportExportManager vsImportExportManager;
         private readonly VSModuleDependencyManager vsDependencyManager;
+        private readonly VSModuleUnityManager vsUnityManager;
 
         public VSModuleDelegateImpl(VSModuleSettingsManager vsSettingsManager,
                 VSModuleProjectManager vsProjectManager,
                 VSModuleImportExportManager vsModuleImportExportManager,
-                VSModuleDependencyManager vsDependencyManager)
+                VSModuleDependencyManager vsDependencyManager,
+                VSModuleUnityManager unityManager)
         {
             this.vsSettingsManager = vsSettingsManager;
             this.vsProjectManager = vsProjectManager;
             this.vsDependencyManager = vsDependencyManager;
-            this.vsModuleImportExportManager = vsModuleImportExportManager;
+            this.vsImportExportManager = vsModuleImportExportManager;
+            this.vsUnityManager = unityManager;
         }
 
         public void SaveModuleSettingsTO(VSModuleSettingsTO to)
@@ -80,7 +85,7 @@ namespace UnityVSModuleEditor.MiddleTier
 
         private void ExportModuleToRepository(VSModuleSettingsTO to)
         {
-            bool isExported = vsModuleImportExportManager.ExportModule(to);
+            bool isExported = vsImportExportManager.ExportModule(to);
             if (isExported)
             {
                 Logger.Log("VSModule Exported To Repository.");
@@ -117,7 +122,7 @@ namespace UnityVSModuleEditor.MiddleTier
                 isAdded = vsProjectManager.UpdateVSProjectsForDependencies(origional, updated, settings);
                 if (isAdded)
                 {
-                    isAdded = vsModuleImportExportManager.ImportModule(companyShortName, projectName, settings);
+                    isAdded = vsImportExportManager.ImportModule(companyShortName, projectName, settings);
                     if (isAdded)
                     {
                         Logger.Log("Dependency '" + companyShortName + "' '" + projectName + "' added.");
@@ -137,7 +142,7 @@ namespace UnityVSModuleEditor.MiddleTier
                     VSModuleDependencyItem item = enumerator.Current;
                     if (existingDependencies.ContainsMatchingItem(item))
                     {
-                        vsModuleImportExportManager.ImportModule(item.GetCompanyShortName(), item.GetProjectName(), settings);
+                        vsImportExportManager.ImportModule(item.GetCompanyShortName(), item.GetProjectName(), settings);
                     }
                     else
                     {
@@ -168,5 +173,20 @@ namespace UnityVSModuleEditor.MiddleTier
             }
         }
 
+
+
+        public void UpdateUnitySettings()
+        {
+            try
+            {
+                VSModuleSettingsTO settings = vsSettingsManager.RetrieveModuleSettingsTO();
+                vsUnityManager.UpdateUnitySettings(settings);
+                Logger.Log("VSModule Settings Applied to Unity Project.");
+            }
+            catch (Exception e)
+            {
+                Logger.LogError("Unexpected exception updating unity project settings for VSModule settings. See log for error details.", e);
+            }
+        }
     }
 }

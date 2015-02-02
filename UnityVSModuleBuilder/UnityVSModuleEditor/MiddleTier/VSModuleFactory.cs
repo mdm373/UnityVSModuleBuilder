@@ -13,7 +13,8 @@ namespace UnityVSModuleEditor.MiddleTier
             VSModuleProjectManagerImpl vsProjectManager = new VSModuleProjectManagerImpl(unityApi, fsController);
             VSModuleDependencyManagerImpl vsDependencyManager = new VSModuleDependencyManagerImpl(unityApi, serializer, fsController);
             VSModuleImportExportManagerImpl vsImportManager = new VSModuleImportExportManagerImpl(unityApi, fsController);
-            return new VSModuleDelegateImpl(vsSettingsManager, vsProjectManager, vsImportManager, vsDependencyManager);
+            VSModuleUnityManager vsUnityManager = new VSModuleUnityManagerImpl(unityApi);
+            return new VSModuleDelegateImpl(vsSettingsManager, vsProjectManager, vsImportManager, vsDependencyManager, vsUnityManager);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace UnityVSModuleEditor.UI
 {
     public class UnityVSModuleConfigWindow : EditorWindow
     {
-        private const int COMMAND_WIDTH = 200;
+        private const int COMMAND_WIDTH = 175;
         private const int LABEL_WIDTH = 150;
         private const int DEPENDENCY_HEIGHT = 200;
         private const string CONFIGURATION_LABEL = "Configuration";
@@ -24,6 +24,7 @@ namespace UnityVSModuleEditor.UI
         private const string DEPENDENCY_SELECT_NONE_BUTTON_TEXT = "Select none";
         private const string DEPENDENCY_UPDATE_BUTTON_TEXT = "Update selected";
         private const string DEPENCENY_REMOVE_BUTTON_TEXT = "Remove selected";
+        
 
         private VSModuleDelegate vsModuleDelegate;
         private Vector2 windowScrollPosition;
@@ -39,7 +40,7 @@ namespace UnityVSModuleEditor.UI
         private String companyShortNameLabel = String.Empty;
         private VSModuleDependencyTO vsDependencyTO;
         private List<DependencySelection> dependencySelections;
-
+        
         public UnityVSModuleConfigWindow()
         {
             Logger.SetService(UnityLoggingService.INSTANCE);
@@ -143,10 +144,14 @@ namespace UnityVSModuleEditor.UI
                 
             GUILayout.EndHorizontal();
 
+            GUILayout.BeginHorizontal();
             if (GUILayout.Button(APPLY_BUTTON_TEXT, commandWidth))
             {
                 vsModuleDelegate.SaveModuleSettingsTO(vsModuleSettingsTO);
+                vsModuleDelegate.UpdateUnitySettings();
             }
+            GUILayout.EndHorizontal();
+            
             GUILayout.EndVertical();
         }
 

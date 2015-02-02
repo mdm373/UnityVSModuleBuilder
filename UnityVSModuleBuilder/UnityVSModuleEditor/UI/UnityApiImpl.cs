@@ -54,5 +54,20 @@ namespace UnityVSModuleEditor.UI
             LogError(p);
             LogException(e);
         }
+
+        public void UpdateProjectName(string projectName)
+        {
+            PlayerSettings.productName = projectName;
+        }
+
+        public void UpdateCompanyName(string companyName)
+        {
+            PlayerSettings.companyName = companyName;
+        }
+
+        public void UpdateAndriodBundleIdentifier(string androidIdenfitifer)
+        {
+            PlayerSettings.bundleIdentifier = androidIdenfitifer;
+        }
     }
 }

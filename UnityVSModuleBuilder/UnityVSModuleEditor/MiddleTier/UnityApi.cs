@@ -15,5 +15,8 @@ namespace UnityVSModuleEditor.MiddleTier
         String GetAssetFolder();
         void ExportRootAssets(string[] assetPathname, String exportFileName);
         void ImportRootAssets(String importFileName);
+        void UpdateProjectName(string projectName);
+        void UpdateCompanyName(string comapnyName);
+        void UpdateAndriodBundleIdentifier(string androidIdenfitifer);
     }
 }

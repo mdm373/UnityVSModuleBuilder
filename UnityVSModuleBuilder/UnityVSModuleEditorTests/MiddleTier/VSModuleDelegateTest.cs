@@ -33,6 +33,7 @@ namespace UnityVSModuleEditor.MiddleTier
         private VSModuleDependencyItem existingDependency;
         private VSModuleDependencyItem unknownDependency;
         private List<VSModuleDependencyItem> toRemoveList;
+        private VSModuleUnityManager vsUnityManager;
         
         [SetUp]
         public void SetUp()
@@ -42,6 +43,7 @@ namespace UnityVSModuleEditor.MiddleTier
             toUpdateList = new List<VSModuleDependencyItem>();
             loggingService = Substitute.For<LoggingService>();
             Logger.SetService(loggingService);
+            vsUnityManager = Substitute.For<VSModuleUnityManager>();
             vsSettingsManager = Substitute.For<VSModuleSettingsManager>();
             vsProjectManager = Substitute.For<VSModuleProjectManager>();
             vsImportExportManager = Substitute.For<VSModuleImportExportManager>();
@@ -50,7 +52,8 @@ namespace UnityVSModuleEditor.MiddleTier
             vsModuleDelegate = new VSModuleDelegateImpl(vsSettingsManager, 
                 vsProjectManager, 
                 vsImportExportManager, 
-                vsDependencyManager);
+                vsDependencyManager,
+                vsUnityManager);
         }
 
         [Test]
@@ -190,6 +193,24 @@ namespace UnityVSModuleEditor.MiddleTier
             ThenDependencyManagerRemovesDependency();
             ThenProjectManagerUpdatesForDependencyChange();
             
+        }
+
+        [Test]
+        public void TestApplyProjectSettings()
+        {
+            GivenSettingsManagerProvidesExistingSettingsTO();
+            WhenUpdateUnitySettingsRequested();
+            ThenUnityManagerSettingsUpdateRequested();
+        }
+
+        private void ThenUnityManagerSettingsUpdateRequested()
+        {
+            vsUnityManager.Received().UpdateUnitySettings(existingSettings);
+        }
+
+        private void WhenUpdateUnitySettingsRequested()
+        {
+            vsModuleDelegate.UpdateUnitySettings();
         }
 
         private void GivenExistingDependencyInRemoveList()

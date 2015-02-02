@@ -71,5 +71,21 @@ namespace UnityVSModuleBuilder.Drivers
         {
             Console.Out.WriteLine("MockUnityApi.ImportRootAssets('" + importFileName + "')");
         }
+
+
+        public void UpdateProjectName(string projectName)
+        {
+            Console.Out.WriteLine("MockUnityApi.UpdateProjectName('" + projectName + "')");
+        }
+
+        public void UpdateCompanyName(string companyName)
+        {
+            Console.Out.WriteLine("MockUnityApi.UpdateCompanyName('" + companyName + "')");
+        }
+
+        public void UpdateAndriodBundleIdentifier(string andriodIdentifier)
+        {
+            Console.Out.WriteLine("MockUnityApi.UpdateAndriodBundleIdentifier('" + andriodIdentifier + "')");
+        }
     }
 }

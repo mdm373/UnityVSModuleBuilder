@@ -53,6 +53,7 @@
     <Compile Include="MiddleTier\VSModuleImportExportManagerTest.cs" />
     <Compile Include="MiddleTier\VSModuleProjectManagerTest.cs" />
     <Compile Include="MiddleTier\VSModuleSettingsManagerTest.cs" />
+    <Compile Include="MiddleTier\VSModuleUnityManagerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
