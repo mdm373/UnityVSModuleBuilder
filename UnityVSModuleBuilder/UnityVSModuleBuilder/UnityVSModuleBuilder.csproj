@@ -153,9 +153,6 @@
     <None Include="ProjectTemplate\[[PROJECT_NAME]]\VisualStudio\[[PROJECT_NAME]].sln">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\VisualStudio\[[PROJECT_NAME]]Editor\lib\NSubstitute.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\Assets\[[COMPANY_SHORT_NAME]]\[[PROJECT_NAME]]\[[REM_TAG]]">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -168,6 +165,9 @@
     <Content Include="ProjectTemplate\[[PROJECT_NAME]]\VisualStudio\[[PROJECT_NAME]]Editor\[[PROJECT_NAME]]Editor.csproj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="ProjectTemplate\[[PROJECT_NAME]]\VisualStudio\[[PROJECT_NAME]]Editor\packages.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="ProjectTemplate\[[PROJECT_NAME]]\VisualStudio\[[PROJECT_NAME]]\[[PROJECT_NAME]].csproj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

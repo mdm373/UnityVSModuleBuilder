@@ -4,33 +4,38 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5E1A72A1-C42F-4DA1-BE37-7C7C42D82C0E}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{06B78506-3ACF-4401-9CC3-C5FBFD4B03BA}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnityVSModuleEditor</RootNamespace>
-    <AssemblyName>UnityVSModuleEditor</AssemblyName>
+    <RootNamespace>UnityVSModuleBuilder.CommandLine</RootNamespace>
+    <AssemblyName>UVSModMake</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>UnityVSModuleBuilder.CommandLine.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -39,42 +44,29 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnityEditor">
-      <HintPath>lib\UnityEditor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>lib\UnityEngine.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MiddleTier\VSModuleConstants.cs" />
-    <Compile Include="MiddleTier\VSModuleDependencyManager.cs" />
-    <Compile Include="MiddleTier\VSModuleDependencyTO.cs" />
-    <Compile Include="MiddleTier\VSModuleImportExportManager.cs" />
-    <Compile Include="MiddleTier\VSModuleUnityManager.cs" />
-    <Compile Include="UI\UnityLoggingService.cs" />
-    <Compile Include="UI\UnityApiFactory.cs" />
-    <Compile Include="UI\DependencyPromptWindow.cs" />
-    <Compile Include="MiddleTier\UnityApi.cs" />
-    <Compile Include="UI\UnityApiImpl.cs" />
-    <Compile Include="MiddleTier\VSModuleFactory.cs" />
-    <Compile Include="MiddleTier\VSModuleSettingsManager.cs" />
-    <Compile Include="XMLStore\VSModuleDependencyXmlModel.cs" />
-    <Compile Include="XMLStore\VSModuleSettingsXmlModel.cs" />
-    <Compile Include="UI\UnityVSModuleConfigWindow.cs" />
-    <Compile Include="UI\VSModuleMenu.cs" />
+    <Compile Include="ArgHelper.cs" />
+    <Compile Include="BuildProjectArgRequest.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="ProgramConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MiddleTier\VSModuleSettingsTO.cs" />
-    <Compile Include="MiddleTier\VSModuleDelegate.cs" />
-    <Compile Include="MiddleTier\VSModuleProjectManager.cs" />
-    <Compile Include="XMLStore\XmlSerializerWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UnityVSModuleBuilder\UnityVSModuleBuilder.csproj">
+      <Project>{182bd9f7-1b95-4b2d-afc2-6b6fa80a98d0}</Project>
+      <Name>UnityVSModuleBuilder</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UnityVSModuleCommon\UnityVSModuleCommon.csproj">
       <Project>{90ea66a4-5c21-42ed-a0c2-6bcc9ece484c}</Project>
       <Name>UnityVSModuleCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnityVSModuleEditor\UnityVSModuleEditor.csproj">
+      <Project>{5e1a72a1-c42f-4da1-be37-7c7c42d82c0e}</Project>
+      <Name>UnityVSModuleEditor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
