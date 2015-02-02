@@ -162,7 +162,9 @@
     <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\Assets\Editor\ModuleConfig.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="ProjectTemplate\[[PROJECT_NAME]]\.gitignore" />
+    <None Include="ProjectTemplate\[[PROJECT_NAME]]\.gitignore">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="ProjectTemplate\[[PROJECT_NAME]]\VisualStudio\[[PROJECT_NAME]]Editor\[[PROJECT_NAME]]Editor.csproj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
