@@ -8,7 +8,6 @@ UnityVSModuleBuilder/UnityVSModuleBuilderDrivers/obj/
 *.VisualState.xml
 *.FileListAbsolute.txt
 *TestResult.xml
-UnityVSModuleBuilder/UnityVSModuleEditor/lib/
 UnityVSModuleBuilder/UnityVSModuleEditor/bin/
 UnityVSModuleBuilder/UnityVSModuleEditor/obj/
 UnityVSModuleBuilder/UnityVSModuleCommon/bin/

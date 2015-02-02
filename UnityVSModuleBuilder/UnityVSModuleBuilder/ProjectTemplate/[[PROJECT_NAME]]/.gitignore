@@ -1,0 +1,8 @@
+VisualStudio/packages/
+VisualStudio/[[PROJECT_NAME]]/bin/
+VisualStudio/[[PROJECT_NAME]]Editor/bin/
+VisualStudio/[[PROJECT_NAME]]/obj/
+VisualStudio/[[PROJECT_NAME]]Editor/obj/
+*.VisualState.xml
+*.FileListAbsolute.txt
+*TestResult.xml
