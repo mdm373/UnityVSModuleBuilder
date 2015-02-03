@@ -16,10 +16,6 @@ namespace UnityVSModuleCommon.FileSystem
             {
                 throw new DirectoryNotFoundException("Source dir'" + from + "' does not exist");
             }
-            if (toInfo.Exists)
-            {
-                throw new DirectoryNotFoundException("Destination dir'" + to + "' already exists");
-            }
             else
             {
                 Directory.CreateDirectory(to);

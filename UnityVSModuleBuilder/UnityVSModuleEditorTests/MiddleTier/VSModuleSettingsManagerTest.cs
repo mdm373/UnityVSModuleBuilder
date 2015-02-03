@@ -6,6 +6,7 @@ using NUnit.Framework;
 using NSubstitute;
 using UnityVSModuleCommon.FileSystem;
 using UnityVSModuleEditor.XMLStore;
+using UnityVSModuleCommon;
 
 namespace UnityVSModuleEditor.MiddleTier
 {

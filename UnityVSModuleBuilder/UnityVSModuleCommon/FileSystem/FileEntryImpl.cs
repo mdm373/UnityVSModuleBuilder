@@ -41,6 +41,10 @@ namespace UnityVSModuleCommon.FileSystem
             {
                 DirectoryInfo existingDirInfo = new DirectoryInfo(info.FullName);
                 String newDirName = Path.Combine(existingDirInfo.Parent.FullName, newName);
+                if (Directory.Exists(newDirName))
+                {
+                    Directory.Delete(newDirName, true);
+                }
                 Directory.Move(existingDirInfo.FullName, newDirName);
                 info = new DirectoryInfo(newDirName);
             }
@@ -48,6 +52,10 @@ namespace UnityVSModuleCommon.FileSystem
             {
                 FileInfo existingFileInfo = new FileInfo(info.FullName);
                 String newFileName = Path.Combine(existingFileInfo.Directory.FullName, newName);
+                if (File.Exists(newFileName))
+                {
+                    File.Delete(newFileName);
+                }
                 File.Move(info.FullName, newFileName);
                 info = new FileInfo(newFileName);
             }

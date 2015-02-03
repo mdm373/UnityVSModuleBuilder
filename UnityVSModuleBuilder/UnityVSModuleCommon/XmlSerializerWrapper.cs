@@ -4,15 +4,15 @@ using System.Xml.Serialization;
 using UnityVSModuleCommon;
 using UnityVSModuleCommon.FileSystem;
 
-namespace UnityVSModuleEditor.XMLStore
+namespace UnityVSModuleCommon
 {
-    internal interface XmlSerializerWrapper
+    public interface XmlSerializerWrapper
     {
         bool SerializeToFile<V>(FileEntry info, V model);
         V GetDeserialized<V>(FileEntry file);
     }
 
-    internal class XmlSerializerWrapperImpl : XmlSerializerWrapper
+    public class XmlSerializerWrapperImpl : XmlSerializerWrapper
     {
 
         public bool SerializeToFile<V>(FileEntry info, V model)

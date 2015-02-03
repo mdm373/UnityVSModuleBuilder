@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVSModuleEditorTests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVSModuleBuilderCommandLine", "UnityVSModuleBuilderCommandLine\UnityVSModuleBuilderCommandLine.csproj", "{06B78506-3ACF-4401-9CC3-C5FBFD4B03BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVSModuleBuilderGUI", "UnityVSModuleBuilderGUI\UnityVSModuleBuilderGUI.csproj", "{F2D36FBA-3215-4856-A56B-4E74DE3CF7A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{06B78506-3ACF-4401-9CC3-C5FBFD4B03BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06B78506-3ACF-4401-9CC3-C5FBFD4B03BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06B78506-3ACF-4401-9CC3-C5FBFD4B03BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2D36FBA-3215-4856-A56B-4E74DE3CF7A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2D36FBA-3215-4856-A56B-4E74DE3CF7A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2D36FBA-3215-4856-A56B-4E74DE3CF7A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2D36FBA-3215-4856-A56B-4E74DE3CF7A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

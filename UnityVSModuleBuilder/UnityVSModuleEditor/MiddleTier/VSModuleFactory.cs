@@ -1,4 +1,5 @@
-﻿using UnityVSModuleCommon.FileSystem;
+﻿using UnityVSModuleCommon;
+using UnityVSModuleCommon.FileSystem;
 using UnityVSModuleEditor.XMLStore;
 
 namespace UnityVSModuleEditor.MiddleTier

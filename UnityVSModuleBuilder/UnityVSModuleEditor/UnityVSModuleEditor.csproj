@@ -69,7 +69,6 @@
     <Compile Include="MiddleTier\VSModuleSettingsTO.cs" />
     <Compile Include="MiddleTier\VSModuleDelegate.cs" />
     <Compile Include="MiddleTier\VSModuleProjectManager.cs" />
-    <Compile Include="XMLStore\XmlSerializerWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UnityVSModuleCommon\UnityVSModuleCommon.csproj">
