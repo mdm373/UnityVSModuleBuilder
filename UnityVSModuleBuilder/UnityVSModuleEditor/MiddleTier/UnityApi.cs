@@ -13,6 +13,7 @@ namespace UnityVSModuleEditor.MiddleTier
         void LogException(Exception e);
         void LogWarning(String message);
         String GetAssetFolder();
+        String GetProjectFolder();
         void ExportRootAssets(string[] assetPathname, String exportFileName);
         void ImportRootAssets(String importFileName);
         void UpdateProjectName(string projectName);

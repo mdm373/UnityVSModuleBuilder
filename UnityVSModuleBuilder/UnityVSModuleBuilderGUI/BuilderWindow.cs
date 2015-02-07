@@ -30,7 +30,7 @@ namespace UnityVSModuleBuilder.GUI
         private void InitializeConfiguration()
         {
             flpkrOutput.IsExistEnforced = false;
-            flpkrRepoLocation.IsExistEnforced = false;
+            //flpkrRepoLocation.IsExistEnforced = false;
             flpkrOutput.IsExistEnforced = false;
             
         }
@@ -51,7 +51,7 @@ namespace UnityVSModuleBuilder.GUI
             txtProjectName.Text = config.ProjectName;
             txtCompanyName.Text = config.CompanyName;
             txtCompanyShortName.Text = config.CompanyShortName;
-            flpkrRepoLocation.SetChosen(config.RepositoryLocation);
+            //flpkrRepoLocation.SetChosen(config.RepositoryLocation);
             flpkrUnityInstall.SetChosen(config.UnityInstallLocation);
             flpkrOutput.SetChosen(config.ProjectGenerationLocation);
 
@@ -70,7 +70,6 @@ namespace UnityVSModuleBuilder.GUI
                 config.ProjectName = txtProjectName.Text;
                 config.CompanyName = txtCompanyName.Text;
                 config.CompanyShortName = txtCompanyShortName.Text;
-                config.RepositoryLocation = flpkrRepoLocation.GetChosen();
                 config.UnityInstallLocation = flpkrUnityInstall.GetChosen();
                 config.ProjectGenerationLocation = flpkrOutput.GetChosen();
                 config.SaveToFile();
@@ -108,6 +107,12 @@ namespace UnityVSModuleBuilder.GUI
                 icon = MessageBoxIcon.Error;
             }
             MessageBox.Show(this, message, title, MessageBoxButtons.OK, icon);
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsWindow settings = new SettingsWindow();
+            settings.ShowDialog();
         }
 
 

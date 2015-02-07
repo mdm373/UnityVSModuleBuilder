@@ -21,12 +21,12 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\Inno\Content\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -40,18 +40,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\ApplicationFactory.cs" />
+    <Compile Include="Application\ApplicationManager.cs" />
+    <Compile Include="Application\ApplicationManagerImpl.cs" />
+    <Compile Include="Application\ApplicationSettings.cs" />
+    <Compile Include="Application\ApplicationSettingsImpl.cs" />
+    <Compile Include="Application\ApplicationSettingsResponse.cs" />
+    <Compile Include="Application\ApplicationSettingsResponseImpl.cs" />
     <Compile Include="FileSystem\FileEntry.cs" />
     <Compile Include="FileSystem\FileEntryImpl.cs" />
     <Compile Include="FileSystem\FileSystemController.cs" />
     <Compile Include="FileSystem\FileSystemControllerImpl.cs" />
     <Compile Include="FileSystem\FileSystemFactory.cs" />
     <Compile Include="FileSystem\Path.cs" />
-    <Compile Include="ConsoleLoggingService.cs" />
+    <Compile Include="LoggingServiceConsole.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="LoggingService.cs" />
+    <Compile Include="LoggingServiceFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegistryController.cs" />
     <Compile Include="StreamUtil.cs" />
     <Compile Include="XmlSerializerWrapper.cs" />
+    <Compile Include="XMLStore\ApplicationSettingsXMLModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

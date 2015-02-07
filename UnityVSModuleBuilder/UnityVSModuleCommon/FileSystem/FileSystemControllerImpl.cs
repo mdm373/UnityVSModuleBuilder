@@ -97,6 +97,20 @@ namespace UnityVSModuleCommon.FileSystem
             return entry;
         }
 
+        public FileEntry GetExistingFileOrDirectory(string fileLocation)
+        {
+            FileEntry existing = GetExistingFile(fileLocation);
+            if (existing == null)
+            {
+                DirectoryInfo dirInfo = new DirectoryInfo(fileLocation);
+                if (dirInfo.Exists)
+                {
+                    existing = new FileEntryImpl(dirInfo);
+                }
+            }
+            return existing;
+        }
+
         public FileEntry CreateNotPresentFile(string fileLocation)
         {
             FileEntry file = null;

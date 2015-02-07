@@ -31,7 +31,7 @@ namespace UnityVSModuleCommon
         {
             if (service == null)
             {
-                service = new ConsoleLoggingService();
+                service = new LoggingServiceConsole();
             }
         }
     }

@@ -11,8 +11,7 @@ namespace UnityVSModuleBuilder.Implement
         private const String EXPECTED_UNITY_LOCATION = "EXPECTED_UNITY_LOCATION";
         private const String EXPECTED_COMPANY_SHORT_NAME = "EXPECTED_COMPANY_SHORT_NAME";
         private const String EXPECTED_COMPANY_NAME = "EXPECTED_COMPANY_NAME";
-        private const String EXPECTED_MODULE_REPOSITORY_LOCATION = "EXPECTED_MODULE_REPOSITORY_LOCATION";
-
+        
         private BuildProjectRequest request;
         private BuildProjectRequestImpl.Builder builder;
         
@@ -31,24 +30,12 @@ namespace UnityVSModuleBuilder.Implement
             GivenBuilderHasExpectedCompanyShortName();
             GivenBuilderHasExpectedUnityLocation();
             GivenBuilderHasExpectedProjectName();
-            GivenBuilderHasModuleRepositoryLocation();
             WhenBuildInvoked();
-            ThenRequestHasModuleRepositoryLocation();
             ThenRequestHasExpectedCopyLocation();
             ThenRequestHasExpectedCompanyName();
             ThenRequestHasExpectedCompanyShortName();
             ThenRequestHasExpectedUnityLocation();
             ThenRequestHasExpectedProjectName();
-        }
-
-        private void ThenRequestHasModuleRepositoryLocation()
-        {
-            Assert.AreEqual(EXPECTED_MODULE_REPOSITORY_LOCATION, request.GetModuleRepositoryLocation());
-        }
-
-        private void GivenBuilderHasModuleRepositoryLocation()
-        {
-            builder.moduleRepositoryLocation = EXPECTED_MODULE_REPOSITORY_LOCATION;
         }
 
         private void ThenRequestHasExpectedProjectName()

@@ -2,6 +2,7 @@
 using UnityVSModuleCommon.FileSystem;
 using UnityVSModuleCommon;
 using UnityVSModuleEditor.XMLStore;
+using UnityVSModuleCommon.Application;
 
 namespace UnityVSModuleEditor.MiddleTier
 {
@@ -16,12 +17,17 @@ namespace UnityVSModuleEditor.MiddleTier
         private readonly UnityApi unityApi;
         private readonly XmlSerializerWrapper serializer;
         private FileSystemController fsController;
+        private ApplicationManager appManager;
 
-        public VSModuleSettingsManagerImpl(UnityApi unityApi, XmlSerializerWrapper serializer, FileSystemController fsController)
+        public VSModuleSettingsManagerImpl(UnityApi unityApi,
+            XmlSerializerWrapper serializer, 
+            FileSystemController fsController,
+            ApplicationManager appManager)
         {
             this.unityApi = unityApi;
             this.serializer = serializer;
             this.fsController = fsController;
+            this.appManager = appManager;
         }
 
         public bool SaveModuleSettingsTO(VSModuleSettingsTO to)
@@ -30,6 +36,12 @@ namespace UnityVSModuleEditor.MiddleTier
             try
             {
                 SendToToFile(to);
+                ApplicationSettings oldSettings = GetExistingAppSettings();
+                if(!oldSettings.GetRepoLocation().Equals(to.GetRepoLocation()))
+                {
+                    ApplicationSettings settings = ApplicationFactory.GetNewApplicationSettings(to.GetRepoLocation());
+                    appManager.SaveApplicationSettings(settings);
+                }
             }
             catch (Exception e)
             {
@@ -40,12 +52,32 @@ namespace UnityVSModuleEditor.MiddleTier
             return isSaved;
         }
 
+        private ApplicationSettings GetExistingAppSettings()
+        {
+            ApplicationSettings settings = null;
+            ApplicationSettingsResponse response = appManager.RetrieveApplicationSettings();
+            if (response.GetCode() == AppSettingsCode.SUCCESS)
+            {
+                settings = response.GetApplicationSettings();
+            }
+            return settings;
+        }
+
         public VSModuleSettingsTO RetrieveModuleSettingsTO()
         {
             VSModuleSettingsTO to = null;
             try
             {
-                to = GetTOFromFile();
+                ApplicationSettings appSettings = GetExistingAppSettings();
+                if (appSettings != null)
+                {
+                    to = GetTOFromFile(appSettings);
+                }
+                else
+                {
+                    to = GetDefaultTO();
+                }
+                
             }
             catch (Exception e)
             {
@@ -77,7 +109,7 @@ namespace UnityVSModuleEditor.MiddleTier
             
         }
 
-        private VSModuleSettingsTO GetTOFromFile()
+        private VSModuleSettingsTO GetTOFromFile(ApplicationSettings appSettings)
         {
             VSModuleSettingsTO to = null;
             FileEntry info = GetSettingsFileInfo(false);
@@ -86,7 +118,7 @@ namespace UnityVSModuleEditor.MiddleTier
                 VSModuleSettingsXmlModel model = serializer.GetDeserialized<VSModuleSettingsXmlModel>(info);
                 if (model != null)
                 {
-                    to = TranslateModeltoTO(model);
+                    to = TranslateModeltoTO(model, appSettings);
                 }
             }
             else
@@ -96,14 +128,14 @@ namespace UnityVSModuleEditor.MiddleTier
             return to;
         }
 
-        private VSModuleSettingsTO TranslateModeltoTO(VSModuleSettingsXmlModel model)
+        private VSModuleSettingsTO TranslateModeltoTO(VSModuleSettingsXmlModel model, ApplicationSettings settings)
         {
             VSModuleSettingsTO.Builder builder = new VSModuleSettingsTO.Builder();
             builder.ProjectName = model.projectName;
             builder.CompanyName = model.companyName;
             builder.CompanyShortName = model.companyShortName;
-            builder.RepoLocation = model.repoLocation;
             builder.UnityInstallLocation = model.unityInstallLocation;
+            builder.RepoLocation = settings.GetRepoLocation();
             return builder.Build();
         }
 
@@ -113,7 +145,6 @@ namespace UnityVSModuleEditor.MiddleTier
             model.projectName = to.GetProjectName();
             model.companyName = to.GetCompanyName();
             model.companyShortName = to.GetCompanyShortName();
-            model.repoLocation = to.GetRepoLocation();
             model.unityInstallLocation = to.GetUnityInstallLocation();
             return model;
         }

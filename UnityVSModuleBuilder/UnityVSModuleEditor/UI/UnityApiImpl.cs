@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using UnityEditor;
@@ -36,6 +37,10 @@ namespace UnityVSModuleEditor.UI
             return Application.dataPath;
         }
 
+        public String GetProjectFolder()
+        {
+            return Directory.GetParent(GetAssetFolder()).FullName;
+        }
 
         public void ExportRootAssets(string[] assetPaths, String exportFileName)
         {

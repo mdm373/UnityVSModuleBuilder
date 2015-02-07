@@ -12,19 +12,22 @@ namespace UnityVSModuleEditor.UI
         private const int COMMAND_WIDTH = 175;
         private const int LABEL_WIDTH = 150;
         private const int DEPENDENCY_HEIGHT = 200;
-        private const string CONFIGURATION_LABEL = "Configuration";
+        private const string APP_CONFIGURATION_LABEL = "Application Configuration";
         private const string REPO_LOCATION_LABEL = "Repo location";
         private const string UNITY_INSTALL_DIR_LABEL = "Unity install location";
-        private const string APPLY_BUTTON_TEXT = "Apply";
-        private const string MODULE_INFO_HEADER_TEXT = "Module info";
-        private const string EXPORT_TO_REPO_BUTTON_TEXT = "Export to repo";
-        private const string  DEPENDENCY_HEADER_TEXT = "Dependency modules";
+        private const string APPLY_BUTTON_TEXT = "Apply module config";
+        private const string MODULE_INFO_HEADER_TEXT = "Module Configuration";
+        private const string EXPORT_TO_REPO_BUTTON_TEXT = "Export module to repo";
+        private const string  DEPENDENCY_HEADER_TEXT = "Module Dependencies";
         private const string DEPENDENCY_ADD_BUTTON_TEXT = "Import from repo";
         private const string DEPENDENCY_SELECT_ALL_BUTTON_TEXT = "Select all";
         private const string DEPENDENCY_SELECT_NONE_BUTTON_TEXT = "Select none";
         private const string DEPENDENCY_UPDATE_BUTTON_TEXT = "Update selected";
         private const string DEPENCENY_REMOVE_BUTTON_TEXT = "Remove selected";
-        
+        private const string PROJECT_NAME_LABEL = "Project name";
+        private const string COMPANY_NAME_LABEL = "Company name";
+        private const string COMPANY_SHORT_NAME_LABEL = "Company short name";
+
 
         private VSModuleDelegate vsModuleDelegate;
         private Vector2 windowScrollPosition;
@@ -35,9 +38,9 @@ namespace UnityVSModuleEditor.UI
         private GUILayoutOption labelWidth;
         private GUILayoutOption dependencyHeight;
 
-        private String companyNameLabel = String.Empty;
-        private String projectNameLabel = String.Empty;
-        private String companyShortNameLabel = String.Empty;
+        private String companyName = String.Empty;
+        private String projectName = String.Empty;
+        private String companyShortName = String.Empty;
         private VSModuleDependencyTO vsDependencyTO;
         private List<DependencySelection> dependencySelections;
         
@@ -79,9 +82,9 @@ namespace UnityVSModuleEditor.UI
 
         private void InitializeConfigLabels()
         {
-            projectNameLabel = "Project Name: " + vsModuleSettingsTO.GetProjectName();
-            companyNameLabel = "Company Name: " + vsModuleSettingsTO.GetCompanyName(); 
-            companyShortNameLabel = "Company Short Name: " + vsModuleSettingsTO.GetCompanyShortName();
+            projectName = vsModuleSettingsTO.GetProjectName();
+            companyName = vsModuleSettingsTO.GetCompanyName(); 
+            companyShortName = vsModuleSettingsTO.GetCompanyShortName();
         }
 
         private void PopulateVSModuleTOs()
@@ -109,9 +112,9 @@ namespace UnityVSModuleEditor.UI
             {
                 InitGui();
                 windowScrollPosition = GUILayout.BeginScrollView(windowScrollPosition);
-                DrawConfigurationArea();
                 DrawModuleInfoArea();
                 DrawDependencyInfoArea();
+                
                 GUILayout.EndScrollView();
             }
             catch (Exception e)
@@ -124,8 +127,7 @@ namespace UnityVSModuleEditor.UI
 
         private void DrawConfigurationArea()
         {
-            GUILayout.BeginVertical(GUI.skin.box);
-            GUILayout.Label(CONFIGURATION_LABEL, headerStyle);
+            GUILayout.Label(APP_CONFIGURATION_LABEL, headerStyle);
             GUILayout.BeginHorizontal();
             GUILayout.Label(REPO_LOCATION_LABEL, labelWidth);
             String repoLocation = GUILayout.TextField(vsModuleSettingsTO.GetRepoLocation());
@@ -134,25 +136,7 @@ namespace UnityVSModuleEditor.UI
             }
             
             GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            GUILayout.Label(UNITY_INSTALL_DIR_LABEL, labelWidth);
-            String installLocation = GUILayout.TextField(vsModuleSettingsTO.GetUnityInstallLocation());
-            if (installLocation != null)
-            {
-                vsModuleSettingsTO.SetUnityInstallLocation(installLocation);
-            }
-                
-            GUILayout.EndHorizontal();
 
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button(APPLY_BUTTON_TEXT, commandWidth))
-            {
-                vsModuleDelegate.SaveModuleSettingsTO(vsModuleSettingsTO);
-                vsModuleDelegate.UpdateUnitySettings();
-            }
-            GUILayout.EndHorizontal();
-            
-            GUILayout.EndVertical();
         }
 
         private void HandleDependencyWindowClosed(DependencyPromptWindow window)
@@ -280,13 +264,47 @@ namespace UnityVSModuleEditor.UI
         {
             GUILayout.BeginVertical(GUI.skin.box);
             GUILayout.Label(MODULE_INFO_HEADER_TEXT, headerStyle);
-            GUILayout.Label(projectNameLabel);
-            GUILayout.Label(companyNameLabel);
-            GUILayout.Label(companyShortNameLabel);
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(PROJECT_NAME_LABEL, labelWidth);
+            GUILayout.Label(projectName, labelWidth);
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(COMPANY_NAME_LABEL, labelWidth);
+            GUILayout.Label(companyName, labelWidth);
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(COMPANY_SHORT_NAME_LABEL, labelWidth);
+            GUILayout.Label(companyShortName, labelWidth);
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(UNITY_INSTALL_DIR_LABEL, labelWidth);
+            String installLocation = GUILayout.TextField(vsModuleSettingsTO.GetUnityInstallLocation());
+            if (installLocation != null)
+            {
+                vsModuleSettingsTO.SetUnityInstallLocation(installLocation);
+            }
+
+            GUILayout.EndHorizontal();
+            GUILayout.Label("");
+            DrawConfigurationArea();
+            GUILayout.Label("");
+            
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button(APPLY_BUTTON_TEXT, commandWidth))
+            {
+                vsModuleDelegate.SaveModuleSettingsTO(vsModuleSettingsTO);
+                vsModuleDelegate.UpdateUnitySettings();
+            }
             if (GUILayout.Button(EXPORT_TO_REPO_BUTTON_TEXT, commandWidth))
             {
                 vsModuleDelegate.ExportModuleToRepository();
             }
+            GUILayout.EndHorizontal();
+
             GUILayout.EndVertical();
         }
 
@@ -299,3 +317,4 @@ namespace UnityVSModuleEditor.UI
         public bool isSelected;
     }
 }
+

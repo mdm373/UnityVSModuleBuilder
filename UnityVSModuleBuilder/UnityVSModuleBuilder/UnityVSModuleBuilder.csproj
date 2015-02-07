@@ -26,13 +26,13 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\Inno\Content\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -59,7 +59,6 @@
     <Compile Include="Overlay\DefinedOverlay.cs" />
     <Compile Include="Overlay\DefinedOverlayImpl.cs" />
     <Compile Include="Overlay\EditorManagedCodeOverlay.cs" />
-    <Compile Include="Overlay\ModuleRepoOverlay.cs" />
     <Compile Include="Overlay\OverlayConstants.cs" />
     <Compile Include="Overlay\ProjectNameOverlay.cs" />
     <Compile Include="Overlay\UnityLocationOverlay.cs" />

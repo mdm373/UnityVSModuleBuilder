@@ -3,7 +3,6 @@
   projectName="[[PROJECT_NAME]]"
   companyName="[[COMPANY_NAME]]"
   companyShortName="[[COMPANY_SHORT_NAME]]"
-  moduleRepositoryLocation="[[MODULE_REPO]]"
   unityLocation="[[UNITY_LOCATION]]"
   />
   

@@ -15,9 +15,6 @@ namespace UnityVSModuleEditor.XMLStore
         [XmlAttribute("companyShortName")]
         public string companyShortName = String.Empty;
 
-        [XmlAttribute("moduleRepositoryLocation")]
-        public string repoLocation = String.Empty;
-
         [XmlAttribute("unityLocation")]
         public string unityInstallLocation = String.Empty;
     }

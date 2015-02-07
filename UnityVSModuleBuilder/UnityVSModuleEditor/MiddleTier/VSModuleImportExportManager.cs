@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityVSModuleCommon.FileSystem;
 using UnityVSModuleCommon;
+using System.Collections.Generic;
 
 namespace UnityVSModuleEditor.MiddleTier
 {
@@ -16,9 +17,11 @@ namespace UnityVSModuleEditor.MiddleTier
         private const string ASSET_FOLDER_NAME = "Assets";
         private const string EDITOR_FOLDER_NAME = "Editor";
         private const string MANAGED_CODE_FOLDER_NAME = "ManagedCode";
+        private const string PLUGIN_FOLDER_NAME = "Plugins";
 
         private readonly UnityApi unityApi;
         private readonly FileSystemController fsController;
+        
         
         public VSModuleImportExportManagerImpl(UnityApi unityApi, FileSystemController fsController)
         {
@@ -70,9 +73,22 @@ namespace UnityVSModuleEditor.MiddleTier
             editorManagedCodePath = Path.Combine(editorManagedCodePath, MANAGED_CODE_FOLDER_NAME);
             String editorPath = Path.Combine(ASSET_FOLDER_NAME, EDITOR_FOLDER_NAME);
             editorPath = Path.Combine(editorPath, companyProjectPath);
-
-            String[] assetPaths = new String[] { editorManagedCodePath, managedCodePath, assetPath, editorPath };
-            unityApi.ExportRootAssets(assetPaths, exportPackageName);
+            String pluginPath = Path.Combine(ASSET_FOLDER_NAME, PLUGIN_FOLDER_NAME);
+            String[] assetPaths = new String[] { editorManagedCodePath, managedCodePath, assetPath, editorPath, pluginPath };
+            List<String> verifiedAssetPaths = new List<string>();
+            String projectRoot = unityApi.GetProjectFolder();
+            foreach(String unverifiedPath in assetPaths)
+            {
+                String assetItemFullPath = Path.Combine(projectRoot, unverifiedPath);
+                if (fsController.GetExistingFileOrDirectory(assetItemFullPath) != null)
+                {
+                    verifiedAssetPaths.Add(unverifiedPath);
+                }
+            }
+            if (verifiedAssetPaths.Count > 0)
+            {
+                unityApi.ExportRootAssets(verifiedAssetPaths.ToArray(), exportPackageName);
+            }
         }
 
 

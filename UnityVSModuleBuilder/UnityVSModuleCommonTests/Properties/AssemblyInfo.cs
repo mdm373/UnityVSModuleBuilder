@@ -5,18 +5,14 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("UnityVSModuleCommon")]
+[assembly: AssemblyTitle("UnityVSModuleCommonTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("UnityVSModuleCommon")]
+[assembly: AssemblyProduct("UnityVSModuleCommonTests")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: InternalsVisibleTo("UnityVSModuleDrivers")]
-[assembly: InternalsVisibleTo("UnityVSModuleCommonTests")]
-[assembly: InternalsVisibleTo("InternalsVisible.ToDynamicProxyGenAssembly2")]
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -24,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("15b8ebed-38ce-413d-b06e-c16c63e27dc8")]
+[assembly: Guid("109274a5-2e3b-43d8-9e00-2e89a0b5f885")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -36,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.1.0")]
-[assembly: AssemblyFileVersion("0.0.1.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

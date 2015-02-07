@@ -15,15 +15,26 @@ namespace UnityVSModuleBuilder.Drivers
             //to.SetUnityInstallLocation("junk");
             //vsModuleDelegate.SaveModuleSettingsTO(to);
 
-            vsModuleDelegate.AddModuleDependency("cn", "DriverProject");
-            vsModuleDelegate.AddModuleDependency("cn", "DriverProject0");
+            
+            //RemoveDependency(vsModuleDelegate);
+            ExportProject(vsModuleDelegate);
+            VSModuleDependencyTO updatedDeps = vsModuleDelegate.RetrieveModuleDependenciesTO();
 
+
+            return 0;
+        }
+
+        private void ExportProject(VSModuleDelegate vsModuleDelegate)
+        {
+            vsModuleDelegate.ExportModuleToRepository();
+        }
+
+        private void RemoveDependency(VSModuleDelegate vsModuleDelegate)
+        {
             VSModuleDependencyItem removeItem = new VSModuleDependencyItem("cn", "DriverProject");
             List<VSModuleDependencyItem> removeItems = new List<VSModuleDependencyItem>();
             removeItems.Add(removeItem);
             vsModuleDelegate.RemoveDependencies(removeItems.GetEnumerator());
-            VSModuleDependencyTO updatedDeps = vsModuleDelegate.RetrieveModuleDependenciesTO();
-            return 0;
         }
     }
 
@@ -51,9 +62,13 @@ namespace UnityVSModuleBuilder.Drivers
 
         public string GetAssetFolder()
         {
-            return @"F:\Projects\unity\UnityVSModuleBuilder\UnityVSModuleBuilder\UnityVSModuleBuilderDrivers\bin\Debug\GeneratedDriverProject\DriverProject2\UnityGame\Assets";
+            return @"F:\Projects\unity\UnityVSModuleBuilder\UnityVSModuleBuilder\UnityVSModuleBuilderDrivers\bin\Debug\GeneratedDriverProject\DriverProject3\UnityGame\Assets";
         }
 
+        public string GetProjectFolder()
+        {
+            return @"F:\Projects\unity\UnityVSModuleBuilder\UnityVSModuleBuilder\UnityVSModuleBuilderDrivers\bin\Debug\GeneratedDriverProject\DriverProject3\UnityGame";
+        }
 
         public void ExportRootAssets(string[] assetPathname, string exportFileName)
         {
@@ -87,5 +102,8 @@ namespace UnityVSModuleBuilder.Drivers
         {
             Console.Out.WriteLine("MockUnityApi.UpdateAndriodBundleIdentifier('" + andriodIdentifier + "')");
         }
+
+
+        
     }
 }

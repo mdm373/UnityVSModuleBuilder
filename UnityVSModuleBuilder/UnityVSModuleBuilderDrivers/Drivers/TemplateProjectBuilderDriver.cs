@@ -13,7 +13,6 @@ namespace UnityVSModuleBuilder.Drivers
             requestBuilder.companyName = "DriverCompany";
             requestBuilder.companyShortName = "cn";
             requestBuilder.unityLocation = @"C:\Program Files\Unity 5.0.0b9\";
-            requestBuilder.moduleRepositoryLocation = @"C:\temp\DriverTest\repo";
             
             BuildProjectRequest request = requestBuilder.Build();
             TemplateProjectBuilder builder = TemplateProjectFactory.GetNewTemplateProjectBuilder();

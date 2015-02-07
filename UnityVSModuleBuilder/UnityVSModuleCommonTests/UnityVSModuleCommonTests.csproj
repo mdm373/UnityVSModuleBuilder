@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B3790A0C-3137-44D3-8C24-F818FEC5F8CE}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{80E045D6-A4F8-4878-B83F-0C774BDF5D65}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnityVSModuleBuilder</RootNamespace>
-    <AssemblyName>UnityVSModuleDrivers</AssemblyName>
+    <RootNamespace>UnityVSModuleCommonTests</RootNamespace>
+    <AssemblyName>UnityVSModuleCommonTests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -16,7 +16,6 @@
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,10 +23,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -35,10 +32,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>UnityVSModuleBuilder.Driver</StartupObject>
-  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NSubstitute">
+      <HintPath>..\packages\NSubstitute.1.8.1.0\lib\net35\NSubstitute.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,47 +48,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Driver.cs" />
-    <Compile Include="Drivable.cs" />
-    <Compile Include="Drivers\FileSystemDriver.cs" />
-    <Compile Include="Drivers\RegistryDriver.cs" />
-    <Compile Include="Drivers\TemplateProjectBuilderDriver.cs" />
-    <Compile Include="Drivers\VSModuleDelegateDriver.cs" />
+    <Compile Include="ApplicationManagerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UnityVSModuleBuilder\UnityVSModuleBuilder.csproj">
-      <Project>{182bd9f7-1b95-4b2d-afc2-6b6fa80a98d0}</Project>
-      <Name>UnityVSModuleBuilder</Name>
-    </ProjectReference>
     <ProjectReference Include="..\UnityVSModuleCommon\UnityVSModuleCommon.csproj">
       <Project>{90ea66a4-5c21-42ed-a0c2-6bcc9ece484c}</Project>
       <Name>UnityVSModuleCommon</Name>
     </ProjectReference>
-    <ProjectReference Include="..\UnityVSModuleEditor\UnityVSModuleEditor.csproj">
-      <Project>{5e1a72a1-c42f-4da1-be37-7c7c42d82c0e}</Project>
-      <Name>UnityVSModuleEditor</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>rmdir $(TargetDir) /s /q</PreBuildEvent>
-  </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <UsingTask AssemblyFile="..\packages\MSBuild.NUnit.1.0.2\tools\MSBuild.NUnit.dll" TaskName="MSBuild.Tasks.NUnit" />
+  <Target Name="RunUnitTest">
+    <NUnit Assemblies="$(ProjectName).csproj" ToolPath="..\packages\NUnit.Runners.2.6.2\tools" DisableShadowCopy="true" Force32Bit="false" ProjectConfiguration="$(Configuration)" FrameworkToUse="net-3.5" WorkingDirectory="$(ProjectDir)" ContinueOnError="false" />
+  </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
-  <Target Name="AfterBuild">
+  <Target Name="AfterBuild" DependsOnTargets="RunUnitTest">
   </Target>
-  -->
 </Project>

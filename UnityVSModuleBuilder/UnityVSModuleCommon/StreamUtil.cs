@@ -3,7 +3,7 @@ using System.IO;
 
 namespace UnityVSModuleCommon
 {
-    public class StreamUtil
+    public sealed class StreamUtil
     {
         private const string ERROR_MESSAGE = "Exception Closing File Stream. Resources May Be Lost.";
 

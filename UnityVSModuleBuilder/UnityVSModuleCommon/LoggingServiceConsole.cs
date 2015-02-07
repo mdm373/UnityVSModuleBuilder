@@ -2,7 +2,7 @@
 
 namespace UnityVSModuleCommon
 {
-    public class ConsoleLoggingService : LoggingService
+    internal class LoggingServiceConsole : LoggingService
     {
         public void Log(string message)
         {

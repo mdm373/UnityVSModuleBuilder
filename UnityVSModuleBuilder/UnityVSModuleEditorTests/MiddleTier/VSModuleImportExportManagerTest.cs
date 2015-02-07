@@ -20,7 +20,8 @@ namespace UnityVSModuleEditor.MiddleTier
                                                                    @"Assets\EXPECTED_COMPANY_SHORT_NAME\EXPECTED_PROJECT_NAME",
                                                                    @"Assets\Editor\EXPECTED_COMPANY_SHORT_NAME\EXPECTED_PROJECT_NAME",
                                                                    @"Assets\ManagedCode",
-                                                                   @"Assets\Editor\ManagedCode"
+                                                                   @"Assets\Editor\ManagedCode",
+                                                                   @"Assets\Plugins"
                                                                };
         private const string EXPECTED_EXPORT_FILE = @"EXPECTED_REPO_LOCATION\EXPECTED_COMPANY_SHORT_NAME\EXPECTED_PROJECT_NAME\EXPECTED_PROJECT_NAME.unitypackage";
         private const string EXPECTED_SETTINGS_REPO_COPY_LOCATION = @"EXPECTED_REPO_LOCATION\EXPECTED_COMPANY_SHORT_NAME\EXPECTED_PROJECT_NAME";

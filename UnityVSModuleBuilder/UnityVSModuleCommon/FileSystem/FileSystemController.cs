@@ -10,6 +10,7 @@ namespace UnityVSModuleCommon.FileSystem
         List<FileEntry>.Enumerator GetFilesForLocationRecursive(String location);
         void DeleteFile(string fileLocation);
         FileEntry GetExistingFile(string fileLocation);
+        FileEntry GetExistingFileOrDirectory(string fileLocation);
         FileEntry GetExistingOrNewlyCreatedFile(string fileLocation);
         FileEntry CreateNotPresentFile(string fileLocation);
         bool DoCreateDirectory(string moduleRepoLocation);

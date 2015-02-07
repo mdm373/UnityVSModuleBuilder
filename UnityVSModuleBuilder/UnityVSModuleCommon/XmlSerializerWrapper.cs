@@ -6,6 +6,15 @@ using UnityVSModuleCommon.FileSystem;
 
 namespace UnityVSModuleCommon
 {
+    public sealed class XmlSerializerFactory
+    {
+        private XmlSerializerFactory() { }
+        public static XmlSerializerWrapper GetXmlSerializerWrapper()
+        {
+            return new XmlSerializerWrapperImpl();
+        }
+    }
+
     public interface XmlSerializerWrapper
     {
         bool SerializeToFile<V>(FileEntry info, V model);

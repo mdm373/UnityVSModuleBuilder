@@ -2,13 +2,15 @@
 #define AppLongName "Unity VS Module Builder"
 #define AppShortName "UnityVSModuleBuilder"
 [Setup]
-OutputBaseFilename=IntallUnityVSModuleBuilder-{#AppVer}
+OutputBaseFilename=Intall {#AppLongName}-{#AppVer}
 PrivilegesRequired=admin 
 AppName={#AppLongName}
 AppVersion={#AppVer}
+AppPublisher=Mark Mayer
 DefaultDirName={pf}\{#AppShortName}
 DefaultGroupName={#AppShortName}
 UninstallDisplayIcon={app}\{#AppShortName}UI.exe
+UninstallDisplayName=Uninstall {#AppLongName}
 Compression=lzma2
 SolidCompression=yes
 OutputDir=Release

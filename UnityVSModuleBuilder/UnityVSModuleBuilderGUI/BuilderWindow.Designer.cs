@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BuilderWindow));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,10 +42,11 @@
             this.txtProjectName = new System.Windows.Forms.TextBox();
             this.lblCompanyName = new System.Windows.Forms.Label();
             this.lblCompanyShortName = new System.Windows.Forms.Label();
-            this.lblRepoLocation = new System.Windows.Forms.Label();
             this.lblUnityInstall = new System.Windows.Forms.Label();
             this.txtCompanyName = new System.Windows.Forms.TextBox();
             this.txtCompanyShortName = new System.Windows.Forms.TextBox();
+            this.flpkrUnityInstall = new UnityVSModuleBuilder.GUI.FilePicker();
+            this.flpkrOutput = new UnityVSModuleBuilder.GUI.FilePicker();
             this.formTitle = new System.Windows.Forms.Label();
             this.formTable = new System.Windows.Forms.TableLayoutPanel();
             this.titlePanel = new System.Windows.Forms.Panel();
@@ -53,9 +55,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.flpkrRepoLocation = new UnityVSModuleBuilder.GUI.FilePicker();
-            this.flpkrUnityInstall = new UnityVSModuleBuilder.GUI.FilePicker();
-            this.flpkrOutput = new UnityVSModuleBuilder.GUI.FilePicker();
             this.menuStrip1.SuspendLayout();
             this.fieldsTable.SuspendLayout();
             this.formTable.SuspendLayout();
@@ -81,6 +80,7 @@
             // 
             this.fileToolStripMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settingsToolStripMenuItem,
             this.resetToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -88,12 +88,19 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
             // resetToolStripMenuItem
             // 
             this.resetToolStripMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.resetToolStripMenuItem.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.resetToolStripMenuItem.Text = "Reset";
             this.resetToolStripMenuItem.Click += new System.EventHandler(this.ResetMenuClicked);
             // 
@@ -102,7 +109,7 @@
             this.exitToolStripMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.exitToolStripMenuItem.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitMenuClicked);
             // 
@@ -130,30 +137,28 @@
             this.fieldsTable.ColumnCount = 2;
             this.fieldsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 146F));
             this.fieldsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.fieldsTable.Controls.Add(this.lblOutputLocation, 0, 5);
+            this.fieldsTable.Controls.Add(this.lblOutputLocation, 0, 4);
             this.fieldsTable.Controls.Add(this.lblProjectName, 0, 0);
             this.fieldsTable.Controls.Add(this.txtProjectName, 1, 0);
             this.fieldsTable.Controls.Add(this.lblCompanyName, 0, 1);
             this.fieldsTable.Controls.Add(this.lblCompanyShortName, 0, 2);
-            this.fieldsTable.Controls.Add(this.lblRepoLocation, 0, 3);
-            this.fieldsTable.Controls.Add(this.lblUnityInstall, 0, 4);
+            this.fieldsTable.Controls.Add(this.lblUnityInstall, 0, 3);
             this.fieldsTable.Controls.Add(this.txtCompanyName, 1, 1);
             this.fieldsTable.Controls.Add(this.txtCompanyShortName, 1, 2);
-            this.fieldsTable.Controls.Add(this.flpkrRepoLocation, 1, 3);
-            this.fieldsTable.Controls.Add(this.flpkrUnityInstall, 1, 4);
-            this.fieldsTable.Controls.Add(this.flpkrOutput, 1, 5);
+            this.fieldsTable.Controls.Add(this.flpkrUnityInstall, 1, 3);
+            this.fieldsTable.Controls.Add(this.flpkrOutput, 1, 4);
             this.fieldsTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fieldsTable.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fieldsTable.Location = new System.Drawing.Point(3, 49);
             this.fieldsTable.Name = "fieldsTable";
-            this.fieldsTable.RowCount = 6;
-            this.fieldsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66F));
-            this.fieldsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66F));
-            this.fieldsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66F));
-            this.fieldsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66F));
-            this.fieldsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66F));
-            this.fieldsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66F));
-            this.fieldsTable.Size = new System.Drawing.Size(559, 349);
+            this.fieldsTable.RowCount = 5;
+            this.fieldsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.fieldsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.fieldsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.fieldsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.fieldsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.fieldsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.fieldsTable.Size = new System.Drawing.Size(559, 259);
             this.fieldsTable.TabIndex = 1;
             // 
             // lblOutputLocation
@@ -162,7 +167,7 @@
             this.lblOutputLocation.AutoSize = true;
             this.lblOutputLocation.BackColor = System.Drawing.SystemColors.Control;
             this.lblOutputLocation.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOutputLocation.Location = new System.Drawing.Point(50, 312);
+            this.lblOutputLocation.Location = new System.Drawing.Point(50, 224);
             this.lblOutputLocation.Name = "lblOutputLocation";
             this.lblOutputLocation.Size = new System.Drawing.Size(93, 15);
             this.lblOutputLocation.TabIndex = 9;
@@ -175,7 +180,7 @@
             this.lblProjectName.AutoSize = true;
             this.lblProjectName.BackColor = System.Drawing.SystemColors.Control;
             this.lblProjectName.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProjectName.Location = new System.Drawing.Point(64, 21);
+            this.lblProjectName.Location = new System.Drawing.Point(64, 18);
             this.lblProjectName.Name = "lblProjectName";
             this.lblProjectName.Size = new System.Drawing.Size(79, 15);
             this.lblProjectName.TabIndex = 2;
@@ -185,7 +190,7 @@
             // txtProjectName
             // 
             this.txtProjectName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtProjectName.Location = new System.Drawing.Point(149, 17);
+            this.txtProjectName.Location = new System.Drawing.Point(149, 14);
             this.txtProjectName.Name = "txtProjectName";
             this.txtProjectName.Size = new System.Drawing.Size(407, 23);
             this.txtProjectName.TabIndex = 1;
@@ -196,7 +201,7 @@
             this.lblCompanyName.AutoSize = true;
             this.lblCompanyName.BackColor = System.Drawing.SystemColors.Control;
             this.lblCompanyName.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCompanyName.Location = new System.Drawing.Point(52, 79);
+            this.lblCompanyName.Location = new System.Drawing.Point(52, 69);
             this.lblCompanyName.Name = "lblCompanyName";
             this.lblCompanyName.Size = new System.Drawing.Size(91, 15);
             this.lblCompanyName.TabIndex = 3;
@@ -209,25 +214,12 @@
             this.lblCompanyShortName.AutoSize = true;
             this.lblCompanyShortName.BackColor = System.Drawing.SystemColors.Control;
             this.lblCompanyShortName.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCompanyShortName.Location = new System.Drawing.Point(20, 137);
+            this.lblCompanyShortName.Location = new System.Drawing.Point(20, 120);
             this.lblCompanyShortName.Name = "lblCompanyShortName";
             this.lblCompanyShortName.Size = new System.Drawing.Size(123, 15);
             this.lblCompanyShortName.TabIndex = 4;
             this.lblCompanyShortName.Text = "Company short name";
             this.lblCompanyShortName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblRepoLocation
-            // 
-            this.lblRepoLocation.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lblRepoLocation.AutoSize = true;
-            this.lblRepoLocation.BackColor = System.Drawing.SystemColors.Control;
-            this.lblRepoLocation.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRepoLocation.Location = new System.Drawing.Point(29, 195);
-            this.lblRepoLocation.Name = "lblRepoLocation";
-            this.lblRepoLocation.Size = new System.Drawing.Size(114, 15);
-            this.lblRepoLocation.TabIndex = 5;
-            this.lblRepoLocation.Text = "Repository location";
-            this.lblRepoLocation.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblUnityInstall
             // 
@@ -235,7 +227,7 @@
             this.lblUnityInstall.AutoSize = true;
             this.lblUnityInstall.BackColor = System.Drawing.SystemColors.Control;
             this.lblUnityInstall.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUnityInstall.Location = new System.Drawing.Point(20, 253);
+            this.lblUnityInstall.Location = new System.Drawing.Point(20, 171);
             this.lblUnityInstall.Name = "lblUnityInstall";
             this.lblUnityInstall.Size = new System.Drawing.Size(123, 15);
             this.lblUnityInstall.TabIndex = 6;
@@ -245,7 +237,7 @@
             // txtCompanyName
             // 
             this.txtCompanyName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCompanyName.Location = new System.Drawing.Point(149, 75);
+            this.txtCompanyName.Location = new System.Drawing.Point(149, 65);
             this.txtCompanyName.Name = "txtCompanyName";
             this.txtCompanyName.Size = new System.Drawing.Size(407, 23);
             this.txtCompanyName.TabIndex = 7;
@@ -253,10 +245,30 @@
             // txtCompanyShortName
             // 
             this.txtCompanyShortName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCompanyShortName.Location = new System.Drawing.Point(149, 133);
+            this.txtCompanyShortName.Location = new System.Drawing.Point(149, 116);
             this.txtCompanyShortName.Name = "txtCompanyShortName";
             this.txtCompanyShortName.Size = new System.Drawing.Size(407, 23);
             this.txtCompanyShortName.TabIndex = 8;
+            // 
+            // flpkrUnityInstall
+            // 
+            this.flpkrUnityInstall.BackColor = System.Drawing.SystemColors.Control;
+            this.flpkrUnityInstall.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flpkrUnityInstall.IsExistEnforced = true;
+            this.flpkrUnityInstall.Location = new System.Drawing.Point(149, 156);
+            this.flpkrUnityInstall.Name = "flpkrUnityInstall";
+            this.flpkrUnityInstall.Size = new System.Drawing.Size(407, 45);
+            this.flpkrUnityInstall.TabIndex = 10;
+            // 
+            // flpkrOutput
+            // 
+            this.flpkrOutput.BackColor = System.Drawing.SystemColors.Control;
+            this.flpkrOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flpkrOutput.IsExistEnforced = true;
+            this.flpkrOutput.Location = new System.Drawing.Point(149, 207);
+            this.flpkrOutput.Name = "flpkrOutput";
+            this.flpkrOutput.Size = new System.Drawing.Size(407, 49);
+            this.flpkrOutput.TabIndex = 11;
             // 
             // formTitle
             // 
@@ -293,7 +305,7 @@
             this.formTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             this.formTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
             this.formTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
-            this.formTable.Size = new System.Drawing.Size(565, 447);
+            this.formTable.Size = new System.Drawing.Size(565, 357);
             this.formTable.TabIndex = 1;
             // 
             // titlePanel
@@ -325,7 +337,7 @@
             this.panel3.BackColor = System.Drawing.SystemColors.Control;
             this.panel3.Controls.Add(this.button2);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(0, 401);
+            this.panel3.Location = new System.Drawing.Point(0, 311);
             this.panel3.Margin = new System.Windows.Forms.Padding(0);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(565, 46);
@@ -336,7 +348,7 @@
             this.button2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.button2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.button2.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(477, 10);
+            this.button2.Location = new System.Drawing.Point(471, 10);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(85, 27);
             this.button2.TabIndex = 0;
@@ -365,49 +377,19 @@
             this.panel2.Size = new System.Drawing.Size(275, 36);
             this.panel2.TabIndex = 10;
             // 
-            // flpkrRepoLocation
-            // 
-            this.flpkrRepoLocation.BackColor = System.Drawing.SystemColors.Control;
-            this.flpkrRepoLocation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flpkrRepoLocation.IsExistEnforced = true;
-            this.flpkrRepoLocation.Location = new System.Drawing.Point(149, 177);
-            this.flpkrRepoLocation.Name = "flpkrRepoLocation";
-            this.flpkrRepoLocation.Size = new System.Drawing.Size(407, 52);
-            this.flpkrRepoLocation.TabIndex = 9;
-            // 
-            // flpkrUnityInstall
-            // 
-            this.flpkrUnityInstall.BackColor = System.Drawing.SystemColors.Control;
-            this.flpkrUnityInstall.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flpkrUnityInstall.IsExistEnforced = true;
-            this.flpkrUnityInstall.Location = new System.Drawing.Point(149, 235);
-            this.flpkrUnityInstall.Name = "flpkrUnityInstall";
-            this.flpkrUnityInstall.Size = new System.Drawing.Size(407, 52);
-            this.flpkrUnityInstall.TabIndex = 10;
-            // 
-            // flpkrOutput
-            // 
-            this.flpkrOutput.BackColor = System.Drawing.SystemColors.Control;
-            this.flpkrOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flpkrOutput.IsExistEnforced = true;
-            this.flpkrOutput.Location = new System.Drawing.Point(149, 293);
-            this.flpkrOutput.Name = "flpkrOutput";
-            this.flpkrOutput.Size = new System.Drawing.Size(407, 53);
-            this.flpkrOutput.TabIndex = 11;
-            // 
             // BuilderWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(565, 471);
+            this.ClientSize = new System.Drawing.Size(565, 381);
             this.Controls.Add(this.formTable);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(581, 456);
+            this.MinimumSize = new System.Drawing.Size(581, 420);
             this.Name = "BuilderWindow";
             this.Text = "UVSModule Builder";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
@@ -440,19 +422,18 @@
         private System.Windows.Forms.PictureBox logoPicture;
         private System.Windows.Forms.Label lblCompanyName;
         private System.Windows.Forms.Label lblCompanyShortName;
-        private System.Windows.Forms.Label lblRepoLocation;
         private System.Windows.Forms.Label lblUnityInstall;
         private System.Windows.Forms.TextBox txtCompanyName;
         private System.Windows.Forms.TextBox txtCompanyShortName;
         private System.Windows.Forms.Label lblOutputLocation;
         private System.Windows.Forms.Panel panel2;
-        private FilePicker flpkrRepoLocation;
         private FilePicker flpkrUnityInstall;
         private FilePicker flpkrOutput;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         
     }
 }

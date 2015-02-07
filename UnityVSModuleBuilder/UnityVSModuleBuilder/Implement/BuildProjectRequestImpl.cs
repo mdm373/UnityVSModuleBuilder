@@ -11,7 +11,6 @@ namespace UnityVSModuleBuilder.Implement
         private readonly string companyName;
         private readonly string companyShortName;
         private readonly string unityLocation;
-        private readonly string moduleRepositoryLocation;
         
         public class Builder{
             public string copyLocation;
@@ -19,8 +18,7 @@ namespace UnityVSModuleBuilder.Implement
             public string companyName;
             public string companyShortName;
             public string unityLocation;
-            public string moduleRepositoryLocation;
-
+            
             public BuildProjectRequest Build()
             {
                 if (copyLocation == null) throw new ArgumentException("copyLocation cannot be null.");
@@ -28,7 +26,6 @@ namespace UnityVSModuleBuilder.Implement
                 if (companyName == null) throw new ArgumentException("companyName cannot be null.");
                 if (companyShortName == null) throw new ArgumentException("companyShortName cannot be null.");
                 if (unityLocation == null) throw new ArgumentException("unityLocation cannot be null.");
-                if (moduleRepositoryLocation == null) throw new ArgumentException("moduleRepoLocation cannot be null.");
                 return new BuildProjectRequestImpl(this);
             }
         }
@@ -40,7 +37,6 @@ namespace UnityVSModuleBuilder.Implement
             this.companyName = builder.companyName;
             this.companyShortName = builder.companyShortName;
             this.unityLocation = builder.unityLocation;
-            this.moduleRepositoryLocation = builder.moduleRepositoryLocation;
         }
         
         public string GetProjectName()
@@ -52,7 +48,6 @@ namespace UnityVSModuleBuilder.Implement
         {
             return copyLocation;
         }
-
 
         public string GetCompanyName()
         {
@@ -69,9 +64,5 @@ namespace UnityVSModuleBuilder.Implement
             return this.unityLocation;
         }
 
-        public string GetModuleRepositoryLocation()
-        {
-            return this.moduleRepositoryLocation;
-        }
     }
 }

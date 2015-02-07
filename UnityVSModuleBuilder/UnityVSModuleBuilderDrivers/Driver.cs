@@ -17,6 +17,7 @@ namespace UnityVSModuleBuilder
             //drivers.Add(new FileSystemDriver());
             drivers.Add(new TemplateProjectBuilderDriver());
             //drivers.Add(new VSModuleDelegateDriver());
+            //drivers.Add(new RegistryDriver());
             return drivers;
         }
 
