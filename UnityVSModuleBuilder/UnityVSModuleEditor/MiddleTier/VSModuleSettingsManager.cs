@@ -46,8 +46,7 @@ namespace UnityVSModuleEditor.MiddleTier
             catch (Exception e)
             {
                 isSaved = false;
-                unityApi.LogError("Could Not Save VSMoule Settings. Unexpected Error. See Exception for Details.");
-                unityApi.LogException(e);
+                Logger.LogError("Could Not Save VSMoule Settings. Unexpected Error. See Exception for Details.", e);
             }
             return isSaved;
         }
@@ -81,8 +80,7 @@ namespace UnityVSModuleEditor.MiddleTier
             }
             catch (Exception e)
             {
-                Logger.LogError("Could Not Populate VSModule Settings. Unexpected Error. See Exception for Details.");
-                unityApi.LogException(e);
+                Logger.LogError("Could Not Populate VSModule Settings. Unexpected Error. See Exception for Details.", e);
                 to = GetDefaultTO();
             }
             finally
@@ -151,7 +149,7 @@ namespace UnityVSModuleEditor.MiddleTier
 
         private FileEntry GetSettingsFileInfo(bool isCreateIfNotPresent)
         {
-            String filePath = Path.Combine(unityApi.GetAssetFolder(), VSModuleConstants.CONFIG_FILE_ASSET_LOCATION);
+            String filePath = Path.Combine(unityApi.GetProjectFolder(), VSModuleConstants.CONFIG_FILE_ASSET_LOCATION);
             FileEntry entry = null;
             if(isCreateIfNotPresent){
                 entry = fsController.GetExistingOrNewlyCreatedFile(filePath);

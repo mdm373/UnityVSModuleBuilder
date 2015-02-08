@@ -11,8 +11,8 @@ namespace UnityVSModuleEditor.MiddleTier
     [TestFixture]
     public class VSModuleDependencyManagerTest
     {
-        private const string EXPECTED_ASSET_FOLDER = "EXPECTED_ASSET_FOLDER";
-        private const string EXPECTED_DEPENDENCY_FILE_LOCATION = @"EXPECTED_ASSET_FOLDER\Editor\ModuleDependencies.xml";
+        private const string EXPECTED_PROEJCT_FOLDER = "EXPECTED_PROJECT_FOLDER";
+        private const string EXPECTED_DEPENDENCY_FILE_LOCATION = @"EXPECTED_PROJECT_FOLDER\..\UVSModule\ModuleDependencies.xml";
         private const string EXPECTED_EXISTING_COMPANY_SHORT_NAME = "EXPECTED_COMPANY_SHORT_NAME";
         private const string EXPECTED_EXISTING_PROJECT_NAME = "EXPECTED_PROJECT_NAME";
         private const string EXPECTED_ADDED_COMPANY_SHORT_NAME = "EXPECTED_ADDED_COMPANY_SHORT_NAME";
@@ -50,18 +50,24 @@ namespace UnityVSModuleEditor.MiddleTier
         [Test]
         public void TestDependencyRetrievedSuccessfully()
         {
-            GivenUnityAPIHasExpectedAssetFolder();
+            GivenUnityAPIHasExpectedProjectFolder();
             GivenDependencyFileExists();
             GivenSerializerHasModelForFile();
             GivenModelHasExpectedDependencyItems();
             WhenManagerRetrievesDependencyTO();
+            ThenFileSystemProvidesDepenencyFile();
             ThenRetrievedTOHasExpectedDependencyItems();
+        }
+
+        private void ThenFileSystemProvidesDepenencyFile()
+        {
+            fsController.Received().GetExistingFile(EXPECTED_DEPENDENCY_FILE_LOCATION);
         }
 
         [Test]
         public void TestDependencyRetrieveForNonExistingDependencyFile()
         {
-            GivenUnityAPIHasExpectedAssetFolder();
+            GivenUnityAPIHasExpectedProjectFolder();
             GivenDependencyFileDoesNotExist();
             WhenManagerRetrievesDependencyTO();
             ThenRetrievedTOHasNoDependencies();
@@ -70,7 +76,7 @@ namespace UnityVSModuleEditor.MiddleTier
         [Test]
         public void TestDependencyAddForNewDependency()
         {
-            GivenUnityAPIHasExpectedAssetFolder();
+            GivenUnityAPIHasExpectedProjectFolder();
             GivenDependencyFileExists();
             GivenSerializerHasModelForFile();
             GivenModelHasExpectedDependencyItems();
@@ -82,7 +88,7 @@ namespace UnityVSModuleEditor.MiddleTier
         [Test]
         public void TestDuplicateDependencyAdded()
         {
-            GivenUnityAPIHasExpectedAssetFolder();
+            GivenUnityAPIHasExpectedProjectFolder();
             GivenDependencyFileExists();
             GivenSerializerHasModelForFile();
             GivenModelHasExpectedDependencyItems();
@@ -95,7 +101,7 @@ namespace UnityVSModuleEditor.MiddleTier
         [Test]
         public void TestDependencyRemoval()
         {
-            GivenUnityAPIHasExpectedAssetFolder();
+            GivenUnityAPIHasExpectedProjectFolder();
             GivenDependencyFileExists();
             GivenSerializerHasModelForFile();
             GivenModelHasExpectedDependencyItems();
@@ -213,9 +219,9 @@ namespace UnityVSModuleEditor.MiddleTier
             dependencyFile.IsPresent().Returns(true);
         }
 
-        private void GivenUnityAPIHasExpectedAssetFolder()
+        private void GivenUnityAPIHasExpectedProjectFolder()
         {
-            unityApi.GetAssetFolder().Returns(EXPECTED_ASSET_FOLDER);
+            unityApi.GetAssetFolder().Returns(EXPECTED_PROEJCT_FOLDER);
         }
 
         private void WhenManagerRetrievesDependencyTO()

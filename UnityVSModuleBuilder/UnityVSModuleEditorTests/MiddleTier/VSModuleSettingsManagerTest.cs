@@ -15,7 +15,7 @@ namespace UnityVSModuleEditor.MiddleTier
     public class VSModuleSettingsManagerTest
     {
         private const string ASSET_FOLDER = "ASSET_FOLDER";
-        private const string SETTINGS_FILE_LOCATION = @"ASSET_FOLDER\Editor\ModuleConfig.xml";
+        private const string SETTINGS_FILE_LOCATION = @"ASSET_FOLDER\..\UVSModule\ModuleConfig.xml";
         private const string EXPECTED_COMPANY_NAME = "EXPECTED_COMPANY_NAME";
         private const string EXPECTED_PROJECT_NAME = "EXPECTED_PROJECT_NAME";
         private const string EXPECTED_COMPANY_SHORT_NAME = "EXPECTED_COMPANY_SHORT_NAME";
@@ -51,7 +51,7 @@ namespace UnityVSModuleEditor.MiddleTier
         public void TestRetrieveModuleSettingsSuccess()
         {
             GivenAppSettingsManagerProvidesSettingsWithExpectedRepoLocation();
-            GivenUnityAPIHasAssetFolder();
+            GivenUnityAPIHasProjectFolder();
             GivenXmlSettingsFileExists();
             GivenSerializerHasModelForSettingsFile();
             GivenModelHasExpectedSetUp();
@@ -77,7 +77,7 @@ namespace UnityVSModuleEditor.MiddleTier
         [Test]
         public void TestRetrieveModelSettingsFileMissing()
         {
-            GivenUnityAPIHasAssetFolder();
+            GivenUnityAPIHasProjectFolder();
             GivenXmlFileDoesNotExist();
             WhenRetrieveSettingsRequested();
             ThenSerializerNotRequested();
@@ -88,7 +88,7 @@ namespace UnityVSModuleEditor.MiddleTier
         public void TestSaveModelSettings()
         {
             GivenAppSettingsManagerProvidesSettingsWithOldRepoLocation();
-            GivenUnityAPIHasAssetFolder();
+            GivenUnityAPIHasProjectFolder();
             GivenXmlSettingsFileExists();
             GivenExpectedRequestedTO();
             WhenSaveSettingsRequested();
@@ -174,9 +174,9 @@ namespace UnityVSModuleEditor.MiddleTier
             settingsModel.unityInstallLocation = EXPECTED_UNITY_INSTALL_LOCATION;
         }
 
-        private void GivenUnityAPIHasAssetFolder()
+        private void GivenUnityAPIHasProjectFolder()
         {
-            unityApi.GetAssetFolder().Returns(ASSET_FOLDER);
+            unityApi.GetProjectFolder().Returns(ASSET_FOLDER);
         }
 
         private void ThenSettingsFileMatchesModel()

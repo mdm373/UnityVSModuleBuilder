@@ -12,8 +12,6 @@ namespace UnityVSModuleEditor.MiddleTier
 
     internal class VSModuleUnityManagerImpl : VSModuleUnityManager
     {
-        private const string ANDRIOD_ID_FORMAT = "com.{0}.{1}";
-
         private readonly UnityApi unityApi;
 
         public VSModuleUnityManagerImpl(UnityApi unityApi)
@@ -32,7 +30,7 @@ namespace UnityVSModuleEditor.MiddleTier
         {
             String companyShortName = GetCleanedString(settings.GetCompanyShortName());
             String projectName = GetCleanedString(settings.GetProjectName());
-            return String.Format(ANDRIOD_ID_FORMAT, companyShortName, projectName);
+            return String.Format(VSModuleConstants.ANDRIOD_ID_FORMAT, companyShortName, projectName);
         }
 
         private String GetCleanedString(String s)

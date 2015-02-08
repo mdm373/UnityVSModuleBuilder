@@ -9,9 +9,10 @@ namespace UnityVSModuleEditor.MiddleTier
     [TestFixture]
     class VSModuleImportExportManagerTest
     {
-        public const string EXPECTED_IMPORT_PROJECT_NAME ="EXPECTED_IMPORT_PROJECT_NAME";
-        public const string EXPECTED_IMPORT_COMPANY_SHORT_NAME ="EXPECTED_IMPORT_COMPANY_SHORT_NAME";
+        private const string EXPECTED_IMPORT_PROJECT_NAME ="EXPECTED_IMPORT_PROJECT_NAME";
+        private const string EXPECTED_IMPORT_COMPANY_SHORT_NAME ="EXPECTED_IMPORT_COMPANY_SHORT_NAME";
         private const string EXPECTED_ASSET_FOLDER = "EXPECTED_ASSET_FOLDER";
+        private const string EXPECTED_PROJECT_FOLDER = "EXPECTED_PROJECT_FOLDER";
         private const string EXPECTED_REPO_LOCATION = "EXPECTED_REPO_LOCATION";
         private const string EXPECTED_COMPANY_SHORT_NAME = "EXPECTED_COMPANY_SHORT_NAME";
         private const string EXPECTED_PROJECT_NAME = "EXPECTED_PROJECT_NAME";
@@ -25,7 +26,7 @@ namespace UnityVSModuleEditor.MiddleTier
                                                                };
         private const string EXPECTED_EXPORT_FILE = @"EXPECTED_REPO_LOCATION\EXPECTED_COMPANY_SHORT_NAME\EXPECTED_PROJECT_NAME\EXPECTED_PROJECT_NAME.unitypackage";
         private const string EXPECTED_SETTINGS_REPO_COPY_LOCATION = @"EXPECTED_REPO_LOCATION\EXPECTED_COMPANY_SHORT_NAME\EXPECTED_PROJECT_NAME";
-        private string EXPECTED_SETTINGS_PATH = @"EXPECTED_ASSET_FOLDER\Editor\ModuleConfig.xml";
+        private string EXPECTED_SETTINGS_PATH = @"EXPECTED_PROJECT_FOLDER\..\UVSModule\ModuleConfig.xml";
         private string EXPECTED_IMPORT_PACKAGE_NAME = @"EXPECTED_REPO_LOCATION\EXPECTED_IMPORT_COMPANY_SHORT_NAME\EXPECTED_IMPORT_PROJECT_NAME\EXPECTED_IMPORT_PROJECT_NAME.unitypackage";
 
         private VSModuleImportExportManager manager;
@@ -52,22 +53,33 @@ namespace UnityVSModuleEditor.MiddleTier
         [Test]
         public void TestExportModuleAssetsSuccess()
         {
-            GivenUnityApiHasExpectedAssetsFolder();
+            GivenUnityApiHasExpectedProjectFolder();
             GivenSettingsTOHasExpectedRepoLocation();
             GivenSettingsTOHasExpectedCompanyShortNameAndProjectName();
             GivenFileSystemHasSettingsFile();
             GivenFileSystemGeneratesProjectRepoLocation();
             WhenExportModuleRequested();
+            ThenFileSystemProvidesSettingsFile();
             ThenMakeProjectRepoLocationRequestedOnFileSystem();
             ThenUniApiExportRequestedToProjectRepoLocationWithExpectedAssetPaths();
             ThenSettingsFileCopiedToRepoLocation();
             ThenExportIsSuccess();
         }
 
+        private void ThenFileSystemProvidesSettingsFile()
+        {
+            fsController.Received().GetExistingFile(EXPECTED_SETTINGS_PATH);
+        }
+
+        private void GivenUnityApiHasExpectedProjectFolder()
+        {
+            unityApi.GetProjectFolder().Returns(EXPECTED_PROJECT_FOLDER);
+        }
+
         [Test]
         public void TestExportModuleFailure()
         {
-            GivenUnityApiHasExpectedAssetsFolder();
+            GivenUnityApiHasExpectedProjectFolder();
             GivenSettingsTOHasExpectedRepoLocation();
             GivenFileSystemHasSettingsFile();
             GivenFileSystemFailsToGenerateRepoLocation();

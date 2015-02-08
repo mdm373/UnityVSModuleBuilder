@@ -79,7 +79,7 @@ namespace UnityVSModuleEditor.MiddleTier
             }
             else
             {
-                unityApi.Log("Failed to Load Dependency Info From XML.");
+                Logger.Log("Failed to Load Dependency Info From XML.");
             }
             return to;
         }

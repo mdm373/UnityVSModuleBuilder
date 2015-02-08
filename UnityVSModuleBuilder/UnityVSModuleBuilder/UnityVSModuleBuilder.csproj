@@ -155,7 +155,7 @@
     <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\Assets\[[COMPANY_SHORT_NAME]]\[[PROJECT_NAME]]\[[REM_TAG]]">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\Assets\Editor\ModuleConfig.xml">
+    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UVSModule\ModuleConfig.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="ProjectTemplate\[[PROJECT_NAME]]\.gitignore">

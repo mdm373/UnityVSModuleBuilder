@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using UnityVSModuleCommon;
 using UnityVSModuleCommon.FileSystem;
 
 namespace UnityVSModuleEditor.MiddleTier
@@ -13,35 +14,18 @@ namespace UnityVSModuleEditor.MiddleTier
 
     internal class VSModuleProjectManagerImpl : VSModuleProjectManager
     {
-        private const string VISUAL_STUDIO_FOLDER = @"..\..\VisualStudio\";
-        private const string UNITY_ROOT_PATTERN = @"<UnityRoot>.*</UnityRoot>";
-        private const string UNITYROOT_OPEN_TAG = @"<UnityRoot>";
-        private const string UNITYROOT_CLOSE_TAG = @"</UnityRoot>";
-        private const string DEPENDENCY_ITEM_EDITOR_FORMAT = 
-@"
-<Reference Include='{0}Editor'>
-    <HintPath>$(SolutionDir)$(PluginsEditorRoot)\{0}Editor.dll</HintPath>
-</Reference>";
-        private const string DEPENDENCY_ITEM_FORMAT = 
-@"
-<Reference Include='{0}'>
-    <HintPath>$(SolutionDir)$(PluginsRoot)\{0}.dll</HintPath>
-</Reference>";
-        private const string ITEM_GROUP_HINT_MATCH = "<!--DepRefsGroup--><ItemGroup>";
-
         private readonly FileSystemController fsController;
         private readonly UnityApi unityApi;
-        private const string DEPS_START_TAG = "<!--DepRefsGroup-->";
-        private const string DEPS_END_TAG = "<!--EndDepRefsGroup-->";
+        
         private readonly List<string> editorFormats = new List<string>();
         private readonly List<string> projectFormats = new List<string>();
         
 
         public VSModuleProjectManagerImpl(UnityApi unityApi, FileSystemController fsController)
         {
-            editorFormats.Add(DEPENDENCY_ITEM_FORMAT);
-            editorFormats.Add(DEPENDENCY_ITEM_EDITOR_FORMAT);
-            projectFormats.Add(DEPENDENCY_ITEM_FORMAT);
+            editorFormats.Add(VSModuleConstants.DEPENDENCY_ITEM_FORMAT);
+            editorFormats.Add(VSModuleConstants.DEPENDENCY_ITEM_EDITOR_FORMAT);
+            projectFormats.Add(VSModuleConstants.DEPENDENCY_ITEM_FORMAT);
             this.fsController = fsController;
             this.unityApi = unityApi;
         }
@@ -60,14 +44,14 @@ namespace UnityVSModuleEditor.MiddleTier
 
         private FileEntry GetEditorProjectFile(String projectName)
         {
-            String location = Path.Combine(unityApi.GetAssetFolder(), VISUAL_STUDIO_FOLDER);
+            String location = Path.Combine(unityApi.GetAssetFolder(), VSModuleConstants.VISUAL_STUDIO_FOLDER);
             String editorProject = Path.Combine(location, projectName + @"Editor\" + projectName + "Editor.csproj");
             return fsController.GetExistingFile(editorProject);
         }
 
         private FileEntry GetMainProjectFile(String projectName)
         {
-            String location = Path.Combine(unityApi.GetAssetFolder(), VISUAL_STUDIO_FOLDER);
+            String location = Path.Combine(unityApi.GetAssetFolder(), VSModuleConstants.VISUAL_STUDIO_FOLDER);
             String mainProject = Path.Combine(location, projectName + @"\" + projectName + ".csproj");
             return fsController.GetExistingFile(mainProject);
         }
@@ -77,8 +61,8 @@ namespace UnityVSModuleEditor.MiddleTier
             try
             {
                 String projectText = projectFile.ReadAllText();
-                Regex expression = new Regex(UNITY_ROOT_PATTERN);
-                String replacement = UNITYROOT_OPEN_TAG + updatedValue + UNITYROOT_CLOSE_TAG;
+                Regex expression = new Regex(VSModuleConstants.UNITY_ROOT_PATTERN);
+                String replacement = VSModuleConstants.UNITYROOT_OPEN_TAG + updatedValue + VSModuleConstants.UNITYROOT_CLOSE_TAG;
                 String replaced = expression.Replace(projectText, replacement);
 
                 projectFile.WriteAllText(replaced);
@@ -86,8 +70,7 @@ namespace UnityVSModuleEditor.MiddleTier
             }
             catch (Exception e)
             {
-                unityApi.LogError("Exception Updating visual studio project'" + projectFile.GetFilePath() + '\'');
-                unityApi.LogException(e);
+                Logger.LogError("Exception Updating visual studio project'" + projectFile.GetFilePath() + '\'', e);
             }
         }
 
@@ -107,7 +90,7 @@ namespace UnityVSModuleEditor.MiddleTier
             }
             catch (Exception e)
             {
-                unityApi.LogError("Unexpected Exception Updating Visual Studio Project For Depenencies. See Logged Error For Details", e);
+                Logger.LogError("Unexpected Exception Updating Visual Studio Project For Depenencies. See Logged Error For Details", e);
             }
             return isUpdated;
         }
@@ -121,8 +104,8 @@ namespace UnityVSModuleEditor.MiddleTier
         private void AddDependencyFormatsToProject(FileEntry projectFile, List<VSModuleDependencyItem> allDepenencies, List<String> formats)
         {
             String projectText = projectFile.ReadAllText();
-            int existingDepsStartIndex = projectText.IndexOf(DEPS_START_TAG) + DEPS_START_TAG.Length;
-            int existingDepsEndIndex = projectText.IndexOf(DEPS_END_TAG);
+            int existingDepsStartIndex = projectText.IndexOf(VSModuleConstants.DEPS_START_TAG) + VSModuleConstants.DEPS_START_TAG.Length;
+            int existingDepsEndIndex = projectText.IndexOf(VSModuleConstants.DEPS_END_TAG);
             String depsToRemove = projectText.Substring(existingDepsStartIndex, existingDepsEndIndex - existingDepsStartIndex);
             String projectWithNoDeps = projectText.Substring(0, existingDepsStartIndex) + projectText.Substring(existingDepsEndIndex, projectText.Length - existingDepsEndIndex);
             String depsToAdd = String.Empty;
