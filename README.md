@@ -1,4 +1,4 @@
-Overview | [Specification](Markdown/SPECIFICATION.md) | [Developing](Markdown/DEVELOPMENT.md)
+Overview | [Specification](MarkDown/SPECIFICATION.md) | [Developing](MarkDown/DEVELOPMENT.md)
 # UVSModule Manager Overview#
 ## A dependency management tool for Unity 3D project development##
 

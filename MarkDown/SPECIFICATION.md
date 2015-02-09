@@ -1,4 +1,4 @@
-[Overview](README.md) | Specification | [Developing](Markdown/DEVELOPMENT.md)
+[Overview](README.md) | Specification | [Developing](MarkDown/DEVELOPMENT.md)
 
 # UVSModule Manager Specifications#
 ## Specifications For Module Builder / Maintenance  ##
@@ -23,7 +23,7 @@ Application repository location **[REPO_LOCATION]** defined by *repositoryLocati
 
 	[APP_LOCATION]\UVSRepo
 
-##Builder Specification##
+###Builder Specification###
 Building the project will take a request with the following parameters
 
 * Template Copy Target Location **[COPY_LOCATION]**:  Valid Location on file system with read / write user privileges or higher
@@ -37,3 +37,9 @@ The builder will copy a project template located at the following location.
 	[APP_LOCATION]\ProjectTemplate
 
 Project template folder will be copied to the [COPY_LOCATION] defined in the request
+
+TBD
+
+###Unity Editor Specification###
+
+TBD
