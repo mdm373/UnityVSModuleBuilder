@@ -3,4 +3,4 @@
 
 See project [Overview](MarkDown/OVERVIEW.md) for details
 
-See [Releases](releases) for latest version
+See [Releases](https://github.com/mdm373/UnityVSModuleBuilder/releases) for latest version
