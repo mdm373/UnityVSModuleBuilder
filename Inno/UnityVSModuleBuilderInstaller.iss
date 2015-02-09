@@ -31,3 +31,6 @@ Name: "{group}\{#AppLongName}"; Filename: "{app}\UnityVSModuleBuilderUI.exe"
 
 [Registry]
 Root: HKLM; Subkey: "Software\{#AppShortName}"; ValueName: "install-location"; ValueData: {app}; ValueType: string; Flags: uninsdeletekey; Permissions: everyone-read
+
+[Run]
+Filename: {app}\UnityVSModuleBuilderUI.exe; Description: Run {#AppLongName}; Flags: postinstall nowait skipifsilent
