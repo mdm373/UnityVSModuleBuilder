@@ -1,4 +1,4 @@
-[Overview](README.md) | [Specification](MarkDown/SPECIFICATION.md) | Developing
+[Overview](..\README.md) | [Specification](SPECIFICATION.md) | Developing
 
 # UVSModule Manager Development#
 ## Development Structure And Practices  ##
