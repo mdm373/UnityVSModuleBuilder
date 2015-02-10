@@ -13,6 +13,6 @@ namespace UnityVSModuleCommon.FileSystem
         FileEntry GetExistingFileOrDirectory(string fileLocation);
         FileEntry GetExistingOrNewlyCreatedFile(string fileLocation);
         FileEntry CreateNotPresentFile(string fileLocation);
-        bool DoCreateDirectory(string moduleRepoLocation);
+        bool DoCreateDirectory(string directoryLocation);
     }
 }

@@ -22,7 +22,7 @@ namespace UnityVSModuleBuilder.Implement
 
         public BuildProjectResponse DoBuild(BuildProjectRequest request)
         {
-            bool isSuccessful = copyController.CopyAndCleanTemplate(request.GetCopyLocation());
+            bool isSuccessful = copyController.CopyAndCleanTemplate(request.GetCopyLocation(), request.GetProjectName());
             if (isSuccessful)
             {
                 foreach (DefinedOverlay overlay in overlays)

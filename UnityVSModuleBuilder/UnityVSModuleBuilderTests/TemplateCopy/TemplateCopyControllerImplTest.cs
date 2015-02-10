@@ -11,6 +11,8 @@ namespace UnityVSModuleBuilder.TemplateCopy
     public class TemplateCopyControllerImplTest
     {
         private const string EXPECTED_COPY_LOCATION = "EXPECTED_COPY_LOCATION";
+        private string EXPECTED_PROJECT_NAME = "EXPECTED_PROJECT_NAME";
+        private string EXPECTED_COPY_FULL_LOCATION = @"EXPECTED_COPY_LOCATION\EXPECTED_PROJECT_NAME";
         private const string EXPECTED_REM_TAG_FILE_NAME = "[[REM_TAG]]";
         private const string EXPECTED_REM_TAG_FILE_PATH = "EXPECTED_REM_TAG_FILE_PATH";
         private const string EXPECTED_TEMPLATE_LOCATION = @"ProjectTemplate";
@@ -22,6 +24,7 @@ namespace UnityVSModuleBuilder.TemplateCopy
         private Boolean isSuccess;
         private FileSystemController fileSystem;
         private LoggingService loggingService;
+        
         
         
         
@@ -40,7 +43,7 @@ namespace UnityVSModuleBuilder.TemplateCopy
         public void TestCopyTemplateProject()
         {
             GivenFileSystemContainsRemTagFileAndNonRemTagFile();
-            WhenCopyRequestedForExpectedLocation();
+            WhenCopyRequestedForExpectedLocationAndName();
             ThenFileSystemCopyRequestedFromTemplateLocationToExpectedLocation();
             ThenCopyRequestIsSuccssful();
             ThenRemTagItemsAreDeleted();
@@ -54,7 +57,7 @@ namespace UnityVSModuleBuilder.TemplateCopy
             FileEntry nonRemTagFile = GetSubstitueFileEntry(EXPECTED_NON_REM_TAG_FILE_NAME, EXPECTED_NON_REM_TAG_FILE_PATH);
             expectedFiles.Add(remTagFile);
             expectedFiles.Add(nonRemTagFile);
-            fileSystem.GetFilesForLocationRecursive(EXPECTED_COPY_LOCATION).Returns(x => { return expectedFiles.GetEnumerator(); });
+            fileSystem.GetFilesForLocationRecursive(EXPECTED_COPY_FULL_LOCATION).Returns(x => { return expectedFiles.GetEnumerator(); });
         }
 
         private static FileEntry GetSubstitueFileEntry(String fileName, String filePath)
@@ -72,7 +75,7 @@ namespace UnityVSModuleBuilder.TemplateCopy
         public void TestCopyTemplateProjectFailure()
         {
             GivenFileSystemThrowsExceptionForCopy();
-            WhenCopyRequestedForExpectedLocation();
+            WhenCopyRequestedForExpectedLocationAndName();
             ThenCopyRequestIsFailure();
             ThenFailureIsLogged();
         }
@@ -107,14 +110,14 @@ namespace UnityVSModuleBuilder.TemplateCopy
             Assert.True(this.isSuccess);
         }
 
-        private void WhenCopyRequestedForExpectedLocation()
+        private void WhenCopyRequestedForExpectedLocationAndName()
         {
-            isSuccess = copyController.CopyAndCleanTemplate(EXPECTED_COPY_LOCATION);
+            isSuccess = copyController.CopyAndCleanTemplate(EXPECTED_COPY_LOCATION, EXPECTED_PROJECT_NAME);
         }
 
         private void ThenFileSystemCopyRequestedFromTemplateLocationToExpectedLocation()
         {
-            fileSystem.Received().DoFullDirectoryCopy(EXPECTED_TEMPLATE_LOCATION, EXPECTED_COPY_LOCATION);
+            fileSystem.Received().DoFullDirectoryCopy(EXPECTED_TEMPLATE_LOCATION, EXPECTED_COPY_FULL_LOCATION);
         }
     }
 }

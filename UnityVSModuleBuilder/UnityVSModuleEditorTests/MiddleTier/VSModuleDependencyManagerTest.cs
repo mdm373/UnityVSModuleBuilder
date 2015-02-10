@@ -221,7 +221,7 @@ namespace UnityVSModuleEditor.MiddleTier
 
         private void GivenUnityAPIHasExpectedProjectFolder()
         {
-            unityApi.GetAssetFolder().Returns(EXPECTED_PROEJCT_FOLDER);
+            unityApi.GetProjectFolder().Returns(EXPECTED_PROEJCT_FOLDER);
         }
 
         private void WhenManagerRetrievesDependencyTO()

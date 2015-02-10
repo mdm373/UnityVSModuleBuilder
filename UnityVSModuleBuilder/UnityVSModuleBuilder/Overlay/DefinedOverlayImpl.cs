@@ -22,7 +22,8 @@ namespace UnityVSModuleBuilder.Overlay
             String definedValue = GetDefinedValue(request);
             bool isSuccessful = true;
             try {
-                List<FileEntry>.Enumerator files = fileSystem.GetFilesForLocationRecursive(request.GetCopyLocation());
+                String basePath = Path.Combine(request.GetCopyLocation(), request.GetProjectName());
+                List<FileEntry>.Enumerator files = fileSystem.GetFilesForLocationRecursive(basePath);
                 while (files.MoveNext())
                 {
                     if (files.Current.GetFileType() == FileType.FILE)
@@ -31,14 +32,14 @@ namespace UnityVSModuleBuilder.Overlay
                     }
                 }
 
-                files = fileSystem.GetFilesForLocationRecursive(request.GetCopyLocation());
+                files = fileSystem.GetFilesForLocationRecursive(basePath);
                 while (files.MoveNext())
                 {
                     String fileName = files.Current.GetFileName();
                     if (fileName.Contains(definedTag))
                     {
                         files.Current.RenameFile(fileName.Replace(definedTag, definedValue));
-                        files = fileSystem.GetFilesForLocationRecursive(request.GetCopyLocation());
+                        files = fileSystem.GetFilesForLocationRecursive(basePath);
                     }
                 }
             }

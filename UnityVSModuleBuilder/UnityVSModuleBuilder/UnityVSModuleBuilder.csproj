@@ -72,102 +72,102 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\Assets\Editor.meta">
+    <None Include="ProjectTemplate\UnityGame\Assets\Editor.meta">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\Assets\Editor\ManagedCode\[[REM_TAG]]">
+    <None Include="ProjectTemplate\UnityGame\Assets\Editor\ManagedCode\[[REM_TAG]]">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\Assets\Editor\[[COMPANY_SHORT_NAME]]\[[PROJECT_NAME]]\[[REM_TAG]]">
+    <None Include="ProjectTemplate\UnityGame\Assets\Editor\[[COMPANY_SHORT_NAME]]\[[PROJECT_NAME]]\[[REM_TAG]]">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\Assets\ManagedCode\[[REM_TAG]]">
+    <None Include="ProjectTemplate\UnityGame\Assets\ManagedCode\[[REM_TAG]]">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\Library\BuildPlayer.prefs">
+    <None Include="ProjectTemplate\UnityGame\Library\BuildPlayer.prefs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\Library\BuildSettings.asset">
+    <None Include="ProjectTemplate\UnityGame\Library\BuildSettings.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\Library\EditorUserBuildSettings.asset">
+    <None Include="ProjectTemplate\UnityGame\Library\EditorUserBuildSettings.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\Library\EditorUserSettings.asset">
+    <None Include="ProjectTemplate\UnityGame\Library\EditorUserSettings.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\Library\InspectorExpandedItems.asset">
+    <None Include="ProjectTemplate\UnityGame\Library\InspectorExpandedItems.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\Library\MonoManager.asset">
+    <None Include="ProjectTemplate\UnityGame\Library\MonoManager.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\Library\ProjectSettings.asset">
+    <None Include="ProjectTemplate\UnityGame\Library\ProjectSettings.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\ProjectSettings\AudioManager.asset">
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\AudioManager.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\ProjectSettings\DynamicsManager.asset">
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\DynamicsManager.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\ProjectSettings\EditorBuildSettings.asset">
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\EditorBuildSettings.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\ProjectSettings\EditorSettings.asset">
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\EditorSettings.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\ProjectSettings\GraphicsSettings.asset">
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\GraphicsSettings.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\ProjectSettings\InputManager.asset">
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\InputManager.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\ProjectSettings\NavMeshAreas.asset">
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\NavMeshAreas.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\ProjectSettings\NetworkManager.asset">
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\NetworkManager.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\ProjectSettings\Physics2DSettings.asset">
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\Physics2DSettings.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\ProjectSettings\ProjectSettings.asset">
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\ProjectSettings.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\ProjectSettings\QualitySettings.asset">
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\QualitySettings.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\ProjectSettings\TagManager.asset">
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\TagManager.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\ProjectSettings\TimeManager.asset">
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\TimeManager.asset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\ProjectSettings\ProjectVersion.txt">
+    <None Include="ProjectTemplate\UnityGame\ProjectSettings\ProjectVersion.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\VisualStudio\[[PROJECT_NAME]].sln">
+    <None Include="ProjectTemplate\VisualStudio\[[PROJECT_NAME]].sln">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UnityGame\Assets\[[COMPANY_SHORT_NAME]]\[[PROJECT_NAME]]\[[REM_TAG]]">
+    <None Include="ProjectTemplate\UnityGame\Assets\[[COMPANY_SHORT_NAME]]\[[PROJECT_NAME]]\[[REM_TAG]]">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\UVSModule\ModuleConfig.xml">
+    <None Include="ProjectTemplate\UVSModule\ModuleConfig.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\.gitignore">
+    <None Include="ProjectTemplate\.gitignore">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="ProjectTemplate\[[PROJECT_NAME]]\VisualStudio\[[PROJECT_NAME]]Editor\[[PROJECT_NAME]]Editor.csproj">
+    <Content Include="ProjectTemplate\VisualStudio\[[PROJECT_NAME]]Editor\[[PROJECT_NAME]]Editor.csproj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\VisualStudio\[[PROJECT_NAME]]Editor\packages.config">
+    <None Include="ProjectTemplate\VisualStudio\[[PROJECT_NAME]]Editor\packages.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ProjectTemplate\[[PROJECT_NAME]]\VisualStudio\[[PROJECT_NAME]]\[[PROJECT_NAME]].csproj">
+    <None Include="ProjectTemplate\VisualStudio\[[PROJECT_NAME]]\[[PROJECT_NAME]].csproj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

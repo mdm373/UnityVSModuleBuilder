@@ -58,7 +58,7 @@ namespace UnityVSModuleEditor.MiddleTier
 
         private FileEntry GetDependencyFileInfo(bool isCreatedIfNotPresent)
         {
-            String dependencyFilePath = Path.Combine(unityApi.GetAssetFolder(), VSModuleConstants.DEPENDENCY_FILE_LOCATION);
+            String dependencyFilePath = Path.Combine(unityApi.GetProjectFolder(), VSModuleConstants.DEPENDENCY_FILE_LOCATION);
             FileEntry entry = null;
             if (isCreatedIfNotPresent)
             {

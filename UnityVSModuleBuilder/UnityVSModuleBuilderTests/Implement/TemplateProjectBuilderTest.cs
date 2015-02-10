@@ -68,17 +68,17 @@ namespace UnityVSModuleBuilder.Implement
 
         private void ThenTemplateCopyRequestedWithExpectedLocation()
         {
-            this.templateCopy.Received().CopyAndCleanTemplate(EXPECTED_COPY_LOCATION);
+            this.templateCopy.Received().CopyAndCleanTemplate(EXPECTED_COPY_LOCATION, EXPECTED_PROJECT_NAME);
         }
 
         private void GivenTemplateCopySuccessful()
         {
-            this.templateCopy.CopyAndCleanTemplate(Arg.Any<String>()).Returns(true);
+            this.templateCopy.CopyAndCleanTemplate(Arg.Any<String>(), Arg.Any<String>()).Returns(true);
         }
 
         private void GivenTemplateCopyFailure()
         {
-            this.templateCopy.CopyAndCleanTemplate(Arg.Any<String>()).Returns(false);
+            this.templateCopy.CopyAndCleanTemplate(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
         }
 
         private void ThenOverlayNotRequested()

@@ -20,13 +20,15 @@ namespace UnityVSModuleBuilder.TemplateCopy
             this.fileSystem = fileSystem;
         }
 
-        public bool CopyAndCleanTemplate(string copyLocation)
+        public bool CopyAndCleanTemplate(string copyLocation, string projectName)
         {
             bool isSuccess = true;
             try
             {
-                fileSystem.DoFullDirectoryCopy(TEMPLATE_LOCATION, copyLocation);
-                List<FileEntry>.Enumerator files = fileSystem.GetFilesForLocationRecursive(copyLocation);
+                String fullCopyLocation = Path.Combine(copyLocation, projectName);
+                fileSystem.DoCreateDirectory(fullCopyLocation);
+                fileSystem.DoFullDirectoryCopy(TEMPLATE_LOCATION, fullCopyLocation);
+                List<FileEntry>.Enumerator files = fileSystem.GetFilesForLocationRecursive(fullCopyLocation);
                 while (files.MoveNext())
                 {
                     String fileName = files.Current.GetFileName();
