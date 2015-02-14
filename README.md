@@ -1,5 +1,7 @@
-# UVSModule Manager Overview#
-## A dependency management tool for Unity 3D project development##
+# UVSModule Manager#
+## A dependency management tool for Unity3D with supporting Visual Studio solution development##
+
+Currently Developed and tested with VisualStudio Community Edition 2013 and Unity 5
 
 See project [Overview](MarkDown/OVERVIEW.md) for details
 
