@@ -1,4 +1,4 @@
-#define AppVer "0.0.1.1"
+#define AppVer "0.0.2.0"
 #define AppLongName "Unity VS Module Builder"
 #define AppShortName "UnityVSModuleBuilder"
 [Setup]
